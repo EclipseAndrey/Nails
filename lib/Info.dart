@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutterapp32/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class Info extends StatefulWidget {
   @override
@@ -146,6 +148,16 @@ class _Info extends State<Info> {
                           left: MediaQuery.of(context).size.width/2-75,
                           child: GestureDetector(
                             onTap:(){
+
+                              void inf()async{
+
+                                final prefs = await SharedPreferences.getInstance();
+
+                                prefs.setBool('info', true);
+                              }
+                              inf();
+
+
                               Navigator.pushNamed(context, '/home');
                             },
                             child: Container(

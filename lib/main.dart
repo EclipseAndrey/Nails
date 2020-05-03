@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 import 'dart:async';
@@ -7,6 +8,8 @@ import 'package:flutterapp32/home.dart';
 import 'package:flutterapp32/Eclipse.dart';
 import 'package:flutterapp32/Info.dart';
 import 'package:flutterapp32/Contacts.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 void main(){
@@ -22,6 +25,18 @@ void main(){
 
 runApp(
   MaterialApp(
+
+    localizationsDelegates: [
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+      DefaultCupertinoLocalizations.delegate,
+    ],
+    supportedLocales: [
+      const Locale('en', 'US'), // English
+      const Locale('th', 'TH'), // Thai
+      const Locale("ru", "RU"),
+    ],
     home: SplashScreen(nextRoute:
     '/Info',
     ),
@@ -41,16 +56,37 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>  {
+
+
+
+  void inf()async{
+
+    final prefs = await SharedPreferences.getInstance();
+
+    final info = prefs.getBool('info') ?? false;
+
+    if(info){
+      Navigator.of(context).pushReplacementNamed('/home');
+    }else{
+      Navigator.of(context).pushReplacementNamed(widget.nextRoute);
+    }
+
+  }
+
+
   @override
   void initState() {
+
     super.initState();
     // Создаём таймер, который должен будет переключить SplashScreen на HomeScreen через 2 секунды
     Timer(
         Duration(seconds: 2),
         // Для этого используется статический метод навигатора
         // Это очень похоже на передачу лямбда функции в качестве аргумента std::function в C++
-            () { Navigator.of(context).pushReplacementNamed(widget.nextRoute); }
+            () {
+          inf();
+            }
     );
   }
   @override

@@ -7,3 +7,62 @@ class DataTresh{
     this.items  = items;
   }
 }
+
+class Order{
+
+List<int> ids;
+String adress = "";
+String num ="";
+String name="";
+String Promo="";
+String comment = "Не введен.";
+
+Order();
+
+String getAdress(){
+  return this.adress;
+}
+String getNum(){
+  return this.num;
+}
+String getName(){
+  return this.name;
+}
+String getPromo(){
+  return this.Promo;
+}
+String getComment(){
+  return this.comment;
+}
+
+  void initId(){
+  ids =[1];
+
+  ids.clear();
+}
+
+  void addId(int id){
+  ids.add(id);
+  }
+
+  void addAdress(String adress) {
+    this.adress = adress;
+  }
+
+  void addNum(String num) {
+  this.num = num;
+}
+
+  void addName(String name) {
+  this.name = name;
+}
+
+  void addPromo(String promo) {
+  this.Promo = promo;
+}
+
+  void addComment(String comment) {
+  this.comment = comment;
+}
+
+}

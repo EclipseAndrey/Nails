@@ -7,6 +7,7 @@ import 'Objects.dart';
 
 
 List<ElementItem> items;
+List<int> items_counter;
 
 
 class Home extends StatefulWidget {
@@ -34,6 +35,8 @@ class _Home extends State<Home> {
 
     items = [ElementItem(0,'','','',0,0)];
     items.clear();
+    items_counter = [1];
+    items_counter.clear();
 
 
     return new Scaffold(
@@ -292,133 +295,54 @@ ElementItem _elementInfo(int category, int indexx) {
   List<ElementItem> step5 = [];
   List<ElementItem> step6 = [];
   //Комплексы
-  step.add(ElementItem(
-      01,
-      'http://eclipsedevelop.ru/images/xs1.png',
-      'XS Комплекс',
-      'Необрезной экспресс-маникюр и педикюр, покрытие лаком',
-      1699,
-      0));
-  step.add(ElementItem(02, 'http://eclipsedevelop.ru/images/12.png',
-      'S Комплекс', 'Маникюр и педикюр, покрытие лаком', 2299, 0));
-  step.add(ElementItem(03, 'http://eclipsedevelop.ru/images/13.png',
-      'М Комплекс', 'Снятие, маникюр и педикюр, покрытие гель-лаком', 3299, 0));
-  step.add(ElementItem(
-      04,
-      'http://eclipsedevelop.ru/images/14.png',
-      'L Комплекс',
-      'Снятие, маникюр и педикюр, покрытие гель-лаком, дизайн',
-      4299,
-      0));
-  step.add(ElementItem(
-      05,
-      'http://eclipsedevelop.ru/images/15.png',
-      'XL Комплекс',
-      'Снятие, маникюр и педикюр, покрытие гель-лаком, дизайн, спа-уход, использование аппарата',
-      4999,
-      0));
-  step.add(ElementItem(
-      06,
-      'http://eclipsedevelop.ru/images/16.png',
-      'Мужской Комплекс',
-      'Классический обрезной маникюр и педикюр, полировка',
-      1999,
-      0));
-  step.add(ElementItem(07, 'http://eclipsedevelop.ru/images/17.png',
-      'Детский Комплекс', 'Детский маникюр и педикюр', 999, 0));
+  step.add(ElementItem(0101, 'http://eclipsedevelop.ru/images/xs1.png', 'XS Комплекс', 'Необрезной экспресс-маникюр и педикюр, покрытие лаком', 1699, 0));
+  step.add(ElementItem(0102, 'http://eclipsedevelop.ru/images/12.png', 'S Комплекс', 'Маникюр и педикюр, покрытие лаком', 2299, 0));
+  step.add(ElementItem(0103, 'http://eclipsedevelop.ru/images/13.png', 'М Комплекс', 'Снятие, маникюр и педикюр, покрытие гель-лаком', 3299, 0));
+  step.add(ElementItem(0104, 'http://eclipsedevelop.ru/images/14.png', 'L Комплекс', 'Снятие, маникюр и педикюр, покрытие гель-лаком, дизайн', 4299, 0));
+  step.add(ElementItem(0105, 'http://eclipsedevelop.ru/images/15.png', 'XL Комплекс', 'Снятие, маникюр и педикюр, покрытие гель-лаком, дизайн, спа-уход, использование аппарата', 4999, 0));
+  step.add(ElementItem(0106, 'http://eclipsedevelop.ru/images/16.png', 'Мужской Комплекс', 'Классический обрезной маникюр и педикюр, полировка', 1999, 0));
+  step.add(ElementItem(0107, 'http://eclipsedevelop.ru/images/17.png', 'Детский Комплекс', 'Детский маникюр и педикюр', 999, 0));
   info.add(step);
-  print(info.toString());
-
   //Маникюр
-  step1.add(ElementItem(
-      08, '0', 'Маникюр «ColorBird»', 'Классический маникюр', 600, 0));
-  step1.add(ElementItem(
-      09, '0', 'Маникюр «Combo»', 'Комбинированный маникюр', 700, 0));
-  step1.add(ElementItem(10, '0', 'Бразильский маникюр',
-      'SPA-маникюр с применением перчаток', 700, 0));
-  step1.add(ElementItem(11, '0', 'Мужской маникюр',
-      'Обработка кутикулы, полировка ногтевой пластины', 900, 0));
-  step1.add(ElementItem(12, '0', 'Детский маникюр',
-      'Детский маникюр, удаление заусенцев', 400, 0));
+  step1.add(ElementItem(201, '0', 'Маникюр «ColorBird»', 'Классический маникюр', 600, 0));
+  step1.add(ElementItem(202, '0', 'Маникюр «Combo»', 'Комбинированный маникюр', 700, 0));
+  step1.add(ElementItem(203, '0', 'Бразильский маникюр', 'SPA-маникюр с применением перчаток', 700, 0));
+  step1.add(ElementItem(204, '0', 'Мужской маникюр', 'Обработка кутикулы, полировка ногтевой пластины', 900, 0));
+  step1.add(ElementItem(205, '0', 'Детский маникюр', 'Детский маникюр, удаление заусенцев', 400, 0));
   info.add(step1);
 //Покрытия
-  step2.add(ElementItem(13, '0', 'Лак', 'OPI, ESSE', 390, 0));
-  step2
-      .add(ElementItem(14, '0', 'Гель-Лак', 'CND, OPI GelColor, KOD', 950, 0));
-  step2.add(ElementItem(
-      15, '0', 'Укрепление гелем', 'Укрепляющее покрытие', 600, 0));
-  step2.add(ElementItem(16, '0', 'IBX System', 'Укрепление пластины', 700, 0));
-  step2.add(ElementItem(17, '0', 'Снятие геля ', '', 350, 0));
-  step2.add(ElementItem(
-      18, '0', 'Снятие покрытия', 'Снятие долговременного покрытия', 250, 0));
+  step2.add(ElementItem(301, '0', 'Лак', 'OPI, ESSE', 390, 0));
+  step2.add(ElementItem(302, '0', 'Гель-Лак', 'CND, OPI GelColor, KOD', 950, 0));
+  step2.add(ElementItem(303, '0', 'Укрепление гелем', 'Укрепляющее покрытие', 600, 0));
+  step2.add(ElementItem(304, '0', 'IBX System', 'Укрепление пластины', 700, 0));
+  step2.add(ElementItem(305, '0', 'Снятие геля ', '', 350, 0));
+  step2.add(ElementItem(306, '0', 'Снятие покрытия', 'Снятие долговременного покрытия', 250, 0));
   info.add(step2);
 //Педикюр
-  step3.add(ElementItem(
-      19, '0', 'Педикюр «ColorBird»', 'Классический педикюр', 990, 0));
-  step3.add(ElementItem(
-      20, '0', 'Педикюр «Combo»', 'Комбинированный педикюр', 1100, 0));
-  step3.add(ElementItem(21, '0', 'Бразильский педикюр',
-      'СПА-педикюр с применением специальных носочков', 1200, 0));
-  step3.add(ElementItem(22, '0', 'Сложный педикюр',
-      'Классический педикюр, удаление натоптышей, лечение трещин', 1300, 0));
-  step3.add(ElementItem(
-      23,
-      '0',
-      'Мужской педикюр',
-      'Мужской педикюр, обработка кутикул и стоп, удаление натоптышей',
-      1100,
-      0));
-  step3.add(ElementItem(24, '0', 'Детский педикюр',
-      'Детский педикюр, удаление заусенцев', 700, 0));
+  step3.add(ElementItem(401, '0', 'Педикюр «ColorBird»', 'Классический педикюр', 990, 0));
+  step3.add(ElementItem(402, '0', 'Педикюр «Combo»', 'Комбинированный педикюр', 1100, 0));
+  step3.add(ElementItem(403, '0', 'Бразильский педикюр', 'СПА-педикюр с применением специальных носочков', 1200, 0));
+  step3.add(ElementItem(404, '0', 'Сложный педикюр', 'Классический педикюр, удаление натоптышей, лечение трещин', 1300, 0));
+  step3.add(ElementItem(405, '0', 'Мужской педикюр', 'Мужской педикюр, обработка кутикул и стоп, удаление натоптышей', 1100, 0));
+  step3.add(ElementItem(406, '0', 'Детский педикюр', 'Детский педикюр, удаление заусенцев', 700, 0));
   info.add(step3);
 //Дизайн
-  step4.add(ElementItem(25, '0', 'Авторский дизайн',
-      'Стоимость дизайна 10 ногтевых пластин', 500, 0));
-  step4.add(ElementItem(
-      26,
-      '0',
-      'Френч/Лунный',
-      'Стоимость дизайна 10 ногтевых пластин + долговременное покрытие',
-      1200,
-      0));
-  step4.add(ElementItem(27, '0', 'Стразы', 'Стоимость за одну шт.', 20, 0));
-  step4.add(ElementItem(28, '0', 'Зеркальная пудра',
-      'Стоимость за одну ногтевую пластину', 100, 0));
-  step4.add(ElementItem(29, '0', 'Дизайн одного пальца',
-      'Стоимость за одну ногтевую пластину', 100, 0));
-  step4.add(ElementItem(
-      30, '0', 'Глитер', 'Стоимость за одну ногтевую пластину', 200, 100));
+  step4.add(ElementItem(501, '0', 'Авторский дизайн', 'Стоимость дизайна 10 ногтевых пластин', 500, 0));
+  step4.add(ElementItem(502, '0', 'Френч/Лунный', 'Стоимость дизайна 10 ногтевых пластин + долговременное покрытие', 1200, 0));
+  step4.add(ElementItem(503, '0', 'Стразы', 'Стоимость за одну шт.', 20, 0));
+  step4.add(ElementItem(504, '0', 'Зеркальная пудра', 'Стоимость за одну ногтевую пластину', 100, 0));
+  step4.add(ElementItem(505, '0', 'Дизайн одного пальца', 'Стоимость за одну ногтевую пластину', 100, 0));
+  step4.add(ElementItem(506, '0', 'Глитер', 'Стоимость за одну ногтевую пластину', 200, 100));
   info.add(step4);
 //СПА Уход
-  step5.add(ElementItem(
-      31,
-      'http://eclipsedevelop.ru/images/21.png',
-      'Витаминный уход',
-      'Омолаживающий и восстанавливающий уход с применением скраба и крема. Рекомендуется для сухой кожи рук и ног',
-      200,
-      0));
-  step5.add(ElementItem(
-      32,
-      'http://eclipsedevelop.ru/images/22.png',
-      'Холодная парафинотерапия',
-      'Увлажняющий и питательный уход с применением косметического парафина. Идеальный уход во время холодов',
-      300,
-      0));
-  step5.add(ElementItem(
-      33,
-      'http://eclipsedevelop.ru/images/21.png',
-      'Тайский массаж',
-      'Тонизирующий массаж для улучшения кровообращения рук и ног с применением массажного масла',
-      200,
-      0));
+  step5.add(ElementItem(601, 'http://eclipsedevelop.ru/images/21.png', 'Витаминный уход', 'Омолаживающий и восстанавливающий уход с применением скраба и крема. Рекомендуется для сухой кожи рук и ног', 200, 0));
+  step5.add(ElementItem(602, 'http://eclipsedevelop.ru/images/22.png', 'Холодная парафинотерапия', 'Увлажняющий и питательный уход с применением косметического парафина. Идеальный уход во время холодов', 300, 0));
+  step5.add(ElementItem(603, 'http://eclipsedevelop.ru/images/21.png', 'Тайский массаж', 'Тонизирующий массаж для улучшения кровообращения рук и ног с применением массажного масла', 200, 0));
   info.add(step5);
 //Брови
-  step6.add(ElementItem(34, '0', 'Коррекция',
-      'Коррекция формы, удаление нежелательных волос', 200, 0));
-  step6.add(ElementItem(
-      35, '0', 'Оформление бровей', 'Подбор и изменение формы', 300, 0));
-  step6.add(ElementItem(36, '0', 'Окрашивание',
-      'Подбор цвета, окрашивание краской Estel, Igora', 300, 0));
+  step6.add(ElementItem(701, '0', 'Коррекция', 'Коррекция формы, удаление нежелательных волос', 200, 0));
+  step6.add(ElementItem(702, '0', 'Оформление бровей', 'Подбор и изменение формы', 300, 0));
+  step6.add(ElementItem(703, '0', 'Окрашивание', 'Подбор цвета, окрашивание краской Estel, Igora', 300, 0));
   info.add(step6);
   return info[category][indexx];
 }
@@ -544,9 +468,28 @@ Widget _Item(ElementItem item, BuildContext context) {
                 child: GestureDetector(
                   onTap: (){
                     if(items.isEmpty){
+                      items_counter = [1];
                       List<ElementItem> step = [item];
                       items = step;
-                    }else{items.add(item);}
+                    }else{
+                      bool find = false;
+                      for(int i = 0 ; i  < items.length; i++){
+                        print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
+                        if(items[i].id == item.id){
+                          items_counter[i]++;
+                          print('Элементов id${items[i].id} - ${items_counter[i]}');
+                          find = true;
+                          break;
+                        }
+                      }
+                      print('find = $find');
+                      if(!find) {
+                        items.add(item);
+                        items_counter.add(1);
+                      }
+
+
+                    }
 
                     final snackBar = SnackBar(
                       content: Text('${item.head.length < 18?'Добавлено в корзину: '+item.head:'Услуга добавлена в корзину'} '),
@@ -680,9 +623,28 @@ Widget _Item(ElementItem item, BuildContext context) {
                     onTap: (){
 
                       if(items.isEmpty){
+                        items_counter = [1];
                         List<ElementItem> step = [item];
                         items = step;
-                      }else{items.add(item);}
+                      }else{
+                        bool find = false;
+                        for(int i = 0 ; i  < items.length; i++){
+                          print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
+                          if(items[i].id == item.id){
+                            items_counter[i]++;
+                            print('Элементов id${items[i].id} - ${items_counter[i]}');
+                            find = true;
+                            break;
+                          }
+                        }
+                        print('find = $find');
+                        if(!find) {
+                          items.add(item);
+                          items_counter.add(1);
+                        }
+
+
+                      }
 
                       final snackBar = SnackBar(
                         content: Text('${item.head.length < 18?'Добавлено в корзину: '+item.head:'Услуга добавлена в корзину'} '),
