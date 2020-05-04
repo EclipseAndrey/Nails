@@ -59,7 +59,6 @@ InputDecoration inputDecorationName = InputDecoration(
     Icons.person,
     color: Colors.black,
   ),
-
 );
 
 InputDecoration inputDecorationMess = InputDecoration(
@@ -74,3 +73,102 @@ InputDecoration inputDecorationMess = InputDecoration(
     color: Colors.black,
   ),
 );
+
+InputDecoration inputDecorationAdress = InputDecoration(
+  labelText: "Адрес",
+  border: OutlineInputBorder(
+
+    borderRadius: BorderRadius.all(
+
+      Radius.circular(30),
+    ),
+  ),
+  fillColor: Colors.white,
+  filled: true,
+  suffixIcon: Icon(
+    Icons.location_on,
+    color: Colors.black,
+  ),
+);
+
+
+
+InputDecoration inputDecorationNumber = InputDecoration(
+  labelText: "Номер",
+  border: OutlineInputBorder(
+
+    borderRadius: BorderRadius.all(
+
+      Radius.circular(30),
+    ),
+  ),
+  fillColor: Colors.white,
+  filled: true,
+  suffixIcon: Icon(
+    Icons.phone_iphone,
+    color: Colors.black,
+  ),
+);
+
+InputDecoration inputDecorationNamee = InputDecoration(
+  labelText: "Имя",
+  border: OutlineInputBorder(
+
+    borderRadius: BorderRadius.all(
+
+      Radius.circular(30),
+    ),
+  ),
+  fillColor: Colors.white,
+  filled: true,
+  suffixIcon: Icon(
+    Icons.person,
+    color: Colors.black,
+  ),
+);
+
+InputDecoration inputDecorationComment = InputDecoration(
+  labelText: "Комментарий к заказу",
+  border: OutlineInputBorder(
+
+    borderRadius: BorderRadius.all(
+
+      Radius.circular(30),
+    ),
+  ),
+  fillColor: Colors.white,
+  filled: true,
+  suffixIcon: Icon(
+    Icons.chat_bubble_outline,
+    color: Colors.black,
+  ),
+);
+
+InputDecoration inputDecorationPromo = InputDecoration(
+  labelText: "Промокод",
+  border: OutlineInputBorder(
+
+    borderRadius: BorderRadius.all(
+
+      Radius.circular(30),
+    ),
+  ),
+  fillColor: Colors.white,
+  filled: true,
+  suffixIcon: Icon(
+    Icons.local_offer,
+    color: Colors.black,
+  ),
+);
+
+
+
+
+
+
+
+
+
+
+
+
