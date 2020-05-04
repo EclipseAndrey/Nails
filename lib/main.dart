@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp32/Login.dart';
 import 'dart:core';
 import 'dart:async';
 
@@ -11,12 +12,17 @@ import 'package:flutterapp32/Contacts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'CheckCode.dart';
+import 'Detail.dart';
+
 
 void main(){
 
   final routes = <String, WidgetBuilder>{
     // Путь, по которому создаётся Home Screen
+    'CheckCode': (BuildContext context) => CheckCode(''),
     '/Quality': (BuildContext context) => Quality(),
+    '/Login': (BuildContext context) => Login(),
     '/home': (BuildContext context) => Home(),
     '/Info': (BuildContext context) =>Info(),
     '/Eclipse': (BuildContext context) =>Eclipse(),
@@ -49,7 +55,7 @@ runApp(
 }
 
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatefulWidget  {
   final String nextRoute;
   SplashScreen({this.nextRoute});
   @override
