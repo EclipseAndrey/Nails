@@ -17,18 +17,17 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  flutter_localizations:
-    sdk: flutter
+  masked_text: ^0.0.6
+  flutter_cupertino_localizations: ^1.0.1
+  firebase_messaging: ^5.0.2
   shared_preferences: ^0.5.7
-  intl: ^0.16.1
-  fluttertoast: ^4.0.0
+  http: ^0.12.0
+  simple_animations: ^2.1.1
   flutter_swiper: ^1.1.6
   url_launcher: ^5.4.2
   flutter:
     sdk: flutter
   flutter_rounded_date_picker: 1.0.0
-  flutter_masked_text: ^0.8.0
-  flutter_cupertino_localizations: ^1.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -54,7 +53,6 @@ flutter:
   assets:
    - assets/images/vk.png
    - assets/images/inst.png
-   - assets/images/town.jpg
    - assets/images/ok.png
    - assets/images/Eclipse.png
    - assets/images/zayavka.png
