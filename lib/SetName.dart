@@ -104,9 +104,18 @@ class _SetNameState extends State<SetName> {
                               final prefs = await SharedPreferences.getInstance();
                               final token = prefs.getString('token') ?? 'none';
 
-                              var response =  http.get('http://eclipsedevelop.ru/api.php/cbsetname?name=${_numcontroller.text}&token=$token');
-                              Navigator.of(context)
-                                  .pushReplacementNamed('/main');
+                              Future<http.Response> fetchAlbum() async {
+                                return await http.get(
+                                    'http://eclipsedevelop.ru/api.php/cbsetname?name=${_numcontroller
+                                        .text}&token=$token');
+                              }
+
+                               fetchAlbum().then((value) {
+                                if(value.statusCode == 200){
+                                  Navigator.of(context)
+                                      .pushReplacementNamed('/main');
+                                 }});
+
                             },
                             child: Center(
                               child: Text("Далее", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),

@@ -197,6 +197,8 @@ class _CheckCodeState extends State<CheckCode> {
                                   color: Color.fromRGBO(255, 182, 173, 1)),
                               child: GestureDetector(
                                 onTap: () async {
+                                  final prefs = await SharedPreferences
+                                      .getInstance();
                                   if ('${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}'.length ==4) {
                                     print('http://eclipsedevelop.ru/api.php/cbcheckcode?num=+7$num&code=${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}');
                                     Future<http.Response> fetchAlbum() async {
@@ -214,8 +216,6 @@ class _CheckCodeState extends State<CheckCode> {
                                         if (Response == "3") {
                                           String token = response["token"];
                                           void inf() async {
-                                            final prefs = await SharedPreferences
-                                                .getInstance();
                                             prefs.setBool('auto', true);
                                             prefs.setString('token', token);
                                             Navigator.of(context)
@@ -233,7 +233,7 @@ class _CheckCodeState extends State<CheckCode> {
                                             prefs.setBool('auto', true);
                                             prefs.setString('token', token);
                                             Navigator.of(context)
-                                                .pushReplacementNamed('/main');
+                                                .pushReplacementNamed('/SetName');
                                           }
 
                                           inf();

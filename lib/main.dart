@@ -87,6 +87,7 @@ class _SplashScreenState extends State<SplashScreen>  {
 
         if(token != 'none') {
 
+          print('http://eclipsedevelop.ru/api.php/cbvalidate?token=$token');
           Future<http.Response> res() async {
             return await  http.get(
                 'http://eclipsedevelop.ru/api.php/cbvalidate?token=$token');
@@ -96,6 +97,7 @@ class _SplashScreenState extends State<SplashScreen>  {
           res().then((value) {
             var response = jsonDecode(value.body);
             String Response = response["response"];
+            print(Response);
             if (Response == "11") {
               Navigator.of(context).pushReplacementNamed('/SetName');
             }
