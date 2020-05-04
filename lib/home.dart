@@ -1,7 +1,10 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/Detail.dart';
+import 'package:flutterapp32/Push_Notifications.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
+import 'Detail.dart';
 import 'Trash.dart';
 import 'Objects.dart';
 
@@ -29,6 +32,17 @@ class _Home extends State<Home> {
       throw 'Could not launch $url';
     }
   }
+
+  final FirebaseMessaging _messaging = FirebaseMessaging();
+
+  @override
+  void initState(){
+    super.initState();
+    _messaging.getToken().then((token){
+      print(token);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +111,7 @@ class _Home extends State<Home> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-//                Navigator.pushNamed(context, '/home');
+                Navigator.pushNamed(context, '/Login');
                   },
                 ),
                 new ListTile(
@@ -544,16 +558,16 @@ Widget _Item(ElementItem item, BuildContext context) {
       ],
     );
   } else
-    return Row(
-      children: <Widget>[
-        GestureDetector(
-          onTap: (){
-            Navigator.of(context)
-                .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-              return new Detail();
-            }));
-          },
-          child: Container(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Detail(item)));
+      },
+      child: Row(
+        children: <Widget>[
+          Container(
             decoration: BoxDecoration(
                 color: Colors.white70,
                 shape: BoxShape.rectangle,
@@ -565,22 +579,25 @@ Widget _Item(ElementItem item, BuildContext context) {
             width: 150 * 1.7,
             child: Column(
               children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: Image.network(
-                          item.picture,
-                          fit: BoxFit.fill,
-                        ).image,
-                        fit: BoxFit.fill),
-                    color: Colors.white70,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25.0),
+                Hero(
+                  tag: item.id,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: Image.network(
+                            item.picture,
+                            fit: BoxFit.fill,
+                          ).image,
+                          fit: BoxFit.fill),
+                      color: Colors.white70,
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25.0),
+                      ),
                     ),
+                    height: 74,
+                    width: 150 * 1.7, // 255
                   ),
-                  height: 74,
-                  width: 150 * 1.7, // 255
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, left: 10, right: 10),
@@ -688,15 +705,15 @@ Widget _Item(ElementItem item, BuildContext context) {
             ),
             //color: Colors.white,
           ),
-        ),
-        SizedBox(
-          width: 15,
-          height: 150,
-          child: Container(
-            color: Colors.transparent,
-          ),
-        )
-      ],
+          SizedBox(
+            width: 15,
+            height: 150,
+            child: Container(
+              color: Colors.transparent,
+            ),
+          )
+        ],
+      ),
     );
 }
 
