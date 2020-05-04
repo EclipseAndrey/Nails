@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/CheckCode.dart';
 import 'package:http/http.dart' as http;
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import 'FadeAnimation.dart';
 
@@ -10,6 +11,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  var maskFormatter = new MaskTextInputFormatter(mask: '(###) ###-##-##', filter: { "#": RegExp(r'[0-9]') });
   TextEditingController _numcontroller = new TextEditingController();
   bool check = true;
   String title = "Вход";
@@ -74,9 +76,10 @@ class _LoginState extends State<Login> {
                                     border: Border(bottom: BorderSide(color: Colors.grey[200]))
                                 ),
                                 child: TextField(
-                                  controller: _numcontroller,
+                                  inputFormatters: [maskFormatter],
                                   autofocus: true,
                                   decoration: InputDecoration(
+                                      prefix: Text('+7 '),
                                       hintText: "Номер телефона",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       border: InputBorder.none
@@ -96,9 +99,9 @@ class _LoginState extends State<Login> {
                           ),
                           child: GestureDetector(
                             onTap: () async {
-                              String num = _numcontroller.text;
+                              String num = maskFormatter.getUnmaskedText();
                               print(num);
-                              var response = await http.get('http://eclipsedevelop.ru/api.php/cbgetcode?num=$num');
+                              var response = await http.get('http://eclipsedevelop.ru/api.php/cbgetcode?num=+$num');
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
