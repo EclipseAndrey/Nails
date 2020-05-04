@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/Login.dart';
+import 'package:flutterapp32/SetName.dart';
 import 'dart:core';
 import 'dart:async';
+import 'package:http/http.dart' as http;
 
 import 'package:flutterapp32/Quality.dart';
 import 'package:flutterapp32/home.dart';
@@ -26,42 +30,44 @@ void main(){
     '/home': (BuildContext context) => Home(),
     '/Info': (BuildContext context) =>Info(),
     '/Eclipse': (BuildContext context) =>Eclipse(),
+    '/main': (BuildContext context) =>SplashScreen(),
     '/Contacts': (BuildContext context) =>Contacts(),
+    '/SetName': (BuildContext context) =>SetName(),
   };
 
-runApp(
-  MaterialApp(
+  runApp(
+      MaterialApp(
 
-    localizationsDelegates: [
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-      GlobalCupertinoLocalizations.delegate,
-      DefaultCupertinoLocalizations.delegate,
-    ],
-    supportedLocales: [
-      const Locale('en', 'US'), // English
-      const Locale('th', 'TH'), // Thai
-      const Locale("ru", "RU"),
-    ],
-    home: SplashScreen(nextRoute:
-    '/Info',
-    ),
-    debugShowCheckedModeBanner: false,
-    routes: routes,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          DefaultCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', 'US'), // English
+          const Locale('th', 'TH'), // Thai
+          const Locale("ru", "RU"),
+        ],
+        home: SplashScreen(nextRoute:
+        '/Info',
+        ),
+        debugShowCheckedModeBanner: false,
+        routes: routes,
 
 
-  )
-);
+      )
+  );
 }
 
 
 class SplashScreen extends StatefulWidget  {
   final String nextRoute;
+
   SplashScreen({this.nextRoute});
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
-
 class _SplashScreenState extends State<SplashScreen>  {
 
 
@@ -71,9 +77,43 @@ class _SplashScreenState extends State<SplashScreen>  {
     final prefs = await SharedPreferences.getInstance();
 
     final info = prefs.getBool('info') ?? false;
+    final auto = prefs.getBool('auto') ?? false;
+    final token = prefs.getString('token') ?? 'none';
+
+
 
     if(info){
-      Navigator.of(context).pushReplacementNamed('/home');
+      if(auto) {
+
+        if(token != 'none') {
+
+          Future<http.Response> res() async {
+            return await  http.get(
+                'http://eclipsedevelop.ru/api.php/cbvalidate?token=$token');
+          }
+
+          print('Валидность $token  '+res.toString());
+          res().then((value) {
+            var response = jsonDecode(value.body);
+            String Response = response["response"];
+            if (Response == "11") {
+              Navigator.of(context).pushReplacementNamed('/SetName');
+            }
+            else if(Response == "13"){
+              Navigator.of(context).pushReplacementNamed('/home');
+            }else if(Response == "12"){
+              Navigator.of(context).pushReplacementNamed('/Login');
+              prefs.setString('token', 'none');
+            }
+          });
+
+
+        }else{
+          Navigator.of(context).pushReplacementNamed('/Login');
+        }
+      }else{
+        Navigator.of(context).pushReplacementNamed('/Login');
+      }
     }else{
       Navigator.of(context).pushReplacementNamed(widget.nextRoute);
     }
@@ -92,7 +132,7 @@ class _SplashScreenState extends State<SplashScreen>  {
         // Это очень похоже на передачу лямбда функции в качестве аргумента std::function в C++
             () {
           inf();
-            }
+        }
     );
   }
   @override

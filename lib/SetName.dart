@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp32/CheckCode.dart';
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'main.dart';
 import 'FadeAnimation.dart';
 
 class SetName extends StatefulWidget {
@@ -11,6 +12,8 @@ class SetName extends StatefulWidget {
 }
 
 class _SetNameState extends State<SetName> {
+
+
   TextEditingController _numcontroller = new TextEditingController();
   bool check = true;
   String title = "Введите имя";
@@ -75,6 +78,7 @@ class _SetNameState extends State<SetName> {
                                     border: Border(bottom: BorderSide(color: Colors.grey[200]))
                                 ),
                                 child: TextField(
+                                  controller: _numcontroller,
                                   autofocus: true,
                                   decoration: InputDecoration(
                                       hintText: "Имя",
@@ -97,7 +101,12 @@ class _SetNameState extends State<SetName> {
                           child: GestureDetector(
                             onTap: () async {
                               print(num);
-                              var response = await http.get('http://eclipsedevelop.ru/api.php/cbgetcode?num=+$num');
+                              final prefs = await SharedPreferences.getInstance();
+                              final token = prefs.getString('token') ?? 'none';
+
+                              var response =  http.get('http://eclipsedevelop.ru/api.php/cbsetname?name=${_numcontroller.text}&token=$token');
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/main');
                             },
                             child: Center(
                               child: Text("Далее", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),

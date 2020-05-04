@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/Detail.dart';
 import 'package:flutterapp32/Push_Notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'Detail.dart';
@@ -170,7 +171,14 @@ class _Home extends State<Home> {
                     'Выйти',
                     style: TextStyle(color: Colors.redAccent),
                   ),
-                  onTap: () {},
+                  onTap: () async {
+                    final prefs = await SharedPreferences
+                        .getInstance();
+                    prefs.setBool('auto', false);
+                    Navigator.pushNamed(context, '/main');
+
+
+                  },
                 ),
               ],
             ),
