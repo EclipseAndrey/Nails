@@ -5,16 +5,15 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import 'FadeAnimation.dart';
 
-class Login extends StatefulWidget {
+class SetName extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _SetNameState createState() => _SetNameState();
 }
 
-class _LoginState extends State<Login> {
-  var maskFormatter = new MaskTextInputFormatter(mask: '(###) ###-##-##', filter: { "#": RegExp(r'[0-9]') });
+class _SetNameState extends State<SetName> {
   TextEditingController _numcontroller = new TextEditingController();
   bool check = true;
-  String title = "Вход";
+  String title = "Введите имя";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,12 +75,9 @@ class _LoginState extends State<Login> {
                                     border: Border(bottom: BorderSide(color: Colors.grey[200]))
                                 ),
                                 child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [maskFormatter],
                                   autofocus: true,
                                   decoration: InputDecoration(
-                                      prefix: Text('+7 '),
-                                      hintText: "Номер телефона",
+                                      hintText: "Имя",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       border: InputBorder.none
                                   ),
@@ -100,44 +96,14 @@ class _LoginState extends State<Login> {
                           ),
                           child: GestureDetector(
                             onTap: () async {
-                              String num = maskFormatter.getUnmaskedText();
                               print(num);
-                              var response = await http.get('http://eclipsedevelop.ru/api.php/cbgetcode?num=7$num');
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CheckCode(num)));
+                              var response = await http.get('http://eclipsedevelop.ru/api.php/cbgetcode?num=+$num');
                             },
                             child: Center(
                               child: Text("Далее", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
                             ),
                           ),
                         )),
-                        SizedBox(height: 40,),
-                        FadeAnimation(1.5,
-                            (
-                            check ?
-                            GestureDetector(
-                                onTap: (){
-                                  title = "Регистрация";
-                                  setState(() {
-                                    check = false;
-                                  });
-                                },
-                                child: Text("Еще нет аккаунта? Создать!", style: TextStyle(fontSize: 18, color: Colors.grey),)
-                            )
-                            :
-                            GestureDetector(
-                                onTap: (){
-                                  title = "Вход";
-                                  setState(() {
-                                    check = true;
-                                  });
-                                },
-                                child: Text("Уже есть аккаунт? Войти!", style: TextStyle(fontSize: 18, color: Colors.grey),)
-                            )
-                            ),
-                        ),
                       ],
                     ),
                   ),

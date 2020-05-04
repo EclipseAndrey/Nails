@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'FadeAnimation.dart';
+import 'SetName.dart';
 
 class CheckCode extends StatefulWidget {
   String num;
@@ -15,7 +16,14 @@ class CheckCode extends StatefulWidget {
 class _CheckCodeState extends State<CheckCode> {
   String num;
   _CheckCodeState(this.num);
-  TextEditingController _codecontroller = new TextEditingController();
+  final FocusNode _focus1 = FocusNode();
+  final FocusNode _focus2 = FocusNode();
+  final FocusNode _focus3 = FocusNode();
+  final FocusNode _focus4 = FocusNode();
+  TextEditingController _codecontroller1 = new TextEditingController();
+  TextEditingController _codecontroller2 = new TextEditingController();
+  TextEditingController _codecontroller3 = new TextEditingController();
+  TextEditingController _codecontroller4 = new TextEditingController();
   bool check = true;
   String title = "Проверка кода";
   @override
@@ -62,33 +70,86 @@ class _CheckCodeState extends State<CheckCode> {
                       children: <Widget>[
                         SizedBox(height: 60,),
                         FadeAnimation(1.4, Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [BoxShadow(
-                                  color: Color.fromRGBO(225, 95, 27, .3),
-                                  blurRadius: 20,
-                                  offset: Offset(0, 10)
-                              )]
-                          ),
-                          child: Column(
+                          padding: EdgeInsets.only(left: 90,right: 40),
+                          child: Row(
                             children: <Widget>[
                               Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                                width: 20,
+                                child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  keyboardType: TextInputType.number,
+                                  focusNode: _focus1,
+                                  onChanged: (text){
+                                    String a = _codecontroller1.text;
+                                    if(a.length == 1){
+                                      _fieldFocusChange(context, _focus1, _focus2);
+                                    }
+                                  },
+                                  controller: _codecontroller1,
+                                  autofocus: true,
                                 ),
-                                child: Row(
-                                  children: <Widget>[
-                                    TextField(
-                                      controller: _codecontroller,
-                                      autofocus: true,
-                                      decoration: InputDecoration(
-
-                                          border: InputBorder.none
-                                      ),
-                                    ),
-                                  ],
+                              ),
+                              SizedBox(
+                                width: 30,
+                              ),
+                              Container(
+                                width: 20,
+                                child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  keyboardType: TextInputType.number,
+                                  textInputAction: TextInputAction.next,
+                                  focusNode: _focus2,
+                                  onChanged: (text){
+                                    String a = _codecontroller2.text;
+                                    if(a.length == 1){
+                                      _fieldFocusChange(context, _focus2, _focus3);
+                                    }
+                                    if(a.length == 0){
+                                      _fieldFocusChange(context, _focus2, _focus1);
+                                    }
+                                  },
+                                  controller: _codecontroller2,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 30,
+                              ),
+                              Container(
+                                width: 20,
+                                child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  keyboardType: TextInputType.number,
+                                  textInputAction: TextInputAction.next,
+                                  focusNode: _focus3,
+                                  onChanged: (text){
+                                    String a = _codecontroller3.text;
+                                    if(a.length == 1){
+                                      _fieldFocusChange(context, _focus3, _focus4);
+                                    }
+                                    if(a.length == 0){
+                                      _fieldFocusChange(context, _focus3, _focus2);
+                                    }
+                                  },
+                                  controller: _codecontroller3,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 30,
+                              ),
+                              Container(
+                                width: 20,
+                                child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  keyboardType: TextInputType.number,
+                                  textInputAction: TextInputAction.next,
+                                  focusNode: _focus4,
+                                  onChanged: (text){
+                                    String a = _codecontroller4.text;
+                                    if(a.length == 0){
+                                      _fieldFocusChange(context, _focus4, _focus3);
+                                    }
+                                  },
+                                  controller: _codecontroller4,
                                 ),
                               ),
                             ],
@@ -104,12 +165,14 @@ class _CheckCodeState extends State<CheckCode> {
                           ),
                           child: GestureDetector(
                             onTap: ()  {
-                              String code = _codecontroller.text;
-                              var res = http.get('http://eclipsedevelop.ru/api.php/cbcheckcode?num=$num&code=$code');
+                              String code = _codecontroller1.text;
+                              var res = http.get('http://eclipsedevelop.ru/api.php/cbcheckcode?num=+$num&code=$code');
                               print(res);
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => SetName()));
                             },
                             child: Center(
-                              child: Text("Подтвердить", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
+                              child: Text("Отправить", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
                             ),
                           ),
                         )),
@@ -117,9 +180,9 @@ class _CheckCodeState extends State<CheckCode> {
                         FadeAnimation(1.5,
                               GestureDetector(
                                   onTap: (){
-                                    String code = _codecontroller.text;
-                                    var res = http.get('http://eclipsedevelop.ru/api.php/cbcheckcode?num=$num&code=$code');
-                                  },
+                                    String code = _codecontroller1.text;
+                                    var res = http.get('http://eclipsedevelop.ru/api.php/cbcheckcode?num=+$num&code=$code');
+                         },
                                   child: Text("Отправить код повторно", style: TextStyle(fontSize: 18, color: Colors.grey),)
                               )
                         ),
@@ -133,5 +196,9 @@ class _CheckCodeState extends State<CheckCode> {
         ),
       ),
     );
+  }
+  _fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
   }
 }
