@@ -124,6 +124,15 @@ class _Home extends State<Home> {
                 ),
                 new ListTile(
                   title: new Text(
+                    'Мои заказы',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/MyOrders');
+                  },
+                ),
+                new ListTile(
+                  title: new Text(
                     'Записи',
                     style: TextStyle(color: Colors.white),
                   ),

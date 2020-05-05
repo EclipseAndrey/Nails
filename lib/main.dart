@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/Login.dart';
+import 'package:flutterapp32/MyOrders.dart';
 import 'package:flutterapp32/SetName.dart';
 import 'dart:core';
 import 'dart:async';
@@ -26,6 +27,7 @@ void main(){
     // Путь, по которому создаётся Home Screen
     'CheckCode': (BuildContext context) => CheckCode(''),
     '/Quality': (BuildContext context) => Quality(),
+    '/MyOrders': (BuildContext context) => MyOrders(),
     '/Login': (BuildContext context) => Login(),
     '/home': (BuildContext context) => Home(),
     '/Info': (BuildContext context) =>Info(),

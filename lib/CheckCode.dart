@@ -200,9 +200,9 @@ class _CheckCodeState extends State<CheckCode> {
                                   final prefs = await SharedPreferences
                                       .getInstance();
                                   if ('${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}'.length ==4) {
-                                    print('http://eclipsedevelop.ru/api.php/cbcheckcode?num=+7$num&code=${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}');
+                                    print('http://eclipsedevelop.ru/api.php/cbcheckcode?num=7$num&code=${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}');
                                     Future<http.Response> fetchAlbum() async {
-                                      return await http.get('http://eclipsedevelop.ru/api.php/cbcheckcode?num=+7$num&code=${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}');
+                                      return await http.get('http://eclipsedevelop.ru/api.php/cbcheckcode?num=7$num&code=${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}');
                                     }
 
                                     fetchAlbum().then((value) {
