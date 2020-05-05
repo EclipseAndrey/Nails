@@ -16,7 +16,8 @@ String num ="";
 String name="";
 String Promo="";
 String comment = "Не введен.";
-
+String date = "";
+String time ="";
 Order();
 
 String getAdress(){

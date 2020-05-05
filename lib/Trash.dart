@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutterapp32/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Objects.dart';
 import 'home.dart';
 import 'style.dart';
@@ -13,7 +16,9 @@ import 'package:flutter_rounded_date_picker/src/material_rounded_date_picker_sty
 import 'package:flutter_rounded_date_picker/src/material_rounded_year_picker_style.dart';
 import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'dart:core';
+import 'dart:async';
+import 'package:http/http.dart' as http;
 
 
 class Trash extends StatefulWidget {
@@ -32,6 +37,15 @@ class Trash extends StatefulWidget {
 class _Trash extends State<Trash> with TickerProviderStateMixin {
   List<AnimationController> controller;
 
+  String token = 'none';
+  void _ii()async{
+    final prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token') ?? 'none';
+  }
+
+
+
+
   List<ElementItem> items2  = items;
   final GlobalKey<AnimatedListState> animatedListKey = GlobalKey<AnimatedListState>();
 
@@ -43,6 +57,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    _ii();
     super.initState();
     order.name = "";
     order.adress = "";
@@ -346,6 +361,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
   }
 
   Widget _RegistrationZakaza(BuildContext context) {
+
     if (items.length > 0)
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -421,7 +437,24 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
     else
       return SizedBox();
   }
+  String datetx = "Дата";
 
+  String _month(String month){
+    switch(month){
+      case "1": return "января"; break;
+      case "2": return "февраля"; break;
+      case "3": return "марта"; break;
+      case "4": return "апреля"; break;
+      case "5": return "мая"; break;
+      case "6": return "июня"; break;
+      case "7": return "июля"; break;
+      case "8": return "августа"; break;
+      case "9": return "сентября"; break;
+      case "10": return "октября"; break;
+      case "11": return "ноября"; break;
+      case "12": return "декабря"; break;
+    }
+  }
   Widget _Date(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -457,6 +490,8 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
             if (newDateTime != null && newDateTime != selectedDate)
               setState(() {
                 print(newDateTime);
+                order.date = newDateTime.day.toString()+"."+newDateTime.month.toString()+"."+newDateTime.year.toString();
+                datetx = newDateTime.day.toString()+" "+_month(newDateTime.month.toString());
                 selectedDate = newDateTime;
               });
           },
@@ -476,7 +511,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
                   width: 94,
                   child: Center(
                     child: Text(
-                      'Дата',
+                      datetx,
                       style: TextStyle(
                         decoration: TextDecoration.none,
                         color: Colors.black,
@@ -496,6 +531,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
       ],
     );
   }
+  String tmtx = "Время";
 
   Widget _Time(BuildContext context) {
     return Column(
@@ -515,6 +551,10 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
               onDurationChanged: (newDuration) {
                 //
                 print(newDuration);
+                order.time = newDuration.inHours.toString()+":"+newDuration.inMinutes.toString();
+                setState(() {
+                  tmtx = newDuration.inHours.toString()+":"+'${newDuration.inMinutes.toInt()%60}'.toString();
+                });
 
               },
             );
@@ -533,7 +573,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Text(
-                      'Время',
+                      tmtx,
                       style: TextStyle(
                         decoration: TextDecoration.none,
                         color: Colors.black,
@@ -712,20 +752,48 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
           }
 
 
-          if(check != "")
+          if(check != ""){
           Fluttertoast.showToast(
             msg: check+"Введены неверно",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
           );
-          else
-            Fluttertoast.showToast(
-              msg: check+"Отправлено",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-            );
+          } else{
+            String getIds(){
+              String ids = '';
+              for(int i = 0; i < items2.length; i++){
+                ids = ids + ","+items2[i].id.toString();
+              }
+
+              return ids;
+            }
+            Future<http.Response> res() async {
+              return await  http.get(
+                  'http://eclipsedevelop.ru/api.php/cbmakeorder?token=$token&ids=${getIds()}&promo=${order.Promo}&adress=${order.adress}&comment=${order.comment}&date=${order.date}&time=${order.time}&prise=${_check_summ()}');
+            }
+            res().then((value){
+              if(value.statusCode == 200){
+                if(jsonDecode(value.body)['response'] == '14'){
+                  Fluttertoast.showToast(
+                    msg: check+"Отправлено",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                  );
+                }
+                else{
+                  Fluttertoast.showToast(
+                    msg: check+"В следующий раз обязательно получится",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                  );
+                }
+              }
+            });
+
+            }
 
         },
         child: Center(
