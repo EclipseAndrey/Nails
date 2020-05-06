@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'home.dart';
+
 
 
 class DataTresh{
@@ -67,3 +71,22 @@ String getComment(){
 }
 
 }
+
+class itemOrder{
+  List<int> ids;
+  String adress = "";
+  String num ="";
+  String name="";
+  String Promo="";
+  String comment = "Не введен.";
+  String date = "";
+  String time ="";
+  int Status = 0;
+
+
+
+
+  itemOrder();
+}
+
+

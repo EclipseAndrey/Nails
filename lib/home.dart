@@ -137,7 +137,7 @@ class _Home extends State<Home> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, '/Eclipse');
+                    Navigator.pushNamed(context, '/MyOrders');
 
                   },
                 ),
@@ -315,7 +315,7 @@ class ElementItem {
   }
 }
 
-ElementItem _elementInfo(int category, int indexx) {
+ElementItem elementInfo(int category, int indexx) {
   List<List<ElementItem>> info = [];
 
   List<ElementItem> step = [];
@@ -436,7 +436,7 @@ Widget _Category(int cat, BuildContext context) {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: List.generate(info.count, (index) {
-                return _Item(_elementInfo(cat, index), context);
+                return _Item(elementInfo(cat, index), context);
               }),
             ),
           ),

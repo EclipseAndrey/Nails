@@ -455,6 +455,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
       case "12": return "декабря"; break;
     }
   }
+
   Widget _Date(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -531,6 +532,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
       ],
     );
   }
+
   String tmtx = "Время";
 
   Widget _Time(BuildContext context) {
@@ -551,7 +553,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
               onDurationChanged: (newDuration) {
                 //
                 print(newDuration);
-                order.time = newDuration.inHours.toString()+":"+newDuration.inMinutes.toString();
+                order.time = newDuration.inHours.toString()+":"+'${newDuration.inMinutes.toInt()%60}'.toString();
                 setState(() {
                   tmtx = newDuration.inHours.toString()+":"+'${newDuration.inMinutes.toInt()%60}'.toString();
                 });
