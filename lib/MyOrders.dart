@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/home.dart';
 import 'package:intl/intl.dart';
+import 'dart:core';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'main.dart';
 
 class MyOrders extends StatefulWidget {
   @override
@@ -8,6 +15,16 @@ class MyOrders extends StatefulWidget {
 }
 
 class _MyOrdersState extends State<MyOrders> {
+  String i = token;
+
+  @override
+  Future<void> initState()  {
+    super.initState();
+
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +38,7 @@ class _MyOrdersState extends State<MyOrders> {
           },
         ),
       ),
+      body: odresList(token, context),
     );
   }
 }
@@ -117,7 +135,7 @@ Widget orders50(List<int> id) {
 
 Widget StatusOrder(int _Status, BuildContext context) {
   switch (_Status) {
-    case 1:
+    case 0:
       {
         return Container(
           child: Row(
@@ -140,7 +158,7 @@ Widget StatusOrder(int _Status, BuildContext context) {
         );
       }
       break;
-    case 2:
+    case 1:
       {
         return Container(
           child: Row(
@@ -163,7 +181,7 @@ Widget StatusOrder(int _Status, BuildContext context) {
         );
       }
       break;
-    case 3:
+    case 2:
       {
         return Container(
           child: Row(
@@ -261,6 +279,124 @@ Widget def(String date, String time) {
     child: Text(
       defferent,
       style: TextStyle(decoration: TextDecoration.none),
+    ),
+  );
+}
+
+Widget bigDay(String date, String time) {
+  String _month(String month) {
+    switch (month) {
+      case "1":
+        return "января";
+        break;
+      case "2":
+        return "февраля";
+        break;
+      case "3":
+        return "марта";
+        break;
+      case "4":
+        return "апреля";
+        break;
+      case "5":
+        return "мая";
+        break;
+      case "6":
+        return "июня";
+        break;
+      case "7":
+        return "июля";
+        break;
+      case "8":
+        return "августа";
+        break;
+      case "9":
+        return "сентября";
+        break;
+      case "10":
+        return "октября";
+        break;
+      case "11":
+        return "ноября";
+        break;
+      case "12":
+        return "декабря";
+        break;
+    }
+  }
+
+  var dateorder = date;
+  var timeorder = time;
+
+  String defferent = "none";
+
+  var now = new DateTime.now();
+
+  var intlorder = new DateFormat("dd.MM.yyyy HH:mm", "en_US")
+      .parse(dateorder + " " + timeorder);
+  var different = intlorder.difference(now);
+  String tx;
+  if (intlorder.day - now.day > 0) {
+    tx = intlorder.day.toString() + " " + _month(intlorder.month.toString());
+  } else {
+    tx = time;
+  }
+  return Text(
+    tx,
+    style: TextStyle(
+      decoration: TextDecoration.none,
+    ),
+  );
+}
+
+Widget odresList(String token, BuildContext context)  {
+  Future<http.Response> res() async {
+    return await http
+        .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+  }
+  print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+
+  var response;
+
+  res().then((value) {
+    if (value.statusCode == 200) {
+      response = jsonDecode(value.body);
+      print(response);
+    }
+  });
+
+  if (response['count'] > 0) {
+    return Column(children:List.generate(response['count'], (index) {
+      return ElementOrder(context, response['orders'][index]['order']['date'], response['orders'][index]['order']['time'],response['orders'][index]['ids'], response['orders'][index]['order']['status']);
+    })
+      ,);
+  } else {
+    return SizedBox();
+  }
+
+
+}
+
+Widget ElementOrder(
+    BuildContext context, String date, String time, List<int> ids, int status) {
+  return Container(
+    width: MediaQuery.of(context).size.width,
+    height: 80,
+    child: Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            bigDay(date, time),
+            def(date, time),
+            StatusOrder(status, context),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            orders50(ids),
+          ],
+        ),
+      ],
     ),
   );
 }

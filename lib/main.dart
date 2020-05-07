@@ -62,6 +62,7 @@ void main(){
   );
 }
 
+String token;
 
 class SplashScreen extends StatefulWidget  {
   final String nextRoute;
@@ -80,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen>  {
 
     final info = prefs.getBool('info') ?? false;
     final auto = prefs.getBool('auto') ?? false;
-    final token = prefs.getString('token') ?? 'none';
+    token = prefs.getString('token') ?? 'none';
 
 
 
