@@ -64,6 +64,8 @@ void main(){
 
 String token;
 
+var response;
+
 class SplashScreen extends StatefulWidget  {
   final String nextRoute;
 

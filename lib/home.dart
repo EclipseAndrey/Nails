@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/Detail.dart';
@@ -8,7 +10,9 @@ import 'dart:async';
 import 'Detail.dart';
 import 'Trash.dart';
 import 'Objects.dart';
-
+import 'package:http/http.dart' as http;
+import 'MyOrders.dart';
+import 'main.dart';
 
 List<ElementItem> items;
 List<int> items_counter;
@@ -137,7 +141,22 @@ class _Home extends State<Home> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, '/MyOrders');
+
+                    Future<http.Response> res() async {
+                      return await http
+                          .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+                    }
+                    print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+
+                    res().then((value) {
+                      if (value.statusCode == 200) {
+                        response = jsonDecode(value.body);
+                        print(response);
+                        Navigator.pushNamed(context, '/MyOrders');
+                      }
+                    });
+
+
 
                   },
                 ),

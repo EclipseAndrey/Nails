@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'main.dart';
 
 class MyOrders extends StatefulWidget {
+
   @override
   _MyOrdersState createState() => _MyOrdersState();
 }
@@ -71,7 +72,7 @@ String minutes(int d) {
     return ("Через " + d.toString() + " минут");
 }
 
-Widget orders50(List<int> id) {
+Widget orders50(List<dynamic> id) {
   //ограничение по сиволам
   int symbols = 50;
   //размер шрифта
@@ -275,10 +276,16 @@ Widget def(String date, String time) {
   print("Order " + new DateFormat("dd-MM-yyyy HH:mm:ss").format(intlorder));
   //_counter = dateorder.day.toString() ;
 
-  return Container(
-    child: Text(
-      defferent,
-      style: TextStyle(decoration: TextDecoration.none),
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+      child: Text(
+        defferent,
+        style: TextStyle(
+            fontStyle: FontStyle.italic,
+        color: Color.fromRGBO(0, 255, 0, 100),
+            decoration: TextDecoration.none),
+      ),
     ),
   );
 }
@@ -341,35 +348,29 @@ Widget bigDay(String date, String time) {
   } else {
     tx = time;
   }
-  return Text(
-    tx,
-    style: TextStyle(
-      decoration: TextDecoration.none,
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Text(
+      tx,
+      style: TextStyle(
+        fontSize: 28,
+        decoration: TextDecoration.none,
+      ),
     ),
   );
 }
 
+
 Widget odresList(String token, BuildContext context)  {
-  Future<http.Response> res() async {
-    return await http
-        .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
-  }
-  print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
 
-  var response;
-
-  res().then((value) {
-    if (value.statusCode == 200) {
-      response = jsonDecode(value.body);
-      print(response);
-    }
-  });
 
   if (response['count'] > 0) {
-    return Column(children:List.generate(response['count'], (index) {
-      return ElementOrder(context, response['orders'][index]['order']['date'], response['orders'][index]['order']['time'],response['orders'][index]['ids'], response['orders'][index]['order']['status']);
-    })
-      ,);
+    return SingleChildScrollView(
+      child: Column(children:List.generate(response['count'], (index) {
+        return ElementOrder(context, response['orders'][index]['order']['date'], response['orders'][index]['order']['time'],response['orders'][index]['ids'], int.parse(response['orders'][index]['order']['status']));
+      })
+        ,),
+    );
   } else {
     return SizedBox();
   }
@@ -377,26 +378,72 @@ Widget odresList(String token, BuildContext context)  {
 
 }
 
-Widget ElementOrder(
-    BuildContext context, String date, String time, List<int> ids, int status) {
-  return Container(
-    width: MediaQuery.of(context).size.width,
-    height: 80,
-    child: Column(
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            bigDay(date, time),
-            def(date, time),
-            StatusOrder(status, context),
-          ],
+Widget ElementOrder(BuildContext context, String date, String time, List<dynamic> ids, int status) {
+  return Padding(
+    padding: const EdgeInsets.all(6.0),
+    child: Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10)
         ),
-        Row(
-          children: <Widget>[
-            orders50(ids),
-          ],
-        ),
-      ],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      width: MediaQuery.of(context).size.width-12,
+      height: 80,
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+
+                  width: (MediaQuery.of(context).size.width-12)*2/3,
+                  child: Row(
+                children: <Widget>[
+                  bigDay(date, time),
+                  def(date, time),
+
+
+                ],
+              ),
+
+              ),
+              Container(
+                width: (MediaQuery.of(context).size.width-12)*1/3,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: StatusOrder(status, context),
+                    ),
+
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left:8.0),
+                child: orders50(ids),
+              ),
+            ],
+          ),
+        ],
+      ),
     ),
   );
 }
