@@ -293,7 +293,70 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/home');
+
+
+                  Future<http.Response> res() async {
+                    return await http
+                        .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+                  }
+                  print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+                  var response;
+                  res().then((value) {
+                    if (value.statusCode == 200) {
+                      response = jsonDecode(value.body);
+                      print(response);
+
+                      print("Count  "+response['count'].toString());
+
+                      if (response['count'] > 0) {
+
+                        List<dynamic> ids = response['orders'][0]['ids'];
+
+                        print("Кол-во проходов цикла "+ids.length.toString());
+                        for(int i = 0; i < ids.length; i++){
+                          print("Проход "+i.toString());
+                          int id =ids[i];
+                          var item = elementInfo((id ~/ 100), id % 100);
+
+                          if(items.isEmpty){
+                            items_counter = [1];
+                            List<ElementItem> step = [item];
+                            items = step;
+                          }else{
+                            bool find = false;
+                            for(int i = 0 ; i  < items.length; i++){
+                              print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
+                              if(items[i].id == item.id){
+                                items_counter[i]++;
+                                print('Элементов id${items[i].id} - ${items_counter[i]}');
+                                find = true;
+                                break;
+                              }
+                            }
+                            print('find = $find');
+                            if(!find) {
+                              items.add(item);
+                              items_counter.add(1);
+                            }
+
+
+                          }
+
+                        }
+                        Navigator.pushNamed(context, '/Trash');
+                      }else{
+                        Fluttertoast.showToast(
+                          msg: "У вас пока не было записей",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                        );
+                      }
+
+                    }
+                  });
+
+
                 },
                 child: Container(
                   height: 33,

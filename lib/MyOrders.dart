@@ -30,7 +30,8 @@ class _MyOrdersState extends State<MyOrders> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor:  Color.fromRGBO(225, 200, 199, 10),
+        elevation: 0.0,
         title: Text("Мои заказы"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -365,11 +366,26 @@ Widget odresList(String token, BuildContext context)  {
 
 
   if (response['count'] > 0) {
-    return SingleChildScrollView(
-      child: Column(children:List.generate(response['count'], (index) {
-        return ElementOrder(context, response['orders'][index]['order']['date'], response['orders'][index]['order']['time'],response['orders'][index]['ids'], int.parse(response['orders'][index]['order']['status']));
-      })
-        ,),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: FractionalOffset.topCenter,
+            end: FractionalOffset.bottomCenter,
+            colors: [
+              Colors.white,
+              Color.fromRGBO(255, 230, 229, 1),
+              Color.fromRGBO(255, 230, 229, 1)
+            ],
+//              stops: [0.45,0.5],
+          )),
+      child: SingleChildScrollView(
+        child: Column(children:List.generate(response['count'], (index) {
+          return ElementOrder(context, response['orders'][index]['order']['date'], response['orders'][index]['order']['time'],response['orders'][index]['ids'], int.parse(response['orders'][index]['order']['status']));
+        })
+          ,),
+      ),
     );
   } else {
     return SizedBox();

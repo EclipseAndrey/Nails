@@ -8,7 +8,7 @@ import 'package:flutterapp32/SetName.dart';
 import 'dart:core';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-
+import 'Trash.dart';
 import 'package:flutterapp32/Quality.dart';
 import 'package:flutterapp32/home.dart';
 import 'package:flutterapp32/Eclipse.dart';
@@ -35,6 +35,7 @@ void main(){
     '/main': (BuildContext context) =>SplashScreen(),
     '/Contacts': (BuildContext context) =>Contacts(),
     '/SetName': (BuildContext context) =>SetName(),
+    '/Trash': (BuildContext context) =>Trash(items),
   };
 
   runApp(

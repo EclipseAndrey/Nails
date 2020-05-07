@@ -28,7 +28,8 @@ class _Contacts extends State<Contacts> {
             Color.fromRGBO(255, 230, 229, 1)
           ],
 //              stops: [0.45,0.5],
-        )),
+        ),
+        ),
         height: MediaQuery.of(context).size.height,
         width:MediaQuery.of(context).size.width ,
         child: SingleChildScrollView(
