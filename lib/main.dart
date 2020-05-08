@@ -64,6 +64,7 @@ void main(){
 }
 
 String token;
+String num;
 
 var response;
 
@@ -85,6 +86,7 @@ class _SplashScreenState extends State<SplashScreen>  {
     final info = prefs.getBool('info') ?? false;
     final auto = prefs.getBool('auto') ?? false;
     token = prefs.getString('token') ?? 'none';
+    num = prefs.getString('num') ?? 'none';
 
 
 
