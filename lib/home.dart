@@ -354,35 +354,35 @@ ElementItem elementInfo(int category, int indexx) {
   step.add(ElementItem(0107, 'http://eclipsedevelop.ru/images/17.png', 'Детский Комплекс', 'Детский маникюр и педикюр', 999, 0));
   info.add(step);
   //Маникюр
-  step1.add(ElementItem(201, '0', 'Маникюр «ColorBird»', 'Классический маникюр', 600, 0));
-  step1.add(ElementItem(202, '0', 'Маникюр «Combo»', 'Комбинированный маникюр', 700, 0));
-  step1.add(ElementItem(203, '0', 'Бразильский маникюр', 'SPA-маникюр с применением перчаток', 700, 0));
-  step1.add(ElementItem(204, '0', 'Мужской маникюр', 'Обработка кутикулы, полировка ногтевой пластины', 900, 0));
-  step1.add(ElementItem(205, '0', 'Детский маникюр', 'Детский маникюр, удаление заусенцев', 400, 0));
+  step1.add(ElementItem(201, 'http://eclipsedevelop.ru/images/201.png', 'Маникюр «ColorBird»', 'Классический маникюр', 600, 0));
+  step1.add(ElementItem(202, 'http://eclipsedevelop.ru/images/202.png', 'Маникюр «Combo»', 'Комбинированный маникюр', 700, 0));
+  step1.add(ElementItem(203, 'http://eclipsedevelop.ru/images/203.png', 'Бразильский маникюр', 'SPA-маникюр с применением перчаток', 700, 0));
+  step1.add(ElementItem(204, 'http://eclipsedevelop.ru/images/204.png', 'Мужской маникюр', 'Обработка кутикулы, полировка ногтевой пластины', 900, 0));
+  step1.add(ElementItem(205, 'http://eclipsedevelop.ru/images/205.png', 'Детский маникюр', 'Детский маникюр, удаление заусенцев', 400, 0));
   info.add(step1);
 //Покрытия
-  step2.add(ElementItem(301, '0', 'Лак', 'OPI, ESSE', 390, 0));
-  step2.add(ElementItem(302, '0', 'Гель-Лак', 'CND, OPI GelColor, KOD', 950, 0));
-  step2.add(ElementItem(303, '0', 'Укрепление гелем', 'Укрепляющее покрытие', 600, 0));
-  step2.add(ElementItem(304, '0', 'IBX System', 'Укрепление пластины', 700, 0));
-  step2.add(ElementItem(305, '0', 'Снятие геля ', '', 350, 0));
-  step2.add(ElementItem(306, '0', 'Снятие покрытия', 'Снятие долговременного покрытия', 250, 0));
+  step2.add(ElementItem(301, 'http://eclipsedevelop.ru/images/401.png', 'Лак', 'OPI, ESSE', 390, 0));
+  step2.add(ElementItem(302, 'http://eclipsedevelop.ru/images/402.png', 'Гель-Лак', 'CND, OPI GelColor, KOD', 950, 0));
+  step2.add(ElementItem(303, 'http://eclipsedevelop.ru/images/401.png', 'Укрепление гелем', 'Укрепляющее покрытие', 600, 0));
+  step2.add(ElementItem(304, 'http://eclipsedevelop.ru/images/402.png', 'IBX System', 'Укрепление пластины', 700, 0));
+  step2.add(ElementItem(305, 'http://eclipsedevelop.ru/images/401.png', 'Снятие геля ', '', 350, 0));
+  step2.add(ElementItem(306, 'http://eclipsedevelop.ru/images/402.png', 'Снятие покрытия', 'Снятие долговременного покрытия', 250, 0));
   info.add(step2);
 //Педикюр
-  step3.add(ElementItem(401, '0', 'Педикюр «ColorBird»', 'Классический педикюр', 990, 0));
-  step3.add(ElementItem(402, '0', 'Педикюр «Combo»', 'Комбинированный педикюр', 1100, 0));
-  step3.add(ElementItem(403, '0', 'Бразильский педикюр', 'СПА-педикюр с применением специальных носочков', 1200, 0));
-  step3.add(ElementItem(404, '0', 'Сложный педикюр', 'Классический педикюр, удаление натоптышей, лечение трещин', 1300, 0));
-  step3.add(ElementItem(405, '0', 'Мужской педикюр', 'Мужской педикюр, обработка кутикул и стоп, удаление натоптышей', 1100, 0));
-  step3.add(ElementItem(406, '0', 'Детский педикюр', 'Детский педикюр, удаление заусенцев', 700, 0));
+  step3.add(ElementItem(401, 'http://eclipsedevelop.ru/images/301.png', 'Педикюр «ColorBird»', 'Классический педикюр', 990, 0));
+  step3.add(ElementItem(402, 'http://eclipsedevelop.ru/images/302.png', 'Педикюр «Combo»', 'Комбинированный педикюр', 1100, 0));
+  step3.add(ElementItem(403, 'http://eclipsedevelop.ru/images/303.png', 'Бразильский педикюр', 'СПА-педикюр с применением специальных носочков', 1200, 0));
+  step3.add(ElementItem(404, 'http://eclipsedevelop.ru/images/304.png', 'Сложный педикюр', 'Классический педикюр, удаление натоптышей, лечение трещин', 1300, 0));
+  step3.add(ElementItem(405, 'http://eclipsedevelop.ru/images/305.png', 'Мужской педикюр', 'Мужской педикюр, обработка кутикул и стоп, удаление натоптышей', 1100, 0));
+  step3.add(ElementItem(406, 'http://eclipsedevelop.ru/images/306.png', 'Детский педикюр', 'Детский педикюр, удаление заусенцев', 700, 0));
   info.add(step3);
 //Дизайн
-  step4.add(ElementItem(501, '0', 'Авторский дизайн', 'Стоимость дизайна 10 ногтевых пластин', 500, 0));
-  step4.add(ElementItem(502, '0', 'Френч/Лунный', 'Стоимость дизайна 10 ногтевых пластин + долговременное покрытие', 1200, 0));
-  step4.add(ElementItem(503, '0', 'Стразы', 'Стоимость за одну шт.', 20, 0));
-  step4.add(ElementItem(504, '0', 'Зеркальная пудра', 'Стоимость за одну ногтевую пластину', 100, 0));
-  step4.add(ElementItem(505, '0', 'Дизайн одного пальца', 'Стоимость за одну ногтевую пластину', 100, 0));
-  step4.add(ElementItem(506, '0', 'Глитер', 'Стоимость за одну ногтевую пластину', 200, 100));
+  step4.add(ElementItem(501, 'http://eclipsedevelop.ru/images/501.png', 'Авторский дизайн', 'Стоимость дизайна 10 ногтевых пластин', 500, 0));
+  step4.add(ElementItem(502, 'http://eclipsedevelop.ru/images/502.png', 'Френч/Лунный', 'Стоимость дизайна 10 ногтевых пластин + долговременное покрытие', 1200, 0));
+  step4.add(ElementItem(503, 'http://eclipsedevelop.ru/images/503.png', 'Стразы', 'Стоимость за одну шт.', 20, 0));
+  step4.add(ElementItem(504, 'http://eclipsedevelop.ru/images/503.png', 'Зеркальная пудра', 'Стоимость за одну ногтевую пластину', 100, 0));
+  step4.add(ElementItem(505, 'http://eclipsedevelop.ru/images/503.png', 'Дизайн одного пальца', 'Стоимость за одну ногтевую пластину', 100, 0));
+  step4.add(ElementItem(506, 'http://eclipsedevelop.ru/images/506.png', 'Глитер', 'Стоимость за одну ногтевую пластину', 200, 100));
   info.add(step4);
 //СПА Уход
   step5.add(ElementItem(601, 'http://eclipsedevelop.ru/images/21.png', 'Витаминный уход', 'Омолаживающий и восстанавливающий уход с применением скраба и крема. Рекомендуется для сухой кожи рук и ног', 200, 0));
@@ -390,9 +390,9 @@ ElementItem elementInfo(int category, int indexx) {
   step5.add(ElementItem(603, 'http://eclipsedevelop.ru/images/21.png', 'Тайский массаж', 'Тонизирующий массаж для улучшения кровообращения рук и ног с применением массажного масла', 200, 0));
   info.add(step5);
 //Брови
-  step6.add(ElementItem(701, '0', 'Коррекция', 'Коррекция формы, удаление нежелательных волос', 200, 0));
-  step6.add(ElementItem(702, '0', 'Оформление бровей', 'Подбор и изменение формы', 300, 0));
-  step6.add(ElementItem(703, '0', 'Окрашивание', 'Подбор цвета, окрашивание краской Estel, Igora', 300, 0));
+  step6.add(ElementItem(701, 'http://eclipsedevelop.ru/images/601.png', 'Коррекция', 'Коррекция формы, удаление нежелательных волос', 200, 0));
+  step6.add(ElementItem(702, 'http://eclipsedevelop.ru/images/602.png', 'Оформление бровей', 'Подбор и изменение формы', 300, 0));
+  step6.add(ElementItem(703, 'http://eclipsedevelop.ru/images/603.png', 'Окрашивание', 'Подбор цвета, окрашивание краской Estel, Igora', 300, 0));
   info.add(step6);
   return info[category][indexx];
 }
