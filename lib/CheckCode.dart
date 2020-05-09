@@ -187,72 +187,74 @@ class _CheckCodeState extends State<CheckCode> {
                         SizedBox(
                           height: 40,
                         ),
-                        FadeAnimation(
-                            1.6,
-                            Container(
-                              height: 50,
-                              margin: EdgeInsets.symmetric(horizontal: 50),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Color.fromRGBO(255, 182, 173, 1)),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  final prefs = await SharedPreferences
-                                      .getInstance();
-                                  if ('${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}'.length ==4) {
-                                    print('http://eclipsedevelop.ru/api.php/cbcheckcode?num=7$num&code=${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}');
-                                    Future<http.Response> fetchAlbum() async {
-                                      return await http.get('http://eclipsedevelop.ru/api.php/cbcheckcode?num=7$num&code=${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}');
+                        GestureDetector(
+                          onTap: () async {
+                            final prefs = await SharedPreferences
+                                .getInstance();
+                            if ('${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}'.length ==4) {
+                              print('http://eclipsedevelop.ru/api.php/cbcheckcode?num=7$num&code=${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}');
+                              Future<http.Response> fetchAlbum() async {
+                                return await http.get('http://eclipsedevelop.ru/api.php/cbcheckcode?num=7$num&code=${_codecontroller1.text + _codecontroller2.text + _codecontroller3.text + _codecontroller4.text}');
+                              }
+
+                              fetchAlbum().then((value) {
+                                if(value.statusCode == 200){
+                                  print(value.body);
+                                  var res  = value.body;
+                                  var response = jsonDecode(res);
+                                  // ignore: non_constant_identifier_names
+                                  String Response = response["response"];
+                                  // ignore: unrelated_type_equality_checks
+                                  if (Response == "3") {
+                                    String token = response["token"];
+                                    void inf() async {
+                                      prefs.setBool('auto', true);
+                                      prefs.setString('token', token);
+                                      prefs.setString('num', "7"+num);
+
+                                      Navigator.of(context)
+                                          .pushReplacementNamed('/main');
                                     }
 
-                                    fetchAlbum().then((value) {
-                                      if(value.statusCode == 200){
-                                        print(value.body);
-                                        var res  = value.body;
-                                        var response = jsonDecode(res);
-                                        // ignore: non_constant_identifier_names
-                                        String Response = response["response"];
-                                        // ignore: unrelated_type_equality_checks
-                                        if (Response == "3") {
-                                          String token = response["token"];
-                                          void inf() async {
-                                            prefs.setBool('auto', true);
-                                            prefs.setString('token', token);
-                                            Navigator.of(context)
-                                                .pushReplacementNamed('/main');
-                                          }
-
-                                          inf();
-                                        }
-                                        // ignore: unrelated_type_equality_checks
-                                        if (Response == "5") {
-                                          String token = response["token"];
-                                          void inf() async {
-                                            final prefs = await SharedPreferences
-                                                .getInstance();
-                                            prefs.setBool('auto', true);
-                                            prefs.setString('token', token);
-                                            Navigator.of(context)
-                                                .pushReplacementNamed('/SetName');
-                                          }
-
-                                          inf();
-                                        }
-                                        // ignore: unrelated_type_equality_checks
-                                        if (Response == "4") {
-                                          print('Code don\'t verification');
-                                        }
-                                      }
-                                      else{
-                                        print(value.statusCode);
-                                      }
-                                    });
-
-
-                                  } else {
-                                    //Если код не введен
+                                    inf();
                                   }
-                                },
+                                  // ignore: unrelated_type_equality_checks
+                                  if (Response == "5") {
+                                    String token = response["token"];
+                                    void inf() async {
+                                      final prefs = await SharedPreferences
+                                          .getInstance();
+                                      prefs.setBool('auto', true);
+                                      prefs.setString('token', token);
+                                      Navigator.of(context)
+                                          .pushReplacementNamed('/SetName');
+                                    }
+
+                                    inf();
+                                  }
+                                  // ignore: unrelated_type_equality_checks
+                                  if (Response == "4") {
+                                    print('Code don\'t verification');
+                                  }
+                                }
+                                else{
+                                  print(value.statusCode);
+                                }
+                              });
+
+
+                            } else {
+                              //Если код не введен
+                            }
+                          },
+                          child: FadeAnimation(
+                              1.6,
+                              Container(
+                                height: 50,
+                                margin: EdgeInsets.symmetric(horizontal: 50),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Color.fromRGBO(255, 182, 173, 1)),
                                 child: Center(
                                   child: Text(
                                     "Отправить",
@@ -262,8 +264,8 @@ class _CheckCodeState extends State<CheckCode> {
                                         fontSize: 16),
                                   ),
                                 ),
-                              ),
-                            )),
+                              )),
+                        ),
                         SizedBox(
                           height: 40,
                         ),

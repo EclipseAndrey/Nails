@@ -18,6 +18,7 @@ import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:core';
 import 'dart:async';
+import 'main.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -45,6 +46,8 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
 
 
 
+  var controller1 = new MaskedTextController(mask: '+0 000 000 00 00');
+
 
   List<ElementItem> items2  = items;
   final GlobalKey<AnimatedListState> animatedListKey = GlobalKey<AnimatedListState>();
@@ -58,6 +61,8 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
   @override
   void initState() {
     _ii();
+    controller1.text = "+"+num;
+
     super.initState();
     order.name = "";
     order.adress = "";
@@ -126,7 +131,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
                 },
               ),
               ),
-              _RegistrationZakaza(context),
+              _RegistrationZakaza(context, controller1),
             ],
           ),
           _TrashIsEmpty(context),
@@ -423,7 +428,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
     return sum;
   }
 
-  Widget _RegistrationZakaza(BuildContext context) {
+  Widget _RegistrationZakaza(BuildContext context, var controller1) {
 
     if (items.length > 0)
       return Column(
@@ -475,7 +480,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 18.0, bottom: 18),
-            child: _Number(),
+            child: _Number(controller1),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 18.0, bottom: 18),
@@ -679,15 +684,16 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
     );
   }
 
-  Widget _Number() {
-    var controller = new MaskedTextController(mask: '+0 000 000 00 00');
+  Widget _Number(var controller) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          width: 195,
+          width: 205,
           child: Center(
             child: TextField(
+
               onChanged: (text) {
                 print("Num text field: $text");
                 order.num = text;
@@ -932,6 +938,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
     AnimatedListRemovedItemBuilder builder = (context, animation){
       return _buildItem(removedItem, animation, i);
     };
+
     animatedListKey.currentState.removeItem(i, builder);
   }
 }

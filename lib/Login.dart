@@ -11,6 +11,69 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  Future<void> _ackAlert(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Not in stock'),
+          content: const Text('This item is no longer available'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  void _onLoading() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white38,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25)
+              ),
+
+            ),
+            width: MediaQuery.of(context).size.width*2/3,
+            height: 80,
+            child: Center(
+              child: new CircularProgressIndicator(),
+          ),
+          ),
+
+        );
+      },
+    );
+    new  Future.delayed(new Duration(seconds: 3), () async {
+
+      String num = maskFormatter.getUnmaskedText();
+      print(num);
+      var response = await http.get('http://eclipsedevelop.ru/api.php/cbgetcode?num=7$num');
+      print('http://eclipsedevelop.ru/api.php/cbgetcode?num=7$num');
+      Navigator.of(context).pop();
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) => CheckCode(num)));
+
+    });
+  }
+
+
+
   var maskFormatter = new MaskTextInputFormatter(mask: '(###) ###-##-##', filter: { "#": RegExp(r'[0-9]') });
   TextEditingController _numcontroller = new TextEditingController();
   bool check = true;
@@ -91,28 +154,23 @@ class _LoginState extends State<Login> {
                           ),
                         )),
                         SizedBox(height: 40,),
-                        FadeAnimation(1.6, Container(
-                          height: 50,
-                          margin: EdgeInsets.symmetric(horizontal: 50),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: Color.fromRGBO(255, 182, 173, 1)
-                          ),
-                          child: GestureDetector(
-                            onTap: () async {
-                              String num = maskFormatter.getUnmaskedText();
-                              print(num);
-                              var response = await http.get('http://eclipsedevelop.ru/api.php/cbgetcode?num=7$num');
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CheckCode(num)));
-                            },
+                        GestureDetector(
+                          onTap: () async {
+                            _onLoading();
+
+                          },
+                          child: FadeAnimation(1.6, Container(
+                            height: 50,
+                            margin: EdgeInsets.symmetric(horizontal: 50),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Color.fromRGBO(255, 182, 173, 1)
+                            ),
                             child: Center(
                               child: Text("Далее", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
                             ),
-                          ),
-                        )),
+                          )),
+                        ),
                         SizedBox(height: 40,),
                         FadeAnimation(1.5,
                             (
