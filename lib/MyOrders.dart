@@ -7,6 +7,7 @@ import 'dart:core';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'OrderDetail.dart';
 import 'main.dart';
 
 class MyOrders extends StatefulWidget {
@@ -74,7 +75,7 @@ String minutes(int d) {
 }
 
 Widget orders50(List<dynamic> id) {
-  //ограничение по сиволам
+  //ограничение по символам
   int symbols = 50;
   //размер шрифта
   double symbilssize = 11;
@@ -382,7 +383,10 @@ Widget odresList(String token, BuildContext context)  {
           )),
       child: SingleChildScrollView(
         child: Column(children:List.generate(response['count'], (index) {
-          return ElementOrder(context, response['orders'][index]['order']['date'], response['orders'][index]['order']['time'],response['orders'][index]['ids'], int.parse(response['orders'][index]['order']['status']));
+          ElementItemOrder itemOrder = ElementItemOrder(index, response['orders'][index]['order']['date'], response['orders'][index]['order']['time'],
+              response['orders'][index]['ids'], int.parse(response['orders'][index]['order']['status']));
+          print("JOPA " + itemOrder.id.toString());
+          return ElementOrder(itemOrder, context);
         })
           ,),
       ),
@@ -393,72 +397,98 @@ Widget odresList(String token, BuildContext context)  {
 
 
 }
+class ElementItemOrder{
+  int id;
+  String date;
+  String time;
+  List<dynamic> ids;
+  int status;
 
-Widget ElementOrder(BuildContext context, String date, String time, List<dynamic> ids, int status) {
-  return Padding(
-    padding: const EdgeInsets.all(6.0),
-    child: Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10)
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+  ElementItemOrder(int id, String date, String time, List<dynamic> ids, int status){
+    this.id = id;
+    this.date = date;
+    this.time = time;
+    this.ids = ids;
+    this.status = status;
+  }
+}
+
+Widget ElementOrder(ElementItemOrder item, BuildContext context) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => OrderDetail(item)));
+    },
+    child: Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: Hero(
+        tag: item.id,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10)
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
           ),
-        ],
-      ),
-      width: MediaQuery.of(context).size.width-12,
-      height: 80,
-      child: Column(
-        children: <Widget>[
-          Row(
+          width: MediaQuery.of(context).size.width-12,
+          height: 80,
+          child: Column(
             children: <Widget>[
-              Container(
-
-                  width: (MediaQuery.of(context).size.width-12)*2/3,
-                  child: Row(
+              Row(
                 children: <Widget>[
-                  bigDay(date, time),
-                  def(date, time),
+                  Container(
+
+                      width: (MediaQuery.of(context).size.width-12)*2/3,
+                      child: Row(
+                    children: <Widget>[
+                      bigDay(item.date, item.time),
+                      def(item.date, item.time),
 
 
+                    ],
+                  ),
+
+                  ),
+                  Container(
+                    width: (MediaQuery.of(context).size.width-12)*1/3,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
+                          child: StatusOrder(item?.status, context),
+                        ),
+
+                      ],
+                    ),
+                  ),
                 ],
               ),
 
-              ),
-              Container(
-                width: (MediaQuery.of(context).size.width-12)*1/3,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: StatusOrder(status, context),
-                    ),
-
-                  ],
-                ),
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left:8.0),
+                    child: orders50(item?.ids),
+                  ),
+                ],
               ),
             ],
           ),
-
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left:8.0),
-                child: orders50(ids),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     ),
   );
