@@ -244,13 +244,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 //                  children:
 //                      List.generate(items.length, (i) => _ElementTrash(i)),
 //                ),
-                child: AnimatedList(
-                  key: animatedListKey,
-                  initialItemCount: items2.length,
-                  itemBuilder: (context, index, animation){
-                    return _buildItem(items2[index], animation, index);
-                  },
-                ),
+                child: ListTrash(),
               ),
               _RegistrationZakaza(context, controller1),
             ],
@@ -258,6 +252,16 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
           _TrashIsEmpty(context),
         ],
       ),
+    );
+  }
+
+  Widget ListTrash(){
+    return AnimatedList(
+      key: animatedListKey,
+      initialItemCount: items2.length,
+      itemBuilder: (context, index, animation){
+        return _buildItem(items2[index], animation, index);
+      },
     );
   }
 
