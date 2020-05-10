@@ -132,7 +132,7 @@ class _Home extends State<Home> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    Navigator.pushNamed(context, '/MyOrders');
+                    Navigator.pushNamed(context, '/BottomPage');
                   },
                 ),
                 new ListTile(
@@ -229,7 +229,7 @@ class _Home extends State<Home> {
           ],
         ),
       )),
-      body: Builder(builder: (context)=> _Categories(context)),
+      body: Builder(builder: (context)=> Categories(context)),
     );
   }
 }
@@ -397,8 +397,9 @@ ElementItem elementInfo(int category, int indexx) {
   return info[category][indexx];
 }
 
-Widget _Categories(BuildContext context) {
+Widget Categories(BuildContext context) {
   return Container(
+    color:                Color.fromRGBO(255, 250, 250, 80),
     height: MediaQuery.of(context).size.height,
     width: MediaQuery.of(context).size.width,
     child: ListView(
@@ -466,16 +467,106 @@ Widget _Category(int cat, BuildContext context) {
 }
 
 Widget _Item(ElementItem item, BuildContext context) {
+
+  Widget inTrash(){
+
+    return Container(
+
+      height: 33,
+      width: 150,
+      child: FlatButton(
+
+        shape: new RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(25.0),
+              bottomLeft: Radius.circular(25.0),
+            ),
+
+
+            side: BorderSide(color: Colors.black45)),
+        color: Colors.white,
+
+        textColor: Colors.pinkAccent,
+        padding: EdgeInsets.all(8.0),
+        onPressed: () {
+
+
+          if(items.isEmpty){
+            items_counter = [1];
+            List<ElementItem> step = [item];
+            items = step;
+          }else{
+            bool find = false;
+            for(int i = 0 ; i  < items.length; i++){
+              print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
+              if(items[i].id == item.id){
+                items_counter[i]++;
+                print('Элементов id${items[i].id} - ${items_counter[i]}');
+                find = true;
+                break;
+              }
+            }
+            print('find = $find');
+            if(!find) {
+              items.add(item);
+              items_counter.add(1);
+            }
+
+
+          }
+          final snackBar = SnackBar(
+            duration: new Duration(milliseconds: 1000),
+            content: Text('${item.head.length < 18?'Добавлено в корзину: '+item.head:'Услуга добавлена в корзину'} '),
+            action: SnackBarAction(
+              label: 'Хорошо',
+
+              onPressed: () {
+                // Some code to undo the change.
+              },
+            ),
+          );
+          Scaffold.of(context).showSnackBar(snackBar);
+
+        },
+
+        child: Center(
+          child: Text(
+            'В корзину',
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+              color: Colors.black,
+              fontSize: 16,
+            ),
+          ),
+        ),
+
+      ),
+    );
+
+  }
+
   if (item.picture == '' || item.picture == '0') {
     return Row(
       children: <Widget>[
         Container(
+
           decoration: BoxDecoration(
-              color: Colors.white70,
+            gradient: LinearGradient(
+              begin: FractionalOffset.topCenter,
+              end: FractionalOffset.bottomCenter,
+              colors: [
+                Colors.white,
+                Color.fromRGBO(255, 230, 229, 1),
+                Color.fromRGBO(255, 230, 229, 1)
+              ],
+//              stops: [0.45,0.5],
+            ),
+
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(25.0),
-                  bottomRight: Radius.circular(25.0))),
+                  bottomRight: Radius.circular(25.0)),
+          ),
           padding: EdgeInsets.all(20),
           height: 250 * 1.7,
           width: 150 * 1.7,
@@ -515,70 +606,7 @@ Widget _Item(ElementItem item, BuildContext context) {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
-                child: GestureDetector(
-                  onTap: (){
-                    if(items.isEmpty){
-                      items_counter = [1];
-                      List<ElementItem> step = [item];
-                      items = step;
-                    }else{
-                      bool find = false;
-                      for(int i = 0 ; i  < items.length; i++){
-                        print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
-                        if(items[i].id == item.id){
-                          items_counter[i]++;
-                          print('Элементов id${items[i].id} - ${items_counter[i]}');
-                          find = true;
-                          break;
-                        }
-                      }
-                      print('find = $find');
-                      if(!find) {
-                        items.add(item);
-                        items_counter.add(1);
-                      }
-
-
-                    }
-
-                    final snackBar = SnackBar(
-                      content: Text('${item.head.length < 18?'Добавлено в корзину: '+item.head:'Услуга добавлена в корзину'} '),
-                      action: SnackBarAction(
-                        label: 'Отмена',
-                        onPressed: () {
-                          // Some code to undo the change.
-                        },
-                      ),
-                    );
-
-                    // Find the Scaffold in the widget tree and use
-                    // it to show a SnackBar.
-                    Scaffold.of(context).showSnackBar(snackBar);
-                  },
-                  child: Container(
-
-                    height: 33,
-                    width: 150,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      shape: BoxShape.rectangle,
-                      border: Border.all(color: Colors.black45),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(25.0),
-                        bottomLeft: Radius.circular(25.0),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'В корзину',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                child: inTrash(),
               ),
             ],
           ),
@@ -605,6 +633,15 @@ Widget _Item(ElementItem item, BuildContext context) {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: FractionalOffset.topCenter,
+                  end: FractionalOffset.bottomCenter,
+                  colors: [
+                    Colors.white,
+                    Color.fromRGBO(255, 230, 229, 1),
+                  ],
+//              stops: [0.45,0.5],
+                ),
                 color: Colors.white70,
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.only(
@@ -672,70 +709,7 @@ Widget _Item(ElementItem item, BuildContext context) {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
-                  child: GestureDetector(
-                    onTap: (){
-
-                      if(items.isEmpty){
-                        items_counter = [1];
-                        List<ElementItem> step = [item];
-                        items = step;
-                      }else{
-                        bool find = false;
-                        for(int i = 0 ; i  < items.length; i++){
-                          print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
-                          if(items[i].id == item.id){
-                            items_counter[i]++;
-                            print('Элементов id${items[i].id} - ${items_counter[i]}');
-                            find = true;
-                            break;
-                          }
-                        }
-                        print('find = $find');
-                        if(!find) {
-                          items.add(item);
-                          items_counter.add(1);
-                        }
-
-
-                      }
-
-                      final snackBar = SnackBar(
-                        content: Text('${item.head.length < 18?'Добавлено в корзину: '+item.head:'Услуга добавлена в корзину'} '),
-                        action: SnackBarAction(
-                          label: 'Отмена',
-                          onPressed: () {
-                            // Some code to undo the change.
-                          },
-                        ),
-                      );
-
-                      // Find the Scaffold in the widget tree and use
-                      // it to show a SnackBar.
-                      Scaffold.of(context).showSnackBar(snackBar);
-                    },
-                    child: Container(
-                      height: 33,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        shape: BoxShape.rectangle,
-                        border: Border.all(color: Colors.black45),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25.0),
-                          bottomLeft: Radius.circular(25.0),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'В корзину',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: inTrash(),
                 ),
               ],
             ),

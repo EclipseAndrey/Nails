@@ -16,6 +16,7 @@ import 'package:flutterapp32/Info.dart';
 import 'package:flutterapp32/Contacts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'BottomPage.dart';
 
 import 'CheckCode.dart';
 import 'Detail.dart';
@@ -33,9 +34,10 @@ void main(){
     '/Info': (BuildContext context) =>Info(),
     '/Eclipse': (BuildContext context) =>Eclipse(),
     '/main': (BuildContext context) =>SplashScreen(),
-    '/Contacts': (BuildContext context) =>Contacts(),
+//    '/Contacts': (BuildContext context) =>Contacts(),
     '/SetName': (BuildContext context) =>SetName(),
     '/Trash': (BuildContext context) =>Trash(items),
+    '/BottomPage': (BuildContext context) =>BottomPage(),
   };
 
   runApp(

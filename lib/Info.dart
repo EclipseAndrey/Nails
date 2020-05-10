@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutterapp32/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'main.dart';
 
 class Info extends StatefulWidget {
   @override
@@ -158,7 +158,7 @@ class _Info extends State<Info> {
                               inf();
 
 
-                              Navigator.pushNamed(context, '/home');
+                              Navigator.pushNamed(context, '/main');
                             },
                             child: Container(
                               height: 33,

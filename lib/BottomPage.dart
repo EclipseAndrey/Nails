@@ -1,3 +1,9 @@
+
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'home.dart';
+import 'Contacts.dart';
+import 'Trash.dart';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -21,21 +27,14 @@ import 'dart:async';
 import 'main.dart';
 import 'package:http/http.dart' as http;
 
-
-class Trash extends StatefulWidget {
-  List<ElementItem> items;
-  Trash(List<ElementItem> items) {
-    this.items = items;
-
-  }
+class BottomPage extends StatefulWidget {
+  BottomPage({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _Trash();
-  }
+  _BottomPageState createState() => _BottomPageState();
 }
 
-class _Trash extends State<Trash> with TickerProviderStateMixin {
+class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
   List<AnimationController> controller;
 
@@ -94,23 +93,144 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
     setState(() {});
   }
 
+
+
+
+
+
+
+  int _selectedIndex = 2;
+
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  String headerTx = 'Каталог';
+
+
+
+  Future<void> _makePhoneCall(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  void _onItemTapped(int index) {
+
+    // call back
+    if(index == 0){
+     _makePhoneCall('tel:+79307229602');
+    }
+    if(index == 1){
+      setState(() {
+        headerTx = "Контакты";
+        _selectedIndex = index;
+      });
+    }
+    if(index == 2){
+      setState(() {
+        headerTx = "Каталог";
+        _selectedIndex = index;
+      });
+    }
+    if(index == 3){
+      setState(() {
+        headerTx = "Запись";
+
+        _selectedIndex = index;
+      });
+    }
+    if(index == 4){
+      setState(() {
+        headerTx = "Информация";
+
+        _selectedIndex = index;
+      });
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(items);
+
+
+    List<Widget> _widgetOptions = <Widget>[
+      Text(
+        'Index 0: Home',
+        style: optionStyle,
+      ),
+      ContactsW(context),
+      Categories(context),
+     BodyTrash(order,context),
+      Text(
+        'Index 2: School',
+        style: optionStyle,
+      ),
+    ];
+
+
+
+
+
+
     return Scaffold(
-      appBar: AppBar(
+      appBar:  AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: Text(
-          'Запись',
-          style: TextStyle(fontSize: 22, color: Colors.black),
+        centerTitle: true,
+        title:  Text(
+          headerTx,
+          style: TextStyle(
+//                              color: Colors.black87,
+              color: Color.fromRGBO(219, 33, 76, 1),
+              fontSize: 25,
+              decoration: TextDecoration.none,
+              fontWeight: FontWeight.w300),
         ),
       ),
-      body: BodyTrash(order, context),
+      body: Container(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+
+          type: BottomNavigationBarType.fixed,
+
+//          fixedColor: Color.fromRGBO(250, 208, 221, 100),
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.call, color: Colors.black45,),
+            title: Text('Позвонить'),
+
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.contacts, color: Colors.black45,),
+            title: Text('Контакты'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle_outline, color: Colors.black45,),
+            title: Text('Услуги'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_basket, color: Colors.black45,),
+            title: Text('Детали'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person, color: Colors.black45,),
+            title: Text('Аккаунт'),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
     );
   }
 
+
   Widget BodyTrash(Order order, BuildContext context) {
+
+
 
     return SingleChildScrollView(
       child: Stack(
@@ -124,13 +244,13 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
 //                  children:
 //                      List.generate(items.length, (i) => _ElementTrash(i)),
 //                ),
-              child: AnimatedList(
-                key: animatedListKey,
-                initialItemCount: items2.length,
-                itemBuilder: (context, index, animation){
-                  return _buildItem(items2[index], animation, index);
-                },
-              ),
+                child: AnimatedList(
+                  key: animatedListKey,
+                  initialItemCount: items2.length,
+                  itemBuilder: (context, index, animation){
+                    return _buildItem(items2[index], animation, index);
+                  },
+                ),
               ),
               _RegistrationZakaza(context, controller1),
             ],
@@ -164,7 +284,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
           if(okk[i]) controller.removeAt(i);
           if(okk[i]) remove = null;
           if(okk[i]) items.removeAt(i);
-       //   controller[i].dispose();
+          //   controller[i].dispose();
 
           if(okk[i]) items_counter.removeAt(i);
           if(okk[i]) okk.removeAt(i);
@@ -224,28 +344,28 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
                   Opacity(
                     opacity: cancel[i],
                     child: GestureDetector(
-                      onTap: (){
-                        if(items_counter[i] == 1){
-                          setState(() {
+                        onTap: (){
+                          if(items_counter[i] == 1){
+                            setState(() {
+                              if(permissionCancel)
+                                cancel[i] = 0.0;
+                            });
                             if(permissionCancel)
-                            cancel[i] = 0.0;
-                          });
-                          if(permissionCancel)
-                            controller[i].forward();
-                          if(permissionCancel)
-                            ok();
-                        }else
-                        setState(() {
-                          items_counter[i]--;
-                        });
+                              controller[i].forward();
+                            if(permissionCancel)
+                              ok();
+                          }else
+                            setState(() {
+                              items_counter[i]--;
+                            });
 
-                      },
+                        },
                         child: Icon(Icons.remove_circle)),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 18.0),
                     child: Opacity(
-                        opacity: cancel[i],
+                      opacity: cancel[i],
                       child: GestureDetector(
                           onTap: () {
                             if(permissionCancel) {
@@ -349,7 +469,9 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
                           }
 
                         }
-                        Navigator.pushNamed(context, '/Trash');
+                        setState(() {
+
+                        });
                       }else{
                         Fluttertoast.showToast(
                           msg: "У вас пока не было записей",
@@ -825,12 +947,12 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
 
 
           if(check != ""){
-          Fluttertoast.showToast(
-            msg: check+"Введены неверно",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-          );
+            Fluttertoast.showToast(
+              msg: check+"Введены неверно",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+            );
           } else{
             String getIds(){
               String ids = '';
@@ -866,7 +988,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
               }
             });
 
-            }
+          }
 
         },
         child: Center(
@@ -904,7 +1026,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 14.0, right: 30.0),
                     child: Text(
-                      
+
                       item.head, style: TextStyle(fontSize: 18),),
                   ),
                 ),
@@ -942,7 +1064,6 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
 
     animatedListKey.currentState.removeItem(i, builder);
   }
+
+
 }
-
-
-

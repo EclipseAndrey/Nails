@@ -1,23 +1,9 @@
 import 'package:flutter/material.dart';
 import 'style.dart';
 
-
-class Contacts extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _Contacts();
-  }
-}
-
-class _Contacts extends State<Contacts> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white, //No more green
-        elevation: 0.0, //Shadow gone
-      ),
-      body: Container(
+Widget ContactsW(BuildContext context){
+  return
+Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
           begin: FractionalOffset.topCenter,
@@ -38,18 +24,18 @@ class _Contacts extends State<Contacts> {
               Container(
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Контакты',
-                        style: TextStyle(
-//                              color: Colors.black87,
-                            color: Color.fromRGBO(219, 33, 76, 1),
-                            fontSize: 25,
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.w300),
-                      ),
-                    ),
+//                    Padding(
+//                      padding: const EdgeInsets.all(8.0),
+//                      child: Text(
+//                        'Контакты',
+//                        style: TextStyle(
+////                              color: Colors.black87,
+//                            color: Color.fromRGBO(219, 33, 76, 1),
+//                            fontSize: 25,
+//                            decoration: TextDecoration.none,
+//                            fontWeight: FontWeight.w300),
+//                      ),
+//                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
@@ -160,33 +146,5 @@ class _Contacts extends State<Contacts> {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image:
-                  Image.asset('assets/images/inst.png').image,
-                  fit: BoxFit.cover),
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black54,
-                  blurRadius: 5.0,
-                  spreadRadius: 0.1,
-                  offset: Offset(-5, 5),
-                )
-              ] //boxShadow
-          ),
-          height: 60,
-          width: 60,
-        ),
-        //Widget to display inside Floating Action Button, can be `Text`, `Icon` or any widget.
-        onPressed: () {
-          //Code to execute when Floating Action Button is clicked
-          //...
-        },
-      ),
-    );
+      );
   }
-}
