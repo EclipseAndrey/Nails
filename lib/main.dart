@@ -36,7 +36,7 @@ void main(){
     '/main': (BuildContext context) =>SplashScreen(),
 //    '/Contacts': (BuildContext context) =>Contacts(),
     '/SetName': (BuildContext context) =>SetName(),
-    '/Trash': (BuildContext context) =>Trash(items),
+//    '/Trash': (BuildContext context) =>Trash(items),
     '/BottomPage': (BuildContext context) =>BottomPage(),
   };
 
@@ -69,6 +69,7 @@ String token;
 String num;
 
 var response;
+var response2;
 
 class SplashScreen extends StatefulWidget  {
   final String nextRoute;
@@ -112,7 +113,25 @@ class _SplashScreenState extends State<SplashScreen>  {
               Navigator.of(context).pushReplacementNamed('/SetName');
             }
             else if(Response == "13"){
-              Navigator.of(context).pushReplacementNamed('/home');
+
+
+              Future<http.Response> res() async {
+                return await http
+                    .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+              }
+              print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+
+              res().then((value) {
+                if (value.statusCode == 200) {
+                  response2 = jsonDecode(value.body);
+                  print(response2);
+                  Navigator.of(context).pushReplacementNamed('/BottomPage');
+
+                }
+              });
+
+
+
             }else if(Response == "12"){
               Navigator.of(context).pushReplacementNamed('/Login');
               prefs.setString('token', 'none');
