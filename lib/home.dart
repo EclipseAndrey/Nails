@@ -86,7 +86,7 @@ class _Home extends State<Home> {
               color: Colors.black45,
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Trash(items)));
+              //Navigator.push(context, MaterialPageRoute(builder: (context) => Trash(items)));
             },
           )
         ],

@@ -260,16 +260,16 @@ Widget def(String date, String time) {
         //1 day
         defferent = ("Завтра");
       } else {
-        defferent = days(different.inDays);
+        defferent = days(different.inDays).toString();
       }
     } else {
       // < 1 day
 
       if (different.inHours > 0) {
         // > 0 hour
-        defferent = hours(different.inHours);
+        defferent = hours(different.inHours).toString();
       } else {
-        defferent = minutes(different.inMinutes);
+        defferent = minutes(different.inMinutes).toString();
       }
     }
   }
@@ -364,10 +364,12 @@ Widget bigDay(String date, String time) {
 
 
 Widget odresList(String token, BuildContext context)  {
+  print(response2.toString());
 
 
-  if (response['count'] > 0) {
+  if (response2['count'] > 0) {
     return Container(
+
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
@@ -376,15 +378,14 @@ Widget odresList(String token, BuildContext context)  {
             end: FractionalOffset.bottomCenter,
             colors: [
               Colors.white,
-              Color.fromRGBO(255, 230, 229, 1),
               Color.fromRGBO(255, 230, 229, 1)
             ],
 //              stops: [0.45,0.5],
           )),
       child: SingleChildScrollView(
-        child: Column(children:List.generate(response['count'], (index) {
-          ElementItemOrder itemOrder = ElementItemOrder(index, response['orders'][index]['order']['date'], response['orders'][index]['order']['time'],
-              response['orders'][index]['ids'], int.parse(response['orders'][index]['order']['status']));
+        child: Column(children:List.generate(response2['count'], (index) {
+          ElementItemOrder itemOrder = ElementItemOrder(index, response2['orders'][index]['order']['date'], response2['orders'][index]['order']['time'],
+              response2['orders'][index]['ids'], int.parse(response2['orders'][index]['order']['status']));
           print("JOPA " + itemOrder.id.toString());
           return ElementOrder(itemOrder, context);
         })
@@ -414,6 +415,7 @@ class ElementItemOrder{
 }
 
 Widget ElementOrder(ElementItemOrder item, BuildContext context) {
+  print("Дата контейнера "+item.date+" Время "+item.time);
   return GestureDetector(
     onTap: () {
       Navigator.push(

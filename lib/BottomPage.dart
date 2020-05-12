@@ -26,16 +26,31 @@ import 'dart:core';
 import 'dart:async';
 import 'main.dart';
 import 'package:http/http.dart' as http;
+import 'MyOrders.dart';
 
 class BottomPage extends StatefulWidget {
   BottomPage({Key key}) : super(key: key);
-
+  String i = token;
   @override
   _BottomPageState createState() => _BottomPageState();
 }
+List<ElementItem> items;
+List<int> items_counter;
 
 class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
+//home
 
+
+
+
+
+  //MyOrders
+
+
+
+
+
+  //Trash
   List<AnimationController> controller;
 
   String token = 'none';
@@ -60,6 +75,11 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    items = [ElementItem(0,'','','',0,0)];
+    items.clear();
+    items_counter = [1];
+    items_counter.clear();
+
     _ii();
     controller1.text = "+"+num;
 
@@ -94,19 +114,15 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   }
 
 
-
-
-
-
-
+  //Bottom
   int _selectedIndex = 2;
 
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  String headerTx = 'Каталог';
+  String headerTx = 'Color Bird';
 
 
-
+ //Phone
   Future<void> _makePhoneCall(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -114,7 +130,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
       throw 'Could not launch $url';
     }
   }
-
+ //Bottom
   void _onItemTapped(int index) {
 
     // call back
@@ -123,13 +139,25 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
     }
     if(index == 1){
       setState(() {
-        headerTx = "Контакты";
+        headerTx = "Записи";
         _selectedIndex = index;
+      });
+      Future<http.Response> res() async {
+        return await http
+            .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+      }
+      print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+
+      res().then((value) {
+        if (value.statusCode == 200) {
+          response2 = jsonDecode(value.body);
+          print(response2);
+        }
       });
     }
     if(index == 2){
       setState(() {
-        headerTx = "Каталог";
+        headerTx = "Color Bird";
         _selectedIndex = index;
       });
     }
@@ -150,8 +178,12 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
   }
 
+
   @override
   Widget build(BuildContext context) {
+
+
+
 
 
     List<Widget> _widgetOptions = <Widget>[
@@ -159,7 +191,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
         'Index 0: Home',
         style: optionStyle,
       ),
-      ContactsW(context),
+      odresList(token, context),
       Categories(context),
      BodyTrash(order,context),
       Text(
@@ -172,7 +204,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
 
 
-
+//break
     return Scaffold(
       appBar:  AppBar(
         backgroundColor: Colors.transparent,
@@ -258,9 +290,9 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   Widget ListTrash(){
     return AnimatedList(
       key: animatedListKey,
-      initialItemCount: items2.length,
+      initialItemCount: items.length,
       itemBuilder: (context, index, animation){
-        return _buildItem(items2[index], animation, index);
+        return _buildItem(items[index], animation, index);
       },
     );
   }
@@ -471,6 +503,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
 
                           }
+
 
                         }
                         setState(() {
@@ -1061,12 +1094,13 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   }
 
   void _removeItem(int i){
-    ElementItem removedItem = items2.removeAt(i);
+    ElementItem removedItem = items.removeAt(i);
     AnimatedListRemovedItemBuilder builder = (context, animation){
       return _buildItem(removedItem, animation, i);
     };
 
     animatedListKey.currentState.removeItem(i, builder);
+
   }
 
 

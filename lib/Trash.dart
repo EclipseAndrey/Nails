@@ -23,11 +23,7 @@ import 'package:http/http.dart' as http;
 
 
 class Trash extends StatefulWidget {
-  List<ElementItem> items;
-  Trash(List<ElementItem> items) {
-    this.items = items;
 
-  }
 
   @override
   State<StatefulWidget> createState() {
@@ -289,7 +285,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
               Padding(
                 padding: const EdgeInsets.all(28.0),
                 child: Text(
-                  'Козина пуста',
+                  'Козина пуста :(',
                   style: TextStyle(
                     decoration: TextDecoration.none,
                     color: Colors.black,
