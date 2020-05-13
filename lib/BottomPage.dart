@@ -35,8 +35,8 @@ class BottomPage extends StatefulWidget {
   @override
   _BottomPageState createState() => _BottomPageState();
 }
-List<ElementItem> items;
-List<int> items_counter;
+List<ElementItem> items = [];
+List<int> items_counter = [];
 
 class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 //home
