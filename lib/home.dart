@@ -399,7 +399,7 @@ ElementItem elementInfo(int category, int indexx) {
 
 Widget Categories(BuildContext context) {
   return Container(
-    color:                Color.fromRGBO(255, 250, 250, 80),
+    color:              Color.fromRGBO(255, 240, 239, 1),
     height: MediaQuery.of(context).size.height,
     width: MediaQuery.of(context).size.width,
     child: ListView(
@@ -556,8 +556,6 @@ Widget _Item(ElementItem item, BuildContext context) {
               end: FractionalOffset.bottomCenter,
               colors: [
                 Colors.white,
-                Color.fromRGBO(255, 230, 229, 1),
-                Color.fromRGBO(255, 230, 229, 1)
               ],
 //              stops: [0.45,0.5],
             ),
@@ -638,7 +636,7 @@ Widget _Item(ElementItem item, BuildContext context) {
                   end: FractionalOffset.bottomCenter,
                   colors: [
                     Colors.white,
-                    Color.fromRGBO(255, 230, 229, 1),
+                    Colors.white,
                   ],
 //              stops: [0.45,0.5],
                 ),

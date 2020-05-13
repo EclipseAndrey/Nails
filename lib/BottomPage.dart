@@ -122,7 +122,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   String headerTx = 'Color Bird';
 
 
- //Phone
+  //Phone
   Future<void> _makePhoneCall(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -130,12 +130,12 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
       throw 'Could not launch $url';
     }
   }
- //Bottom
+  //Bottom
   void _onItemTapped(int index) {
 
     // call back
     if(index == 0){
-     _makePhoneCall('tel:+79307229602');
+      _makePhoneCall('tel:+79307229602');
     }
     if(index == 1){
       setState(() {
@@ -193,7 +193,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
       ),
       odresList(token, context),
       Categories(context),
-     BodyTrash(order,context),
+      BodyTrash(order,context),
       Text(
         'Index 2: School',
         style: optionStyle,
@@ -207,7 +207,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 //break
     return Scaffold(
       appBar:  AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromRGBO(255, 240, 239, 1),
         elevation: 0.0,
         centerTitle: true,
         title:  Text(
@@ -226,7 +226,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
       bottomNavigationBar: BottomNavigationBar(
 
-          type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.fixed,
 
 //          fixedColor: Color.fromRGBO(250, 208, 221, 100),
         items: const <BottomNavigationBarItem>[
@@ -269,8 +269,20 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
         children: <Widget>[
           Column(
             children: <Widget>[
-              Divider(),
+
               Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: FractionalOffset.topCenter,
+                    end: FractionalOffset.bottomCenter,
+                    colors: [
+                      Color.fromRGBO(255, 240, 239, 1),
+                      Colors.white,
+
+                    ],
+//              stops: [0.45,0.5],
+                  ),
+                ),
                 height: items.length * 71.toDouble(),
 //                child: Column(
 //                  children:
@@ -437,122 +449,111 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
   Widget _TrashIsEmpty(BuildContext context) {
     if (items.length == 0)
-      return Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(28.0),
-                child: Text(
-                  'Козина пуста',
-                  style: TextStyle(
-                    decoration: TextDecoration.none,
-                    color: Colors.black,
-                    fontSize: 17,
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: FractionalOffset.topCenter,
+              end: FractionalOffset.bottomCenter,
+              colors: [
+                Color.fromRGBO(255, 240, 239, 1),
+                Colors.white,
+
+              ],
+//              stops: [0.45,0.5],
+            ),
+          ),
+
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(28.0),
+                  child: Text(
+                    'Козина пуста',
+                    style: TextStyle(
+                      decoration: TextDecoration.none,
+                      color: Colors.black,
+                      fontSize: 17,
+                    ),
                   ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
+                GestureDetector(
+                  onTap: () {
 
 
-                  Future<http.Response> res() async {
-                    return await http
-                        .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
-                  }
-                  print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
-                  var response;
-                  res().then((value) {
-                    if (value.statusCode == 200) {
-                      response = jsonDecode(value.body);
-                      print(response);
+                    Future<http.Response> res() async {
+                      return await http
+                          .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+                    }
+                    print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+                    var response;
+                    res().then((value) {
+                      if (value.statusCode == 200) {
+                        response = jsonDecode(value.body);
+                        print(response);
 
-                      print("Count  "+response['count'].toString());
+                        print("Count  "+response['count'].toString());
 
-                      if (response['count'] > 0) {
+                        if (response['count'] > 0) {
 
-                        List<dynamic> ids = response['orders'][0]['ids'];
+                          List<dynamic> ids = response['orders'][0]['ids'];
 
-                        print("Кол-во проходов цикла "+ids.length.toString());
-                        for(int i = 0; i < ids.length; i++){
-                          print("Проход "+i.toString());
-                          int id =ids[i];
-                          var item = elementInfo((id ~/ 100), id % 100);
+                          print("Кол-во проходов цикла "+ids.length.toString());
+                          for(int i = 0; i < ids.length; i++){
+                            print("Проход "+i.toString());
+                            int id =ids[i];
+                            var item = elementInfo((id ~/ 100), id % 100);
 
-                          if(items.isEmpty){
-                            items_counter = [1];
-                            List<ElementItem> step = [item];
-                            items = step;
-                          }else{
-                            bool find = false;
-                            for(int i = 0 ; i  < items.length; i++){
-                              print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
-                              if(items[i].id == item.id){
-                                items_counter[i]++;
-                                print('Элементов id${items[i].id} - ${items_counter[i]}');
-                                find = true;
-                                break;
+                            if(items.isEmpty){
+                              items_counter = [1];
+                              List<ElementItem> step = [item];
+                              items = step;
+                            }else{
+                              bool find = false;
+                              for(int i = 0 ; i  < items.length; i++){
+                                print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
+                                if(items[i].id == item.id){
+                                  items_counter[i]++;
+                                  print('Элементов id${items[i].id} - ${items_counter[i]}');
+                                  find = true;
+                                  break;
+                                }
                               }
-                            }
-                            print('find = $find');
-                            if(!find) {
-                              items.add(item);
-                              items_counter.add(1);
+                              print('find = $find');
+                              if(!find) {
+                                items.add(item);
+                                items_counter.add(1);
+                              }
+
+
                             }
 
 
                           }
+                          setState(() {
 
-
+                          });
+                        }else{
+                          Fluttertoast.showToast(
+                            msg: "У вас пока не было записей",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                          );
                         }
-                        setState(() {
 
-                        });
-                      }else{
-                        Fluttertoast.showToast(
-                          msg: "У вас пока не было записей",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                        );
                       }
-
-                    }
-                  });
+                    });
 
 
-                },
-                child: Container(
-                  height: 33,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    shape: BoxShape.rectangle,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(25)),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Повторить прошлую запись',
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        color: Colors.black,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 18.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/home');
                   },
                   child: Container(
                     height: 33,
-                    width: 210,
+                    width: 250,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
                       shape: BoxShape.rectangle,
@@ -561,7 +562,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
                     ),
                     child: Center(
                       child: Text(
-                        'Перейти к выбору услуг',
+                        'Повторить прошлую запись',
                         style: TextStyle(
                           decoration: TextDecoration.none,
                           color: Colors.black,
@@ -571,8 +572,36 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 18.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/home');
+                    },
+                    child: Container(
+                      height: 33,
+                      width: 210,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        shape: BoxShape.rectangle,
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Перейти к выбору услуг',
+                          style: TextStyle(
+                            decoration: TextDecoration.none,
+                            color: Colors.black,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
