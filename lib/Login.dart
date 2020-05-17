@@ -87,9 +87,9 @@ class _LoginState extends State<Login> {
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 colors: [
-                  Color.fromRGBO(255, 182, 173, 1),
-                  Color.fromRGBO(255, 182, 173, 0.8),
-                  Color.fromRGBO(255, 182, 173, 0.5)
+                  Color.fromRGBO(255, 188, 173, 1),
+                  Color.fromRGBO(255, 188, 173, 0.8),
+                  Color.fromRGBO(255, 188, 173, 0.5)
                 ]
             )
         ),
@@ -104,11 +104,11 @@ class _LoginState extends State<Login> {
                 children: <Widget>[
                   FadeAnimation(1, Text(title, style: TextStyle(color: Colors.white, fontSize: 40),)),
                   SizedBox(height: 10,),
-                  FadeAnimation(1.3, Text("Добро пожаловать", style: TextStyle(color: Colors.white, fontSize: 18),)),
+                  FadeAnimation(1.3, Text("Добро пожаловать", style: TextStyle(color: Colors.white, fontSize: 20),)),
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 60),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -120,7 +120,7 @@ class _LoginState extends State<Login> {
                     padding: EdgeInsets.all(30),
                     child: Column(
                       children: <Widget>[
-                        SizedBox(height: 60,),
+                        SizedBox(height: 50,),
                         FadeAnimation(1.4, Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -153,7 +153,7 @@ class _LoginState extends State<Login> {
                             ],
                           ),
                         )),
-                        SizedBox(height: 40,),
+                        SizedBox(height: 60,),
                         GestureDetector(
                           onTap: () async {
                             _onLoading();
@@ -163,15 +163,15 @@ class _LoginState extends State<Login> {
                             height: 50,
                             margin: EdgeInsets.symmetric(horizontal: 50),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: Color.fromRGBO(255, 182, 173, 1)
+                                borderRadius: BorderRadius.circular(10),
+                                color: Color.fromRGBO(255, 188, 173, 1)
                             ),
                             child: Center(
-                              child: Text("Далее", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
+                              child: Text("Далее", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
                             ),
                           )),
                         ),
-                        SizedBox(height: 40,),
+                        SizedBox(height: 20,),
                         FadeAnimation(1.5,
                             (
                             check ?
@@ -182,7 +182,14 @@ class _LoginState extends State<Login> {
                                     check = false;
                                   });
                                 },
-                                child: Text("Еще нет аккаунта? Создать!", style: TextStyle(fontSize: 18, color: Colors.grey),)
+                                child: Container(
+                                  height: 40,
+                                  width: 230,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(color: Color.fromRGBO(255, 188, 173, 1), width: 1)
+                                  ),
+                                  child: Center(child: Text("Создать аккаунт", style: TextStyle(fontSize: 18, color: Color.fromRGBO(255, 188, 173, 1), fontWeight: FontWeight.normal),)))
                             )
                             :
                             GestureDetector(
@@ -192,7 +199,14 @@ class _LoginState extends State<Login> {
                                     check = true;
                                   });
                                 },
-                                child: Text("Уже есть аккаунт? Войти!", style: TextStyle(fontSize: 18, color: Colors.grey),)
+                                child: Container(
+                                    height: 40,
+                                    width: 230,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: Color.fromRGBO(255, 188, 173, 1), width: 1)
+                                    ),
+                                    child: Center(child: Text("Войти", style: TextStyle(fontSize: 18, color: Color.fromRGBO(255, 188, 173, 1), fontWeight: FontWeight.normal),)))
                             )
                             ),
                         ),
