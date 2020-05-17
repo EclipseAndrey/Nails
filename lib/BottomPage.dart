@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutterapp32/Account.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'EmptyTrash.dart';
 import 'home.dart';
@@ -211,10 +212,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
       odresList(token, context),
       Categories(context),
       BodyTrash(order,context),
-      Text(
-        'Index 2: School',
-        style: optionStyle,
-      ),
+      Account(),
     ];
 
 
