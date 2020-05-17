@@ -133,6 +133,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
               _RegistrationZakaza(context, controller1),
             ],
           ),
+          _TrashIsEmpty(context),
         ],
       ),
     );
@@ -770,6 +771,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
           fontSize: 17,
         ),
       );
+
 
 
   }

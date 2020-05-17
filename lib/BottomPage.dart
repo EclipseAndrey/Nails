@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'EmptyTrash.dart';
 import 'home.dart';
 import 'Contacts.dart';
 import 'Trash.dart';
@@ -34,8 +35,8 @@ class BottomPage extends StatefulWidget {
   @override
   _BottomPageState createState() => _BottomPageState();
 }
-List<ElementItem> items;
-List<int> items_counter;
+List<ElementItem> items = [];
+List<int> items_counter = [];
 
 class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 //home
@@ -51,6 +52,18 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
 
   //Trash
+
+  void _incrementCounter(int index) {
+    setState(() {
+      items_counter2[index]++;
+    });
+  }
+  void _decrementCounter(int index) {
+    setState(() {
+      items_counter2[index]--;
+    });
+  }
+
   List<AnimationController> controller;
 
   String token = 'none';
@@ -60,13 +73,14 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   }
 
 
+  int price = 0;
 
   var controller1 = new MaskedTextController(mask: '+0 000 000 00 00');
 
 
   List<ElementItem> items2  = items;
+  List<int> items_counter2  = items_counter;
   final GlobalKey<AnimatedListState> animatedListKey = GlobalKey<AnimatedListState>();
-
 
   List<bool> okk;
   List<double> cancel;
@@ -75,11 +89,6 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    items = [ElementItem(0,'','','',0,0)];
-    items.clear();
-    items_counter = [1];
-    items_counter.clear();
-
     _ii();
     controller1.text = "+"+num;
 
@@ -112,6 +121,14 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   ok() {
     setState(() {});
   }
+  void _getPrice() {
+    price = 0;
+    setState(() {
+      for (int i = 0; i < items2.length; i++) {
+        price = price + (items2[i].price - items2[i].sale) * items_counter2[i];
+      }
+    });
+  }
 
 
   //Bottom
@@ -122,7 +139,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   String headerTx = 'Color Bird';
 
 
- //Phone
+  //Phone
   Future<void> _makePhoneCall(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -130,12 +147,12 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
       throw 'Could not launch $url';
     }
   }
- //Bottom
+  //Bottom
   void _onItemTapped(int index) {
 
     // call back
     if(index == 0){
-     _makePhoneCall('tel:+79307229602');
+      _makePhoneCall('tel:+79307229602');
     }
     if(index == 1){
       setState(() {
@@ -193,7 +210,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
       ),
       odresList(token, context),
       Categories(context),
-     BodyTrash(order,context),
+      BodyTrash(order,context),
       Text(
         'Index 2: School',
         style: optionStyle,
@@ -207,7 +224,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 //break
     return Scaffold(
       appBar:  AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromRGBO(255, 240, 239, 1),
         elevation: 0.0,
         centerTitle: true,
         title:  Text(
@@ -226,7 +243,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
       bottomNavigationBar: BottomNavigationBar(
 
-          type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.fixed,
 
 //          fixedColor: Color.fromRGBO(250, 208, 221, 100),
         items: const <BottomNavigationBarItem>[
@@ -261,9 +278,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
 
   Widget BodyTrash(Order order, BuildContext context) {
-
-
-
+    _getPrice();
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
@@ -271,12 +286,14 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
             children: <Widget>[
               Divider(),
               Container(
-                height: items.length * 71.toDouble(),
-//                child: Column(
-//                  children:
-//                      List.generate(items.length, (i) => _ElementTrash(i)),
-//                ),
-                child: ListTrash(),
+                child: AnimatedList(
+                  shrinkWrap: true,
+                  key: animatedListKey,
+                  initialItemCount: items2.length,
+                  itemBuilder: (context, index, animation){
+                    return _buildItem(items2[index], animation, index);
+                  },
+                ),
               ),
               _RegistrationZakaza(context, controller1),
             ],
@@ -284,16 +301,6 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
           _TrashIsEmpty(context),
         ],
       ),
-    );
-  }
-
-  Widget ListTrash(){
-    return AnimatedList(
-      key: animatedListKey,
-      initialItemCount: items.length,
-      itemBuilder: (context, index, animation){
-        return _buildItem(items[index], animation, index);
-      },
     );
   }
 
@@ -436,7 +443,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   }
 
   Widget _TrashIsEmpty(BuildContext context) {
-    if (items.length == 0)
+    if (items2.length == 0)
       return Padding(
         padding: const EdgeInsets.all(18.0),
         child: Center(
@@ -455,71 +462,61 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               ),
               GestureDetector(
                 onTap: () {
+                  if (items.length == 0){
+                    Future<http.Response> res() async {
+                      return await http
+                          .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+                    }
+                    print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+                    var response;
+                    res().then((value) {
+                      if (value.statusCode == 200) {
+                        response = jsonDecode(value.body);
+                        print(response);
 
+                        print("Count  "+response['count'].toString());
 
-                  Future<http.Response> res() async {
-                    return await http
-                        .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
-                  }
-                  print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
-                  var response;
-                  res().then((value) {
-                    if (value.statusCode == 200) {
-                      response = jsonDecode(value.body);
-                      print(response);
+                        if (response['count'] > 0) {
 
-                      print("Count  "+response['count'].toString());
+                          List<dynamic> ids = response['orders'][0]['ids'];
 
-                      if (response['count'] > 0) {
+                          print("Кол-во проходов цикла "+ids.length.toString());
+                          for(int i = 0; i < ids.length; i++){
 
-                        List<dynamic> ids = response['orders'][0]['ids'];
-
-                        print("Кол-во проходов цикла "+ids.length.toString());
-                        for(int i = 0; i < ids.length; i++){
-                          print("Проход "+i.toString());
-                          int id =ids[i];
-                          var item = elementInfo((id ~/ 100), id % 100);
-
-                          if(items.isEmpty){
-                            items_counter = [1];
-                            List<ElementItem> step = [item];
-                            items = step;
-                          }else{
-                            bool find = false;
-                            for(int i = 0 ; i  < items.length; i++){
-                              print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
-                              if(items[i].id == item.id){
-                                items_counter[i]++;
-                                print('Элементов id${items[i].id} - ${items_counter[i]}');
-                                find = true;
-                                break;
+                            print("Проход "+i.toString());
+                            int id =ids[i];
+                            var item = elementInfo((id ~/ 100), id % 100);
+                            if(items.isEmpty){
+                              items_counter = [1];
+                              List<ElementItem> step = [item];
+                              items = step;
+                            }else{
+                              bool find = false;
+                              for(int i = 0 ; i  < items.length; i++){
+                                print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
+                                if(items[i].id == item.id){
+                                  items_counter[i]++;
+                                  print('Элементов id${items[i].id} - ${items_counter[i]}');
+                                  find = true;
+                                  break;
+                                }
                               }
-                            }
-                            print('find = $find');
-                            if(!find) {
-                              items.add(item);
-                              items_counter.add(1);
-                            }
+                              print('find = $find');
+                              if(!find) {
+                                items.add(item);
+                                items_counter.add(1);
+                              }
 
 
+                            }
+                            print("---------------------$items");
                           }
-
-
                         }
-                        setState(() {
-
-                        });
-                      }else{
-                        Fluttertoast.showToast(
-                          msg: "У вас пока не было записей",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                        );
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => EmptyTrash(items)));
                       }
 
-                    }
-                  });
+                    });
+                  }
 
 
                 },
@@ -580,17 +577,12 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
       return SizedBox();
   }
 
-  int _check_summ() {
-    int sum = 0;
-    for (int i = 0; i < items.length; i++) {
-      sum += (items[i].price - items[i].sale)*items_counter[i];
-    }
-    return sum;
-  }
+
+
 
   Widget _RegistrationZakaza(BuildContext context, var controller1) {
-
-    if (items.length > 0)
+    _getPrice();
+    if (items2.length > 0)
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -600,7 +592,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Text(
-                  'Сумма: ${_check_summ()} руб.',
+                  'Сумма: $price руб.',
                   style: TextStyle(
                     decoration: TextDecoration.none,
                     color: Colors.black,
@@ -664,6 +656,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
       );
     else
       return SizedBox();
+
   }
   String datetx = "Дата";
 
@@ -931,15 +924,16 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   }
 
   Widget _Prise(){
-
     return Text(
-      'Итого: ${_check_summ()} руб.',
+      'Итого: $price руб.',
       style: TextStyle(
         decoration: TextDecoration.none,
         color: Colors.black,
         fontSize: 17,
       ),
     );
+
+
 
   }
 
@@ -999,10 +993,10 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
               return ids;
             }
-            print( 'http://eclipsedevelop.ru/api.php/cbmakeorder?token=$token&ids=${getIds()}&promo=${order.Promo}&adress=${order.adress}&comment=${order.comment}&date=${order.date}&time=${order.time}&prise=${_check_summ()}');
+            print( 'http://eclipsedevelop.ru/api.php/cbmakeorder?token=$token&ids=${getIds()}&promo=${order.Promo}&adress=${order.adress}&comment=${order.comment}&date=${order.date}&time=${order.time}&prise=$price');
             Future<http.Response> res() async {
               return await  http.get(
-                  'http://eclipsedevelop.ru/api.php/cbmakeorder?token=$token&ids=${getIds()}&promo=${order.Promo}&adress=${order.adress}&comment=${order.comment}&date=${order.date}&time=${order.time}&prise=${_check_summ()}');
+                  'http://eclipsedevelop.ru/api.php/cbmakeorder?token=$token&ids=${getIds()}&promo=${order.Promo}&adress=${order.adress}&comment=${order.comment}&date=${order.date}&time=${order.time}&prise=$price');
             }
             res().then((value){
               if(value.statusCode == 200){
@@ -1043,7 +1037,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   }
 
   Widget _buildItem(ElementItem item, Animation animation, int index){
-    int count = 0;
+
     return SizeTransition(
       sizeFactor: animation,
       child: Card(
@@ -1070,20 +1064,35 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
                 IconButton(
                   icon: Icon(Icons.add),
                   onPressed: (){
-                    count++;
+                    if(items_counter2[index] < 100){
+                      _incrementCounter(index);
+                      _getPrice();
+                    }
+                    print(items_counter2[index].toString());
                   },
                 ),
-                Text(count.toString()),
+                Text(items_counter2[index].toString()),
                 IconButton(
                   icon: Icon(Icons.remove),
                   onPressed: (){
-                    count--;
+                    if(items_counter2[index] > 0){
+                      _decrementCounter(index);
+                      _getPrice();
+                    }
+                    print(items_counter2[index].toString());
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.close, color: Colors.redAccent,),
                   onPressed: (){
+                    _getPrice();
                     _removeItem(index);
+                    if(index != items_counter2.length - 1){
+                      items_counter2.removeAt(index);
+                    } else {
+                      items_counter2.remove(item);
+
+                    }
                   },
                 )
               ],
@@ -1094,14 +1103,12 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   }
 
   void _removeItem(int i){
-    ElementItem removedItem = items.removeAt(i);
+    ElementItem removedItem = items2.removeAt(i);
     AnimatedListRemovedItemBuilder builder = (context, animation){
       return _buildItem(removedItem, animation, i);
     };
 
     animatedListKey.currentState.removeItem(i, builder);
-
+    print(items2);
   }
-
-
 }

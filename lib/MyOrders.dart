@@ -86,14 +86,14 @@ Widget orders50(List<dynamic> id) {
         return Text(
           elementInfo((id[0] ~/ 100), id[0] % 100).head,
           style:
-              TextStyle(decoration: TextDecoration.none, fontSize: symbilssize),
+          TextStyle(decoration: TextDecoration.none, fontSize: symbilssize),
         );
       }
       break;
     case 2:
       {
         if (elementInfo((id[0] ~/ 100), id[0] % 100).head.length +
-                elementInfo((id[1] ~/ 100), id[1] % 100).head.length >
+            elementInfo((id[1] ~/ 100), id[1] % 100).head.length >
             symbols) {
           return Text(
             elementInfo((id[0] ~/ 100), id[0] % 100).head + '...',
@@ -114,7 +114,7 @@ Widget orders50(List<dynamic> id) {
     default:
       {
         if (elementInfo((id[0] ~/ 100), id[0] % 100).head.length +
-                elementInfo((id[1] ~/ 100), id[1] % 100).head.length >
+            elementInfo((id[1] ~/ 100), id[1] % 100).head.length >
             symbols) {
           return Text(
             elementInfo((id[0] ~/ 100), id[0] % 100).head + '...',
@@ -285,7 +285,7 @@ Widget def(String date, String time) {
         defferent,
         style: TextStyle(
             fontStyle: FontStyle.italic,
-        color: Color.fromRGBO(0, 255, 0, 100),
+            color: Color.fromRGBO(32, 232, 14, 100),
             decoration: TextDecoration.none),
       ),
     ),
@@ -377,19 +377,23 @@ Widget odresList(String token, BuildContext context)  {
             begin: FractionalOffset.topCenter,
             end: FractionalOffset.bottomCenter,
             colors: [
-              Colors.white,
-              Color.fromRGBO(255, 230, 229, 1)
+              Color.fromRGBO(255, 240, 239, 1),
+              Color.fromRGBO(255, 240, 239, 1),
+
             ],
 //              stops: [0.45,0.5],
           )),
       child: SingleChildScrollView(
-        child: Column(children:List.generate(response2['count'], (index) {
-          ElementItemOrder itemOrder = ElementItemOrder(index, response2['orders'][index]['order']['date'], response2['orders'][index]['order']['time'],
-              response2['orders'][index]['ids'], int.parse(response2['orders'][index]['order']['status']));
-          print("JOPA " + itemOrder.id.toString());
-          return ElementOrder(itemOrder, context);
-        })
-          ,),
+        child: Padding(
+          padding: const EdgeInsets.only(top:4.0),
+          child: Column(children:List.generate(response2['count'], (index) {
+            ElementItemOrder itemOrder = ElementItemOrder(index, response2['orders'][index]['order']['date'], response2['orders'][index]['order']['time'],
+                response2['orders'][index]['ids'], int.parse(response2['orders'][index]['order']['status']));
+            print("JOPA " + itemOrder.id.toString());
+            return ElementOrder(itemOrder, context);
+          })
+            ,),
+        ),
       ),
     );
   } else {
@@ -429,7 +433,15 @@ Widget ElementOrder(ElementItemOrder item, BuildContext context) {
         tag: item.id,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            gradient: LinearGradient(
+              begin: FractionalOffset.topLeft,
+              end: FractionalOffset.bottomRight,
+              colors: [
+                Color.fromRGBO(255, 250, 245, 1),
+                Color.fromRGBO(255, 250, 250, 1),
+              ],
+//              stops: [0.45,0.5],
+            ),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
@@ -438,7 +450,7 @@ Widget ElementOrder(ElementItemOrder item, BuildContext context) {
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
+                color: Colors.transparent.withOpacity(0.1),
                 spreadRadius: 5,
                 blurRadius: 7,
                 offset: Offset(0, 3), // changes position of shadow
@@ -453,15 +465,15 @@ Widget ElementOrder(ElementItemOrder item, BuildContext context) {
                 children: <Widget>[
                   Container(
 
-                      width: (MediaQuery.of(context).size.width-12)*2/3,
-                      child: Row(
-                    children: <Widget>[
-                      bigDay(item.date, item.time),
-                      def(item.date, item.time),
+                    width: (MediaQuery.of(context).size.width-12)*2/3,
+                    child: Row(
+                      children: <Widget>[
+                        bigDay(item.date, item.time),
+                        def(item.date, item.time),
 
 
-                    ],
-                  ),
+                      ],
+                    ),
 
                   ),
                   Container(
