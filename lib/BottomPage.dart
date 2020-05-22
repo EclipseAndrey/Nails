@@ -1,12 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutterapp32/Account.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'EmptyTrash.dart';
 import 'home.dart';
 import 'Contacts.dart';
 import 'Trash.dart';
 import 'dart:convert';
-
+import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -198,23 +199,16 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
-
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     List<Widget> _widgetOptions = <Widget>[
       Text(
         'Index 0: Home',
         style: optionStyle,
       ),
-      odresList(token, context),
-      Categories(context),
-      BodyTrash(order,context),
-      Text(
-        'Index 2: School',
-        style: optionStyle,
-      ),
+      MyOrders(),
+      Home(),
+      Trash(items),
+      Account(),
     ];
 
 
@@ -223,55 +217,47 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
 //break
     return Scaffold(
-      appBar:  AppBar(
-        backgroundColor: Color.fromRGBO(255, 240, 239, 1),
-        elevation: 0.0,
-        centerTitle: true,
-        title:  Text(
-          headerTx,
-          style: TextStyle(
-//                              color: Colors.black87,
-              color: Color.fromRGBO(219, 33, 76, 1),
-              fontSize: 25,
-              decoration: TextDecoration.none,
-              fontWeight: FontWeight.w300),
-        ),
-      ),
       body: Container(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-
-      bottomNavigationBar: BottomNavigationBar(
-
-        type: BottomNavigationBarType.fixed,
-
-//          fixedColor: Color.fromRGBO(250, 208, 221, 100),
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.call, color: Colors.black45,),
-            title: Text('Позвонить'),
-
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.contacts, color: Colors.black45,),
-            title: Text('Контакты'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline, color: Colors.black45,),
-            title: Text('Услуги'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket, color: Colors.black45,),
-            title: Text('Детали'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.black45,),
-            title: Text('Аккаунт'),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(30.0))
+        ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          selectedIconTheme: IconThemeData(size: 30),
+          unselectedIconTheme: IconThemeData(size: 23),
+          unselectedFontSize: 12,
+          selectedFontSize: 13,
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+          backgroundColor: Color.fromRGBO(255, 116, 81, 0.9),
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.call, color: Colors.white,),
+              title: Text('Позвонить', style: TextStyle(color: Colors.white),),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.reorder, color: Colors.white,),
+              title: Text('Заказы', style: TextStyle(color: Colors.white)),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home, color: Colors.white,),
+              title: Text('Услуги', style: TextStyle(color: Colors.white)),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart, color: Colors.white,),
+              title: Text('Корзина', style: TextStyle(color: Colors.white)),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, color: Colors.white,),
+              title: Text('Аккаунт', style: TextStyle(color: Colors.white)),
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }

@@ -26,7 +26,7 @@ void main(){
 
   final routes = <String, WidgetBuilder>{
     // Путь, по которому создаётся Home Screen
-    'CheckCode': (BuildContext context) => CheckCode(''),
+    '/CheckCode': (BuildContext context) => CheckCode(''),
     '/Quality': (BuildContext context) => Quality(),
     '/MyOrders': (BuildContext context) => MyOrders(),
     '/Login': (BuildContext context) => Login(),

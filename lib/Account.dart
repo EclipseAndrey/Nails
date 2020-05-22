@@ -17,9 +17,9 @@ class _AccountState extends State<Account> {
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 colors: [
-                  Color.fromRGBO(255, 182, 173, 1),
-                  Color.fromRGBO(255, 182, 173, 0.8),
-                  Color.fromRGBO(255, 182, 173, 0.5)
+                  Color.fromRGBO(255, 116, 81, 0.8),
+                  Color.fromRGBO(255, 116, 81, 0.7),
+                  Color.fromRGBO(255, 116, 81, 0.7)
                 ]
             )
         ),
@@ -119,7 +119,7 @@ class _AccountState extends State<Account> {
                             margin: EdgeInsets.symmetric(horizontal: 50),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
-                                color: Color.fromRGBO(255, 182, 173, 1)
+                                color: Color.fromRGBO(255, 116, 81, 0.8)
                             ),
                             child: Center(
                               child: Text("Применить", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),

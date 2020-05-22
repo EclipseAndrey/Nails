@@ -63,6 +63,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    _check_summ();
     _ii();
     controller1.text = "+"+num;
 
@@ -414,15 +415,19 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
 
   int _check_summ() {
     sum = 0;
-    for (int i = 0; i < items2.length; i++) {
-      sum += (items2[i].price - items2[i].sale)*items_counter[i];
+    if(resum == true){
+      setState(() {
+        for (int i = 0; i < items2.length; i++) {
+          sum += (items2[i].price - items2[i].sale);
+        }
+      });
+      resum = false;
     }
-    return sum;
   }
 
   Widget _RegistrationZakaza(BuildContext context, var controller1) {
 
-    if (items.length > 0)
+    if (items2.length > 0)
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -432,7 +437,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
               Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Text(
-                  'Сумма: ${_check_summ()} руб.',
+                  'Сумма: $sum руб.',
                   style: TextStyle(
                     decoration: TextDecoration.none,
                     color: Colors.black,
@@ -764,7 +769,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
 
   Widget _Prise(){
       return Text(
-        'Итого: ${_check_summ()} руб.',
+        'Итого: $sum руб.',
         style: TextStyle(
           decoration: TextDecoration.none,
           color: Colors.black,
@@ -832,10 +837,10 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
 
               return ids;
             }
-            print( 'http://eclipsedevelop.ru/api.php/cbmakeorder?token=$token&ids=${getIds()}&promo=${order.Promo}&adress=${order.adress}&comment=${order.comment}&date=${order.date}&time=${order.time}&prise=${_check_summ()}');
+            print( 'http://eclipsedevelop.ru/api.php/cbmakeorder?token=$token&ids=${getIds()}&promo=${order.Promo}&adress=${order.adress}&comment=${order.comment}&date=${order.date}&time=${order.time}&prise=$sum');
             Future<http.Response> res() async {
               return await  http.get(
-                  'http://eclipsedevelop.ru/api.php/cbmakeorder?token=$token&ids=${getIds()}&promo=${order.Promo}&adress=${order.adress}&comment=${order.comment}&date=${order.date}&time=${order.time}&prise=${_check_summ()}');
+                  'http://eclipsedevelop.ru/api.php/cbmakeorder?token=$token&ids=${getIds()}&promo=${order.Promo}&adress=${order.adress}&comment=${order.comment}&date=${order.date}&time=${order.time}&prise=$sum');
             }
             res().then((value){
               if(value.statusCode == 200){
@@ -883,35 +888,27 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
           elevation: 2,
           child: Container(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                    height: 60,
-                    width: 60,
-                    child: CircleAvatar(
-                      backgroundImage:  NetworkImage(item.picture),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          height: 60,
+                          width: 60,
+                          child: CircleAvatar(
+                            backgroundImage:  NetworkImage(item.picture),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 14.0, right: 30.0),
+                          child: Text(
+
+                            item.head, style: TextStyle(fontSize: 18),),
+                        ),
+
+                      ],
                     )
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width/3*1.3,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 14.0, right: 30.0),
-                    child: Text(
-                      
-                      item.head, style: TextStyle(fontSize: 18),),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: (){
-                    count++;
-                  },
-                ),
-                Text(count.toString()),
-                IconButton(
-                  icon: Icon(Icons.remove),
-                  onPressed: (){
-                    count--;
-                  },
                 ),
                 IconButton(
                   icon: Icon(Icons.close, color: Colors.redAccent,),
@@ -933,6 +930,8 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
     };
 
     animatedListKey.currentState.removeItem(i, builder);
+    resum = true;
+    _check_summ();
     print(items2);
   }
 }

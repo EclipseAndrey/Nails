@@ -2,19 +2,21 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutterapp32/Detail.dart';
 import 'package:flutterapp32/Push_Notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'Detail.dart';
+import 'EmptyTrash.dart';
 import 'Trash.dart';
 import 'Objects.dart';
 import 'package:http/http.dart' as http;
 import 'MyOrders.dart';
 import 'main.dart';
 
-List<ElementItem> items;
+List<ElementItem> items = [];
 List<int> items_counter;
 
 
@@ -56,264 +58,13 @@ class _Home extends State<Home> {
     items.clear();
     items_counter = [1];
     items_counter.clear();
-
-
     return new Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Color.fromRGBO(255, 230, 229, 1),
-      appBar: new AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        title: new Text(
-          'Заголов Очка',
-          style: TextStyle(
-            color: Color.fromRGBO(62, 71, 87, 1),
-          ),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.menu,
-            color: Colors.black45,
-          ),
-          onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
-          },
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.add_shopping_cart,
-              color: Colors.black45,
-            ),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Trash(items)));
-            },
-          )
-        ],
-      ),
-      drawer: new Drawer(
-          // elevation: 260.0,
-          child: Container(
-        color: Color.fromRGBO(62, 71, 87, 1),
-        child: Stack(
-          children: <Widget>[
-
-            new ListView(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              children: <Widget>[
-                new DrawerHeader(
-                  decoration: BoxDecoration(
-//                color: Colors.blue,
-                      ),
-                  child: _MenuHeader(),
-                ),
-                new Divider(
-                  color: Colors.white38,
-                ),
-                new ListTile(
-                  title: new Text(
-                    'Услуги',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                Navigator.pushNamed(context, '/Login');
-                  },
-                ),
-                new ListTile(
-                  title: new Text(
-                    'Корзина',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {},
-                ),
-                new ListTile(
-                  title: new Text(
-                    'Мои заказы',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/BottomPage');
-                  },
-                ),
-                new ListTile(
-                  title: new Text(
-                    'Записи',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-
-                    Future<http.Response> res() async {
-                      return await http
-                          .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
-                    }
-                    print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
-
-                    res().then((value) {
-                      if (value.statusCode == 200) {
-                        response = jsonDecode(value.body);
-                        print(response);
-                        Navigator.pushNamed(context, '/MyOrders');
-                      }
-                    });
-
-
-
-                  },
-                ),
-                new ListTile(
-                  title: new Text(
-                    'Контакты',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/Contacts');
-
-                  },
-                ),
-                new ListTile(
-                  title: new Text(
-                    'Быстрый вызов',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-
-                    setState(() {
-                      _launched = _makePhoneCall('tel:+79307229602');
-                    });
-                  },
-                ),
-                new ListTile(
-                  title: new Text(
-                    'Информация',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/Quality');
-                  },
-                ),
-                new Divider(
-                  color: Colors.white38,
-                ),
-                new ListTile(
-                  title: new Text(
-                    'Выйти',
-                    style: TextStyle(color: Colors.redAccent),
-                  ),
-                  onTap: () async {
-                    final prefs = await SharedPreferences
-                        .getInstance();
-                    prefs.setBool('auto', false);
-                    Navigator.pushNamed(context, '/main');
-
-
-                  },
-                ),
-              ],
-            ),
-            Align(
-
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0, left: 20),
-                child: GestureDetector(
-                  child: Text(
-                    'Eclipse Developers 2020',
-                    style: TextStyle(color: Colors.white54, fontSize: 12),
-                  ),
-                  onTap: (){    print("Hello world");
-                  Navigator.pushNamed(context, '/Eclipse');
-                  },
-                ),
-              ),
-              alignment: Alignment.bottomLeft,
-            ),
-          ],
-        ),
-      )),
       body: Builder(builder: (context)=> Categories(context)),
     );
   }
 }
 
-Widget _MenuHeader() {
-  return Center(
-    child: Column(
-      children: <Widget>[
-        Text('Войти с помощью', style: TextStyle(color: Colors.white70)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: Image.asset('assets/images/inst.png').image,
-                            fit: BoxFit.cover),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            blurRadius: 5.0,
-                            spreadRadius: 0.1,
-                            offset: Offset(-5, 5),
-                          )
-                        ] //boxShadow
-                        ),
-                    height: 60,
-                    width: 60,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      'Instagram',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: Image.asset('assets/images/vk.png').image,
-                            fit: BoxFit.cover),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            blurRadius: 5.0,
-                            spreadRadius: 0.01,
-                            offset: Offset(-5, 5),
-                          )
-                        ] //boxShadow
-                        ),
-                    height: 60,
-                    width: 60,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      'VK',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-}
 
 class ElementItem {
   int id;
@@ -385,8 +136,8 @@ ElementItem elementInfo(int category, int indexx) {
   step4.add(ElementItem(506, 'http://eclipsedevelop.ru/images/506.png', 'Глитер', 'Стоимость за одну ногтевую пластину', 200, 100));
   info.add(step4);
 //СПА Уход
-  step5.add(ElementItem(601, 'http://eclipsedevelop.ru/images/21.png', 'Витаминный уход', 'Омолаживающий и восстанавливающий уход с применением скраба и крема. Рекомендуется для сухой кожи рук и ног', 200, 0));
-  step5.add(ElementItem(602, 'http://eclipsedevelop.ru/images/22.png', 'Холодная парафинотерапия', 'Увлажняющий и питательный уход с применением косметического парафина. Идеальный уход во время холодов', 300, 0));
+  step5.add(ElementItem(601, 'http://eclipsedevelop.ru/images/21.png', 'Витаминный уход', 'Омолаживающий и восстанавливающий уход с применением скраба и крема.', 200, 0));
+  step5.add(ElementItem(602, 'http://eclipsedevelop.ru/images/22.png', 'Холодная парафинотерапия', 'Увлажняющий и питательный уход с применением парафина.', 300, 0));
   step5.add(ElementItem(603, 'http://eclipsedevelop.ru/images/21.png', 'Тайский массаж', 'Тонизирующий массаж для улучшения кровообращения рук и ног с применением массажного масла', 200, 0));
   info.add(step5);
 //Брови
@@ -399,7 +150,7 @@ ElementItem elementInfo(int category, int indexx) {
 
 Widget Categories(BuildContext context) {
   return Container(
-    color:              Color.fromRGBO(255, 240, 239, 1),
+    color:Color.fromRGBO(255, 188, 177, 0.0),
     height: MediaQuery.of(context).size.height,
     width: MediaQuery.of(context).size.width,
     child: ListView(
@@ -442,17 +193,23 @@ Widget _Category(int cat, BuildContext context) {
     width: 600,
     child: Column(
       children: <Widget>[
-        Text(
-          info.name,
-          style: TextStyle(color: Colors.black45, fontSize: 20),
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Text(
+              info.name,
+              style: TextStyle(color: Color.fromRGBO(255, 116, 81, 0.9), fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
-        Divider(),
+        Divider(color: Color.fromRGBO(255, 116, 81, 0.8), thickness: 0.4,),
         Padding(
           padding:
               const EdgeInsets.only(right: 18.0, left: 18, bottom: 18, top: 8),
           child: Container(
             height: 160 * 1.7,
-            width: 400,
+            width: MediaQuery.of(context).size.width,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: List.generate(info.count, (index) {
@@ -469,28 +226,17 @@ Widget _Category(int cat, BuildContext context) {
 Widget _Item(ElementItem item, BuildContext context) {
 
   Widget inTrash(){
-
     return Container(
-
       height: 33,
       width: 150,
       child: FlatButton(
-
         shape: new RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(25.0),
-              bottomLeft: Radius.circular(25.0),
-            ),
-
-
+            borderRadius: BorderRadius.all(Radius.circular(25.0)),
             side: BorderSide(color: Colors.black45)),
         color: Colors.white,
-
         textColor: Colors.pinkAccent,
         padding: EdgeInsets.all(8.0),
         onPressed: () {
-
-
           if(items.isEmpty){
             items_counter = [1];
             List<ElementItem> step = [item];
@@ -549,7 +295,6 @@ Widget _Item(ElementItem item, BuildContext context) {
     return Row(
       children: <Widget>[
         Container(
-
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: FractionalOffset.topCenter,
@@ -559,11 +304,8 @@ Widget _Item(ElementItem item, BuildContext context) {
               ],
 //              stops: [0.45,0.5],
             ),
-
               shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25.0),
-                  bottomRight: Radius.circular(25.0)),
+              borderRadius: BorderRadius.all(Radius.circular(25.0)),
           ),
           padding: EdgeInsets.all(20),
           height: 250 * 1.7,
@@ -610,13 +352,7 @@ Widget _Item(ElementItem item, BuildContext context) {
           ),
           //color: Colors.white,
         ),
-        SizedBox(
-          width: 15,
-          height: 150,
-          child: Container(
-            color: Colors.transparent,
-          ),
-        )
+
       ],
     );
   } else
@@ -627,114 +363,84 @@ Widget _Item(ElementItem item, BuildContext context) {
             MaterialPageRoute(
                 builder: (context) => Detail(item)));
       },
-      child: Row(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: FractionalOffset.topCenter,
-                  end: FractionalOffset.bottomCenter,
-                  colors: [
-                    Colors.white,
-                    Colors.white,
-                  ],
-//              stops: [0.45,0.5],
+      child: Padding(
+        padding: const EdgeInsets.only(right: 25),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.all(Radius.circular(25.0)),
+              border: Border.all(width: 1, color: Color.fromRGBO(255, 188, 173, 1))
+          ),
+          height: 250 * 1.7,
+          width: 220,
+          child: Column(
+            children: <Widget>[
+              Hero(
+                tag: item.id,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: Image.network(
+                          item.picture,
+                          fit: BoxFit.fill,
+                        ).image,
+                        fit: BoxFit.fill),
+                    color: Colors.white,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.0),
+                      topRight: Radius.circular(25.0),
+                    ),
+                  ),
+                  height: 74,
+                  width: 150 * 1.7, // 255
                 ),
-                color: Colors.white70,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25.0),
-                    bottomRight: Radius.circular(25.0))),
-            padding: EdgeInsets.only(bottom: 0),
-            height: 250 * 1.7,
-            width: 150 * 1.7,
-            child: Column(
-              children: <Widget>[
-                Hero(
-                  tag: item.id,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: Image.network(
-                            item.picture,
-                            fit: BoxFit.fill,
-                          ).image,
-                          fit: BoxFit.fill),
-                      color: Colors.white70,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25.0),
+              ),
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 10, right: 10),
+                      child: Text(
+                        item.head,
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
-                    height: 74,
-                    width: 150 * 1.7, // 255
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 10, right: 10),
-                  child: Align(
-                    alignment: AlignmentDirectional.center,
-                    child: Text(
-                      item.head,
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 12.0, right: 6, left: 12),
-                  child: Container(
-                    height: 150 * 1.7 - 185,
-                    width: 150 * 1.7 - 16,
-                    child: Align(
-                      alignment: AlignmentDirectional.topCenter,
-                      child: Center(
+                    Padding(
+                      padding: const EdgeInsets.only(left:13.0, right: 8, top: 8, bottom: 0),
+                      child: ConstrainedBox(
                         child: Text(
                           item.tx,
                           style: TextStyle(color: Colors.black26, fontSize: 16),
-                        ),
+                        ), constraints: BoxConstraints(
+                        minHeight: 80
+                      ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-                Align(
-                  alignment: AlignmentDirectional.topCenter,
-                  child: Center(
-                    child: _price(item.price, item.sale),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: inTrash(),
-                ),
-              ],
-            ),
-            //color: Colors.white,
+              ),
+              _price(item.price, item.sale),
+              SizedBox(height: 10,),
+              inTrash()
+
+            ],
           ),
-          SizedBox(
-            width: 15,
-            height: 150,
-            child: Container(
-              color: Colors.transparent,
-            ),
-          )
-        ],
+        ),
       ),
+
     );
 }
 
 Widget _price(int price, int sale) {
   if (sale == 0) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          '$price руб.',
-          style: TextStyle(color: Colors.redAccent, fontSize: 16),
-        )
-      ],
+    return Text(
+      '$price руб.',
+      style: TextStyle(color: Colors.redAccent, fontSize: 16),
     );
   } else {
     return Row(

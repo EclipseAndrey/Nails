@@ -18,7 +18,6 @@ class MyOrders extends StatefulWidget {
 
 class _MyOrdersState extends State<MyOrders> {
   String i = token;
-
   @override
   Future<void> initState()  {
     super.initState();
@@ -30,17 +29,6 @@ class _MyOrdersState extends State<MyOrders> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor:  Color.fromRGBO(225, 200, 199, 10),
-        elevation: 0.0,
-        title: Text("Мои заказы"),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushNamed(context, '/home');
-          },
-        ),
-      ),
       body: odresList(token, context),
     );
   }
@@ -78,15 +66,21 @@ Widget orders50(List<dynamic> id) {
   //ограничение по символам
   int symbols = 50;
   //размер шрифта
-  double symbilssize = 11;
 
   switch (id.length) {
     case 1:
       {
-        return Text(
-          elementInfo((id[0] ~/ 100), id[0] % 100).head,
-          style:
-          TextStyle(decoration: TextDecoration.none, fontSize: symbilssize),
+        return Padding(
+          padding: const EdgeInsets.only(left: 16.0, bottom: 3),
+          child: ConstrainedBox(
+            child: Text(
+              elementInfo((id[0] ~/ 100), id[0] % 100).head,
+              style: TextStyle(color: Colors.black87, decoration: TextDecoration.none, fontSize: 13),
+            ), constraints: BoxConstraints(
+              maxWidth: 150,
+              maxHeight: 40
+          ),
+          ),
         );
       }
       break;
@@ -95,18 +89,32 @@ Widget orders50(List<dynamic> id) {
         if (elementInfo((id[0] ~/ 100), id[0] % 100).head.length +
             elementInfo((id[1] ~/ 100), id[1] % 100).head.length >
             symbols) {
-          return Text(
-            elementInfo((id[0] ~/ 100), id[0] % 100).head + '...',
-            style: TextStyle(
-                decoration: TextDecoration.none, fontSize: symbilssize),
+          return Padding(
+            padding: const EdgeInsets.only(left: 16.0, bottom: 3),
+            child: ConstrainedBox(
+              child: Text(
+                elementInfo((id[0] ~/ 100), id[0] % 100).head + '...',
+                style: TextStyle(color: Colors.black87, decoration: TextDecoration.none, fontSize: 13),
+              ), constraints: BoxConstraints(
+                maxWidth: 150,
+                maxHeight: 40
+            ),
+            ),
           );
         } else {
-          return Text(
-            elementInfo((id[0] ~/ 100), id[0] % 100).head +
-                ', ' +
-                elementInfo((id[1] ~/ 100), id[1] % 100).head,
-            style: TextStyle(
-                decoration: TextDecoration.none, fontSize: symbilssize),
+          return Padding(
+            padding: const EdgeInsets.only(left: 16.0, bottom: 3),
+            child: ConstrainedBox(
+              child: Text(
+                elementInfo((id[0] ~/ 100), id[0] % 100).head +
+                    ', ' +
+                    elementInfo((id[1] ~/ 100), id[1] % 100).head,
+                style: TextStyle( color: Colors.black87, decoration: TextDecoration.none, fontSize: 13),
+              ), constraints: BoxConstraints(
+                  maxWidth: 150,
+                  maxHeight: 40
+            ),
+            ),
           );
         }
       }
@@ -116,19 +124,33 @@ Widget orders50(List<dynamic> id) {
         if (elementInfo((id[0] ~/ 100), id[0] % 100).head.length +
             elementInfo((id[1] ~/ 100), id[1] % 100).head.length >
             symbols) {
-          return Text(
-            elementInfo((id[0] ~/ 100), id[0] % 100).head + '...',
-            style: TextStyle(
-                decoration: TextDecoration.none, fontSize: symbilssize),
+          return ConstrainedBox(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16.0, bottom: 3),
+              child: Text(
+                elementInfo((id[0] ~/ 100), id[0] % 100).head + '...',
+                style: TextStyle( color: Colors.black87, decoration: TextDecoration.none, fontSize: 13),
+              ),
+            ), constraints: BoxConstraints(
+              maxWidth: 150,
+              maxHeight: 40
+          ),
           );
         } else {
-          return Text(
-            elementInfo((id[0] ~/ 100), id[0] % 100).head +
-                ', ' +
-                elementInfo((id[1] ~/ 100), id[1] % 100).head +
-                '...',
-            style: TextStyle(
-                decoration: TextDecoration.none, fontSize: symbilssize),
+          return ConstrainedBox(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16.0, bottom: 3),
+              child: Text(
+                elementInfo((id[0] ~/ 100), id[0] % 100).head +
+                    ', ' +
+                    elementInfo((id[1] ~/ 100), id[1] % 100).head +
+                    '...',
+                style: TextStyle( color: Colors.black87, decoration: TextDecoration.none, fontSize: 13),
+              ),
+            ), constraints: BoxConstraints(
+              maxWidth: 150,
+              maxHeight: 40
+          ),
           );
         }
       }
@@ -141,22 +163,10 @@ Widget StatusOrder(int _Status, BuildContext context) {
     case 0:
       {
         return Container(
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 3.0,
-                height: 3.0,
-                decoration: new BoxDecoration(
-                  color: Colors.orange,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              Text(
-                'Ожидание',
-                style: TextStyle(
-                    color: Colors.orange, decoration: TextDecoration.none),
-              )
-            ],
+          child: Text(
+            'Ожидает',
+            style: TextStyle(
+                color: Colors.black, decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
         );
       }
@@ -164,22 +174,10 @@ Widget StatusOrder(int _Status, BuildContext context) {
     case 1:
       {
         return Container(
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 3.0,
-                height: 3.0,
-                decoration: new BoxDecoration(
-                  color: Colors.green,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              Text(
-                'Подтвержден',
-                style: TextStyle(
-                    color: Colors.green, decoration: TextDecoration.none),
-              )
-            ],
+          child: Text(
+            'Подтвержден',
+            style: TextStyle(
+                color: Colors.black, decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
         );
       }
@@ -187,22 +185,10 @@ Widget StatusOrder(int _Status, BuildContext context) {
     case 2:
       {
         return Container(
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 3.0,
-                height: 3.0,
-                decoration: new BoxDecoration(
-                  color: Colors.red,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              Text(
-                'Отменен',
-                style: TextStyle(
-                    color: Colors.red, decoration: TextDecoration.none),
-              )
-            ],
+          child: Text(
+            'Отменен',
+            style: TextStyle(
+                color: Colors.black, decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
         );
       }
@@ -210,22 +196,10 @@ Widget StatusOrder(int _Status, BuildContext context) {
     case 4:
       {
         return Container(
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 3.0,
-                height: 3.0,
-                decoration: new BoxDecoration(
-                  color: Colors.blue,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              Text(
-                'Завершен',
-                style: TextStyle(
-                    color: Colors.blue, decoration: TextDecoration.none),
-              )
-            ],
+          child: Text(
+            'Завершен',
+            style: TextStyle(
+                color: Colors.black, decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
         );
       }
@@ -237,7 +211,7 @@ Widget StatusOrder(int _Status, BuildContext context) {
   }
 }
 
-Widget def(String date, String time) {
+Widget def(String date, String time, String id, ElementItemOrder item) {
   var dateorder = date;
   var timeorder = time;
 
@@ -273,23 +247,22 @@ Widget def(String date, String time) {
       }
     }
   }
-
-  print("Now " + new DateFormat("dd-MM-yyyy HH:mm:ss").format(now));
-  print("Order " + new DateFormat("dd-MM-yyyy HH:mm:ss").format(intlorder));
-  //_counter = dateorder.day.toString() ;
-
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
+  if(different.inMinutes <= 0){
+    http.get("http://eclipsedevelop.ru/api.php/cbsetstatus?token=$token&id=$id&status=4");
+    print("http://eclipsedevelop.ru/api.php/cbsetstatus?token=$token&id=$id&status=4");
+    return SizedBox();
+  } else{
+    return Container(
       child: Text(
         defferent,
         style: TextStyle(
-            fontStyle: FontStyle.italic,
-            color: Color.fromRGBO(32, 232, 14, 100),
+            fontSize: 17,
+            color: Colors.black87,
             decoration: TextDecoration.none),
       ),
-    ),
-  );
+    );
+  }
+
 }
 
 Widget bigDay(String date, String time) {
@@ -365,29 +338,15 @@ Widget bigDay(String date, String time) {
 
 Widget odresList(String token, BuildContext context)  {
   print(response2.toString());
-
-
   if (response2['count'] > 0) {
     return Container(
-
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: FractionalOffset.topCenter,
-            end: FractionalOffset.bottomCenter,
-            colors: [
-              Color.fromRGBO(255, 240, 239, 1),
-              Color.fromRGBO(255, 240, 239, 1),
-
-            ],
-//              stops: [0.45,0.5],
-          )),
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top:4.0),
+          padding: const EdgeInsets.only(top:20.0),
           child: Column(children:List.generate(response2['count'], (index) {
-            ElementItemOrder itemOrder = ElementItemOrder(index, response2['orders'][index]['order']['date'], response2['orders'][index]['order']['time'],
+            ElementItemOrder itemOrder = ElementItemOrder(response2['orders'][index]['order']['id'], response2['orders'][index]['order']['date'], response2['orders'][index]['order']['time'],
                 response2['orders'][index]['ids'], int.parse(response2['orders'][index]['order']['status']));
             print("JOPA " + itemOrder.id.toString());
             return ElementOrder(itemOrder, context);
@@ -403,13 +362,13 @@ Widget odresList(String token, BuildContext context)  {
 
 }
 class ElementItemOrder{
-  int id;
+  String id;
   String date;
   String time;
   List<dynamic> ids;
   int status;
 
-  ElementItemOrder(int id, String date, String time, List<dynamic> ids, int status){
+  ElementItemOrder(String id, String date, String time, List<dynamic> ids, int status){
     this.id = id;
     this.date = date;
     this.time = time;
@@ -420,88 +379,79 @@ class ElementItemOrder{
 
 Widget ElementOrder(ElementItemOrder item, BuildContext context) {
   print("Дата контейнера "+item.date+" Время "+item.time);
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => OrderDetail(item)));
-    },
-    child: Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: Hero(
-        tag: item.id,
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: FractionalOffset.topLeft,
-              end: FractionalOffset.bottomRight,
-              colors: [
-                Color.fromRGBO(255, 250, 245, 1),
-                Color.fromRGBO(255, 250, 250, 1),
-              ],
-//              stops: [0.45,0.5],
-            ),
+  return Padding(
+    padding: const EdgeInsets.all(6.0),
+    child: Hero(
+      tag: item.id,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(255, 164, 116, 1),
+          border: Border.all(width: 1, color: Color.fromRGBO(255, 164, 116, 1)),
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(255, 164, 116, .4),
+              spreadRadius: 2,
+              blurRadius: 10,
+              offset: Offset(-2, 3), // changes position of shadow
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.transparent.withOpacity(0.1),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
-          ),
-          width: MediaQuery.of(context).size.width-12,
-          height: 80,
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Container(
-
-                    width: (MediaQuery.of(context).size.width-12)*2/3,
-                    child: Row(
-                      children: <Widget>[
-                        bigDay(item.date, item.time),
-                        def(item.date, item.time),
-
-
-                      ],
-                    ),
-
+          ],
+        ),
+        width: MediaQuery.of(context).size.width,
+        height: 80,
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, top: 5),
+                  child: StatusOrder(item.status, context),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, top: 5, right: 10),
+                  child: Container(
+                      alignment: Alignment.centerRight,
+                      child: def(item.date, item.time, item.id, item)),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(top: 10, right: 10),
+                    child: orders50(item.ids)),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OrderDetail(item)));
+                  },
+                  child: Container(
+                      margin: EdgeInsets.only(top: 8, right: 8),
+                      padding: EdgeInsets.only(right: 18, left: 18),
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.black87, width: 1)
+                      ),
+                      child: Center(
+                          child: Text("Подробнее",
+                            style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.normal),
+                          )
+                      )
                   ),
-                  Container(
-                    width: (MediaQuery.of(context).size.width-12)*1/3,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: StatusOrder(item?.status, context),
-                        ),
-
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-
-              Row(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left:8.0),
-                    child: orders50(item?.ids),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                )
+              ],
+            ),
+          ],
         ),
       ),
     ),
