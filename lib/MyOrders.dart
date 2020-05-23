@@ -385,8 +385,8 @@ Widget ElementOrder(ElementItemOrder item, BuildContext context) {
       tag: item.id,
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 164, 116, 1),
-          border: Border.all(width: 1, color: Color.fromRGBO(255, 164, 116, 1)),
+          color: Colors.white70,
+          border: Border.all(width: 2, color: Color.fromRGBO(255, 164, 116, 1)),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
@@ -397,7 +397,7 @@ Widget ElementOrder(ElementItemOrder item, BuildContext context) {
             BoxShadow(
               color: Color.fromRGBO(255, 164, 116, .4),
               spreadRadius: 2,
-              blurRadius: 10,
+              blurRadius: 5,
               offset: Offset(-2, 3), // changes position of shadow
             ),
           ],

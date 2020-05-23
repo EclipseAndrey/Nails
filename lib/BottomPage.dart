@@ -125,8 +125,8 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   void _getPrice() {
     price = 0;
     setState(() {
-      for (int i = 0; i < items2.length; i++) {
-        price = price + (items2[i].price - items2[i].sale) * items_counter2[i];
+      for (int i = 0; i < items.length; i++) {
+        price = price + (items[i].price - items[i].sale);
       }
     });
   }
@@ -910,6 +910,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   }
 
   Widget _Prise(){
+    _getPrice();
     return Text(
       'Итого: $price руб.',
       style: TextStyle(
