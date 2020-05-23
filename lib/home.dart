@@ -243,14 +243,49 @@ ElementItem elementInfo(int category, int indexx) {
 
 Widget Categories(BuildContext context) {
   return Container(
-    color: Color.fromRGBO(255, 188, 177, 0.0),
     height: MediaQuery.of(context).size.height,
     width: MediaQuery.of(context).size.width,
-    child: ListView(
-      scrollDirection: Axis.vertical,
-      children: List.generate(7, (cat) {
-        return _Category(cat, context);
-      }),
+    child: SingleChildScrollView(
+      child: Container(
+        color: Color.fromRGBO(255, 188, 177, 0.0),
+        height: 210 * 1.7 * 7 + 50,
+        // Высота экрана равнозначна длине карточек, чтобы пролистывался  скролл, а не лист
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 50,
+              child: Stack(
+                children: <Widget>[
+                  Image.asset("assets/images/HeaderCatalog.png"),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Text(
+                        "Каталог" , style:  TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              height: 210 * 1.7 * 7,
+              // Высота экрана равнозначна длине карточек, чтобы пролистывался  скролл, а не лист
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+//                scrollDirection: Axis.vertical,
+                children: List.generate(7, (cat) {
+                  return _Category(cat, context);
+                }),
+              ),
+            ),
+          ],
+        ),
+      ),
     ),
   );
 }
@@ -313,7 +348,7 @@ Widget _Category(int cat, BuildContext context) {
               scrollDirection: Axis.horizontal,
               children: List.generate(info.count, (index) {
                 return Padding(
-                  padding: const EdgeInsets.only(bottom:8.0, left: 8),
+                  padding: const EdgeInsets.only(bottom: 8.0, left: 8),
                   child: _Item(elementInfo(cat, index), context),
                 );
               }),
@@ -465,7 +500,6 @@ Widget _Item(ElementItem item, BuildContext context) {
       child: Padding(
         padding: const EdgeInsets.only(right: 25),
         child: Container(
-
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
