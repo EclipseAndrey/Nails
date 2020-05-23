@@ -405,6 +405,7 @@ Widget ElementOrder(ElementItemOrder item, BuildContext context) {
         width: MediaQuery.of(context).size.width,
         height: 80,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
