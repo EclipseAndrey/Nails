@@ -260,7 +260,7 @@ Widget Categories(BuildContext context) {
                   Image.asset("assets/images/HeaderCatalog.png"),
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
+                      padding: const EdgeInsets.only(bottom: 18.0),
                       child: Text(
                         "Каталог" , style:  TextStyle(
                         fontSize: 18,
