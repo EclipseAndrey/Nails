@@ -53,40 +53,52 @@ class _OrderDetailState extends State<OrderDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Container(
         child: Column(
           children: <Widget>[
             Container(
-              alignment: Alignment.centerLeft,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(255, 164, 116, .5),
-                      spreadRadius: 3,
-                      blurRadius:10,
-                      offset: Offset(-2, 3), // changes position of shadow
+              height: 55,
+              child: Stack(
+                children: <Widget>[
+
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromRGBO(255, 164, 116, .5),
+                            spreadRadius: 3,
+                            blurRadius:10,
+                            offset: Offset(-2, 3), // changes position of shadow
+                          ),
+                        ],
+                        gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            colors: [
+                              Color.fromRGBO(255, 116, 81, 0.8),
+                              Color.fromRGBO(255, 116, 81, 0.7),
+                              Color.fromRGBO(255, 116, 81, 0.7)
+                            ]
+                        )
                     ),
-                  ],
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      colors: [
-                        Color.fromRGBO(255, 116, 81, 0.8),
-                        Color.fromRGBO(255, 116, 81, 0.7),
-                        Color.fromRGBO(255, 116, 81, 0.7)
-                      ]
-                  )
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5.0, left: 2.0, bottom: 5),
-                child: IconButton(
-                  color: Colors.white,
-                  iconSize: 28,
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context, '/MyOrders');
-                  },
-                )
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 5.0, left: 2.0, bottom: 5),
+                      child: IconButton(
+                        color: Colors.white,
+                        iconSize: 28,
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.pop(context, '/MyOrders');
+                        },
+                      )
+                  ),
+                  Center(
+                    child: Text("Информация записи", style: TextStyle(color: Colors.white, fontSize: 18),),
+                  ),
+                ],
               ),
             ),
             FadeAnimation(0.8, Container(
@@ -96,7 +108,7 @@ class _OrderDetailState extends State<OrderDetail> {
                     alignment: Alignment.topLeft,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 35.0, left: 20.0),
-                      child: Text("В ваш заказ входит:", style: TextStyle(fontWeight: FontWeight.bold,
+                      child: Text("В ваш заказ входит:", style: TextStyle(fontWeight: FontWeight.w400,
                           fontSize: 21, color: Colors.black),),
                     ),
                   ),
@@ -130,7 +142,7 @@ class _OrderDetailState extends State<OrderDetail> {
                           color: Color.fromRGBO(255, 116, 81, 0.8)
                       ),
                       child: Center(
-                        child: Text("Отменить запись", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
+                        child: Text("Отменить запись", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),),
                       ),
                     ),
                   ),

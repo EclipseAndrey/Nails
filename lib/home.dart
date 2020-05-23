@@ -218,7 +218,7 @@ ElementItem elementInfo(int category, int indexx) {
   step5.add(ElementItem(
       602,
       'http://eclipsedevelop.ru/images/22.png',
-      'Холодная парафинотерапия',
+      'Парафинотерапия',
       'Увлажняющий и питательный уход с применением парафина.',
       300,
       0));
@@ -226,7 +226,7 @@ ElementItem elementInfo(int category, int indexx) {
       603,
       'http://eclipsedevelop.ru/images/21.png',
       'Тайский массаж',
-      'Тонизирующий массаж для улучшения кровообращения рук и ног с применением массажного масла',
+      'Тонизирующий массаж для улучшения кровообращения с применением масла',
       200,
       0));
   info.add(step5);
