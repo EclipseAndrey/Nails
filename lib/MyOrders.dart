@@ -343,15 +343,35 @@ Widget odresList(String token, BuildContext context)  {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top:20.0),
-          child: Column(children:List.generate(response2['count'], (index) {
-            ElementItemOrder itemOrder = ElementItemOrder(response2['orders'][index]['order']['id'], response2['orders'][index]['order']['date'], response2['orders'][index]['order']['time'],
-                response2['orders'][index]['ids'], int.parse(response2['orders'][index]['order']['status']));
-            print("JOPA " + itemOrder.id.toString());
-            return ElementOrder(itemOrder, context);
-          })
-            ,),
+        child: Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Image.asset("assets/images/HeaderCatalog.png"),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: Text(
+                      "Ваши заказы" , style:  TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top:10.0),
+              child: Column(children:List.generate(response2['count'], (index) {
+                ElementItemOrder itemOrder = ElementItemOrder(response2['orders'][index]['order']['id'], response2['orders'][index]['order']['date'], response2['orders'][index]['order']['time'],
+                    response2['orders'][index]['ids'], int.parse(response2['orders'][index]['order']['status']));
+                print("JOPA " + itemOrder.id.toString());
+                return ElementOrder(itemOrder, context);
+              })
+                ,),
+            ),
+          ],
         ),
       ),
     );
