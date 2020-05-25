@@ -29,7 +29,27 @@ class _MyOrdersState extends State<MyOrders> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: odresList(token, context),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Image.asset('assets/images/backround.png',
+              fit: BoxFit.fill,),
+          ),
+          odresList(token, context),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 18.0, right: 18 ,),
+              child: Divider(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+
     );
   }
 }
@@ -65,6 +85,7 @@ String minutes(int d) {
 Widget orders50(List<dynamic> id) {
   //ограничение по символам
   int symbols = 50;
+  double fontSize = 13;
   //размер шрифта
 
   switch (id.length) {
@@ -75,7 +96,7 @@ Widget orders50(List<dynamic> id) {
           child: ConstrainedBox(
             child: Text(
               elementInfo((id[0] ~/ 100), id[0] % 100).head,
-              style: TextStyle(color: Colors.black87, decoration: TextDecoration.none, fontSize: 13),
+              style: TextStyle(color: Colors.black87, decoration: TextDecoration.none, fontSize: fontSize),
             ), constraints: BoxConstraints(
               maxWidth: 150,
               maxHeight: 40
@@ -94,7 +115,7 @@ Widget orders50(List<dynamic> id) {
             child: ConstrainedBox(
               child: Text(
                 elementInfo((id[0] ~/ 100), id[0] % 100).head + '...',
-                style: TextStyle(color: Colors.black87, decoration: TextDecoration.none, fontSize: 13),
+                style: TextStyle(color: Colors.black87, decoration: TextDecoration.none, fontSize: fontSize),
               ), constraints: BoxConstraints(
                 maxWidth: 150,
                 maxHeight: 40
@@ -109,7 +130,7 @@ Widget orders50(List<dynamic> id) {
                 elementInfo((id[0] ~/ 100), id[0] % 100).head +
                     ', ' +
                     elementInfo((id[1] ~/ 100), id[1] % 100).head,
-                style: TextStyle( color: Colors.black87, decoration: TextDecoration.none, fontSize: 13),
+                style: TextStyle( color: Colors.white70, decoration: TextDecoration.none, fontSize: fontSize),
               ), constraints: BoxConstraints(
                   maxWidth: 150,
                   maxHeight: 40
@@ -129,7 +150,7 @@ Widget orders50(List<dynamic> id) {
               padding: const EdgeInsets.only(left: 16.0, bottom: 3),
               child: Text(
                 elementInfo((id[0] ~/ 100), id[0] % 100).head + '...',
-                style: TextStyle( color: Colors.black87, decoration: TextDecoration.none, fontSize: 13),
+                style: TextStyle( color: Colors.white70, decoration: TextDecoration.none, fontSize: 13),
               ),
             ), constraints: BoxConstraints(
               maxWidth: 150,
@@ -145,7 +166,7 @@ Widget orders50(List<dynamic> id) {
                     ', ' +
                     elementInfo((id[1] ~/ 100), id[1] % 100).head +
                     '...',
-                style: TextStyle( color: Colors.black87, decoration: TextDecoration.none, fontSize: 13),
+                style: TextStyle( color: Colors.white70, decoration: TextDecoration.none, fontSize: 13),
               ),
             ), constraints: BoxConstraints(
               maxWidth: 150,
@@ -166,7 +187,7 @@ Widget StatusOrder(int _Status, BuildContext context) {
           child: Text(
             'Ожидает',
             style: TextStyle(
-                color: Colors.black, decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
+                color: Color.fromRGBO(255, 255, 255, 30), decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
         );
       }
@@ -177,7 +198,7 @@ Widget StatusOrder(int _Status, BuildContext context) {
           child: Text(
             'Подтвержден',
             style: TextStyle(
-                color: Colors.black, decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
+                color: Color.fromRGBO(255, 255, 255, 30), decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
         );
       }
@@ -188,7 +209,7 @@ Widget StatusOrder(int _Status, BuildContext context) {
           child: Text(
             'Отменен',
             style: TextStyle(
-                color: Colors.black, decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
+                color: Color.fromRGBO(255, 255, 255, 30), decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
         );
       }
@@ -199,7 +220,7 @@ Widget StatusOrder(int _Status, BuildContext context) {
           child: Text(
             'Завершен',
             style: TextStyle(
-                color: Colors.black, decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
+                color: Color.fromRGBO(255, 255, 255, 30), decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
         );
       }
@@ -264,48 +285,62 @@ Widget def(String date, String time, String id, ElementItemOrder item) {
   }
 
 }
+String _month(String month) {
+  switch (month) {
+    case "1":
+      return "Января";
+      break;
+    case "2":
+      return "Февраля";
+      break;
+    case "3":
+      return "Марта";
+      break;
+    case "4":
+      return "Апреля";
+      break;
+    case "5":
+      return "Мая";
+      break;
+    case "6":
+      return "Июня";
+      break;
+    case "7":
+      return "Июля";
+      break;
+    case "8":
+      return "Августа";
+      break;
+    case "9":
+      return "Сентября";
+      break;
+    case "10":
+      return "Октября";
+      break;
+    case "11":
+      return "Ноября";
+      break;
+    case "12":
+      return "Декабря";
+      break;
+  }
+}
+
+String _dayOfWeek(int day){
+  switch(day){
+    case 1: return "Вс";
+    case 2: return "Пн";
+    case 3: return "Вт";
+    case 4: return "Ср";
+    case 5: return "Чт";
+    case 6: return "Пт";
+    case 7: return "Сб";
+  }
+}
+
 
 Widget bigDay(String date, String time) {
-  String _month(String month) {
-    switch (month) {
-      case "1":
-        return "января";
-        break;
-      case "2":
-        return "февраля";
-        break;
-      case "3":
-        return "марта";
-        break;
-      case "4":
-        return "апреля";
-        break;
-      case "5":
-        return "мая";
-        break;
-      case "6":
-        return "июня";
-        break;
-      case "7":
-        return "июля";
-        break;
-      case "8":
-        return "августа";
-        break;
-      case "9":
-        return "сентября";
-        break;
-      case "10":
-        return "октября";
-        break;
-      case "11":
-        return "ноября";
-        break;
-      case "12":
-        return "декабря";
-        break;
-    }
-  }
+
 
   var dateorder = date;
   var timeorder = time;
@@ -339,41 +374,30 @@ Widget bigDay(String date, String time) {
 Widget odresList(String token, BuildContext context)  {
   print(response2.toString());
   if (response2['count'] > 0) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Stack(
+    return Stack(
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: SingleChildScrollView(
+            child: Column(
               children: <Widget>[
-                Image.asset("assets/images/HeaderCatalog.png"),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: Text(
-                      "Ваши заказы" , style:  TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                    ),
-                  ),
-                )
+
+                Padding(
+                  padding: const EdgeInsets.only(top:10.0),
+                  child: Column(children:List.generate(response2['count'], (index) {
+                    ElementItemOrder itemOrder = ElementItemOrder(response2['orders'][index]['order']['id'], response2['orders'][index]['order']['date'], response2['orders'][index]['order']['time'],
+                        response2['orders'][index]['ids'], int.parse(response2['orders'][index]['order']['status']));
+                    print("JOPA " + itemOrder.id.toString());
+                    return ElementOrder(itemOrder, context);
+                  })
+                    ,),
+                ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top:10.0),
-              child: Column(children:List.generate(response2['count'], (index) {
-                ElementItemOrder itemOrder = ElementItemOrder(response2['orders'][index]['order']['id'], response2['orders'][index]['order']['date'], response2['orders'][index]['order']['time'],
-                    response2['orders'][index]['ids'], int.parse(response2['orders'][index]['order']['status']));
-                print("JOPA " + itemOrder.id.toString());
-                return ElementOrder(itemOrder, context);
-              })
-                ,),
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   } else {
     return SizedBox();
@@ -399,14 +423,25 @@ class ElementItemOrder{
 
 Widget ElementOrder(ElementItemOrder item, BuildContext context) {
   print("Дата контейнера "+item.date+" Время "+item.time);
+
+  var dateorder = item.date;
+  var timeorder = item.time;
+
+  var intlorder = new DateFormat("dd.MM.yyyy HH:mm", "en_US").parse(dateorder + " " + timeorder);
+
+
+
+
+
+
   return Padding(
     padding: const EdgeInsets.all(6.0),
     child: Hero(
       tag: item.id,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white70,
-          border: Border.all(width: 2, color: Color.fromRGBO(255, 164, 116, 1)),
+          color: Colors.transparent,
+          border: Border.all(width: 1, color: Color.fromRGBO(255, 255, 255, 80)),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
@@ -415,65 +450,69 @@ Widget ElementOrder(ElementItemOrder item, BuildContext context) {
           ),
           boxShadow: [
             BoxShadow(
-              color: Color.fromRGBO(255, 164, 116, .4),
+              color: Colors.white10,
               spreadRadius: 2,
               blurRadius: 5,
               offset: Offset(-2, 3), // changes position of shadow
             ),
           ],
         ),
-        width: MediaQuery.of(context).size.width,
-        height: 80,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 5),
-                  child: StatusOrder(item.status, context),
+        width: MediaQuery.of(context).size.width*0.95,
+        height: 85,
+        child:
+          Row(
+            children: <Widget>[
+
+              Container(
+                height: 80,
+                width: MediaQuery.of(context).size.width*0.95*0.15,
+
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+
+                  children: <Widget>[
+                    Text(_dayOfWeek(intlorder.weekday),style: TextStyle(color: Colors.white70), ),
+                    Text(intlorder.day.toString(), style: TextStyle(color: Colors.white, fontSize: 26),),
+                    Text(_month(intlorder.month.toString()),style: TextStyle(color: Colors.white, fontSize: 17), ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 5, right: 10),
-                  child: Container(
-                      alignment: Alignment.centerRight,
-                      child: def(item.date, item.time, item.id, item)),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 10, right: 10),
-                    child: orders50(item.ids)),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OrderDetail(item)));
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(top: 8, right: 8),
-                      padding: EdgeInsets.only(right: 18, left: 18),
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.black87, width: 1)
+              ),
+              Container(
+                height: 84,
+                width: MediaQuery.of(context).size.width*0.95*0.70,
+
+                child: Padding(
+                  padding: const EdgeInsets.only(top:8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+
+                            StatusOrder(item.status, context),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: orders50(item.ids),
+                            ),
+                          ],
+                        ),
                       ),
-                      child: Center(
-                          child: Text("Подробнее",
-                            style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.normal),
-                          )
-                      )
+                    ],
                   ),
-                )
-              ],
-            ),
-          ],
-        ),
+                ),
+              ),
+              Container(
+                  height: 84,
+                  width: MediaQuery.of(context).size.width*0.95*0.14,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16,)
+                    ],
+                  )),
+            ],
+          ),
       ),
     ),
   );

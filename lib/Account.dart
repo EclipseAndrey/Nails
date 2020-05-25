@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'FadeAnimation.dart';
 
@@ -8,6 +9,7 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,7 +131,13 @@ class _AccountState extends State<Account> {
                         SizedBox(height: 20,),
                         FadeAnimation(1.5,
                               GestureDetector(
-                                  onTap: (){
+                                  onTap: ()async{
+
+                                    final prefs = await SharedPreferences
+                                        .getInstance();
+                                    prefs.setBool('auto', false);
+                                    Navigator.pushNamed(context, '/Login');
+
 
                                   },
                                   child: Text("Сменить аккаунт", style: TextStyle(fontSize: 18, color: Colors.grey),)

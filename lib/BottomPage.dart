@@ -29,6 +29,7 @@ import 'dart:async';
 import 'main.dart';
 import 'package:http/http.dart' as http;
 import 'MyOrders.dart';
+import './CustomDesign/nails_icons.dart' as custicon;
 
 class BottomPage extends StatefulWidget {
   BottomPage({Key key}) : super(key: key);
@@ -231,31 +232,32 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
           unselectedFontSize: 12,
           selectedFontSize: 13,
           selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
-          backgroundColor: Color.fromRGBO(255, 116, 81, 0.9),
+          backgroundColor: Color.fromRGBO(34, 15, 45, 1),
+          
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.call, color: Colors.white,),
               title: Text('Позвонить', style: TextStyle(color: Colors.white),),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.reorder, color: Colors.white,),
-              title: Text('Заказы', style: TextStyle(color: Colors.white)),
+              icon: Icon(custicon.Nails.sozdat_dokument_10, color: Colors.white,),
+              title: Text('Записи', style: TextStyle(color: Colors.white)),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: Colors.white,),
+              icon: Icon(custicon.Nails.menu, color: Colors.white,),
               title: Text('Услуги', style: TextStyle(color: Colors.white)),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart, color: Colors.white,),
+              icon: Icon(custicon.Nails.telega_2, color: Colors.white,),
               title: Text('Корзина', style: TextStyle(color: Colors.white)),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person, color: Colors.white,),
+              icon: Icon(custicon.Nails.krugly_chel, color: Colors.white,),
               title: Text('Аккаунт', style: TextStyle(color: Colors.white)),
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
+          selectedItemColor: Colors.transparent,
           onTap: _onItemTapped,
         ),
       ),

@@ -85,5 +85,8 @@ flutter:
     - family: Thin
       fonts:
         - asset: fonts/Thin.ttf
+    - family: Nails
+      fonts:
+        - asset: fonts/Nails.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
