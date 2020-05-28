@@ -246,7 +246,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
             ),
             BottomNavigationBarItem(
               icon: Icon(custicon.Nails.menu, color: Colors.white,),
-              title: Text('Услуги', style: TextStyle(color: Colors.white)),
+              title: Text('Каталог', style: TextStyle(color: Colors.white)),
             ),
             BottomNavigationBarItem(
               icon: Icon(custicon.Nails.telega_2, color: Colors.white,),
