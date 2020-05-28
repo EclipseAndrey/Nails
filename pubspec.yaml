@@ -17,9 +17,11 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  carousel_slider: ^2.0.0
   numeric_keyboard: ^1.0.0
   mask_text_input_formatter: ^1.0.6
   fluttertoast: ^4.0.0
+  animated_text_kit: ^1.1.0
   flutter_masked_text: ^0.8.0
   flutter_cupertino_localizations: ^1.0.1
   firebase_messaging: ^5.0.2
@@ -88,5 +90,14 @@ flutter:
     - family: Nails
       fonts:
         - asset: fonts/Nails.ttf
+    - family: MPLUS
+      fonts:
+        - asset: fonts/MPLUS-Black.ttf
+        - asset: fonts/MPLUS-Bold.ttf
+        - asset: fonts/MPLUS-ExtraBold.ttf
+        - asset: fonts/MPLUS-Light.ttf
+        - asset: fonts/MPLUS-Medium.ttf
+        - asset: fonts/MPLUS-Regular.ttf
+        - asset: fonts/MPLUS-Thin.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

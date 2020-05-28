@@ -12,6 +12,34 @@
 ///       - asset: fonts/Nails.ttf
 ///
 /// 
+/// * Font Awesome 4, Copyright (C) 2016 by Dave Gandy
+///         Author:    Dave Gandy
+///         License:   SIL ()
+///         Homepage:  http://fortawesome.github.com/Font-Awesome/
+/// * Entypo, Copyright (C) 2012 by Daniel Bruce
+///         Author:    Daniel Bruce
+///         License:   SIL (http://scripts.sil.org/OFL)
+///         Homepage:  http://www.entypo.com
+/// * Typicons, (c) Stephen Hutchings 2012
+///         Author:    Stephen Hutchings
+///         License:   SIL (http://scripts.sil.org/OFL)
+///         Homepage:  http://typicons.com/
+/// * Iconic, Copyright (C) 2012 by P.J. Onori
+///         Author:    P.J. Onori
+///         License:   SIL (http://scripts.sil.org/OFL)
+///         Homepage:  http://somerandomdude.com/work/iconic/
+/// * Material Design Icons, Copyright (C) Google, Inc
+///         Author:    Google
+///         License:   Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+///         Homepage:  https://design.google.com/icons/
+/// * Linearicons Free, Copyright (C) Linearicons.com
+///         Author:    Perxis
+///         License:   CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+///         Homepage:  https://linearicons.com
+/// * Octicons, Copyright (C) 2020 by GitHub Inc.
+///         Author:    GitHub
+///         License:   MIT (http://opensource.org/licenses/mit-license.php)
+///         Homepage:  https://primer.style/octicons/
 ///
 import 'package:flutter/widgets.dart';
 
@@ -21,6 +49,7 @@ class Nails {
   static const _kFontFam = 'Nails';
   static const _kFontPkg = null;
 
+  static const IconData heart_empty = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData i_catalog = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData menu = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData orders = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -28,7 +57,12 @@ class Nails {
   static const IconData orderr = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData order1 = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData order2 = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData heart_empty_1 = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData bookmark = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData menu_outline = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData book_open = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData order3__2_ = IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData bookmark_border = IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData telega = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData telega1 = IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData shire_kolesa = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -39,4 +73,7 @@ class Nails {
   static const IconData chel_2 = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData krugly_chel = IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData sozdat_dokument_10 = IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData book = IconData(0xe828, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData bookmark_empty = IconData(0xf097, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData list_ordered = IconData(0xf3a3, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

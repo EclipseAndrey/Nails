@@ -89,4 +89,22 @@ class itemOrder{
   itemOrder();
 }
 
+List<String> UrlImage_c = [
+  'http://eclipsedevelop.ru/images/c-1.png',
+  'http://eclipsedevelop.ru/images/c-2.png',
+  'http://eclipsedevelop.ru/images/c-3.png',
+  'http://eclipsedevelop.ru/images/c-4.png',
+  'http://eclipsedevelop.ru/images/c-5.png',
+  'http://eclipsedevelop.ru/images/c-6.png',
+  'http://eclipsedevelop.ru/images/c-7.png',
+];
 
+List<String> Header = [
+  "Комплексы",
+  "Маникюр",
+  "Покрытия",
+  "Педикюр",
+  "Дизайн",
+  "СПА Уход",
+  "Брови",
+];

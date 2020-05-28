@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/Account.dart';
+import 'package:flutterapp32/HomeCatalog.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'EmptyTrash.dart';
 import 'home.dart';
@@ -207,7 +208,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
         style: optionStyle,
       ),
       MyOrders(),
-      Home(),
+      HomeCatalog(),
       Trash(items),
       Account(),
     ];
@@ -236,11 +237,11 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
           
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.call, color: Colors.white,),
-              title: Text('Позвонить', style: TextStyle(color: Colors.white),),
+              icon: Icon(custicon.Nails.heart_empty, color: Colors.white,),
+              title: Text('Избранное', style: TextStyle(color: Colors.white),),
             ),
             BottomNavigationBarItem(
-              icon: Icon(custicon.Nails.sozdat_dokument_10, color: Colors.white,),
+              icon: Icon(custicon.Nails.bookmark_empty, color: Colors.white,),
               title: Text('Записи', style: TextStyle(color: Colors.white)),
             ),
             BottomNavigationBarItem(
@@ -1100,4 +1101,21 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
     animatedListKey.currentState.removeItem(i, builder);
     print(items2);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
