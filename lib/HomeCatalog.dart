@@ -813,7 +813,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
 
   Widget SliderSales1(){
-    List<ElementItem> sales = [ElementItem(0, '', '', '', 0, 0,true)];
+    List<ElementItem> sales = [ElementItem(0, '', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
     sales.clear();
     for(int cat = 0; cat < 7; cat++){
       HelpItemCount step = ItemCount(cat);
@@ -823,8 +823,6 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
        }
       }
     }
-
-
 
     return
       CarouselSlider.builder(
@@ -847,29 +845,16 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     GestureDetector(
-                      onTapDown: (TapDownDetails details){
-                        setState(() {
-                          MarginPlus = 10;
-                        });
-                      },
-                      onTapUp: (TapUpDetails details){
-                        setState(() {
-                          MarginPlus = 0;
+                      onTap: (){
+                        Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(sales[itemIndex])));
+                     },
 
-                        });
-                      },
-                      onTapCancel: (){
-                        setState(() {
-                          MarginPlus = 0;
-
-                        });
-                      },
-
-
-
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16.0),
-                        child: Image.network(sales[itemIndex].picture),
+                      child: Hero(
+                        tag: sales[itemIndex].id,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16.0),
+                          child: Image.network(sales[itemIndex].picture),
+                        ),
                       ),
                     ),
                     Row(
@@ -919,7 +904,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
   Widget SliderPop(){
 
-    List<ElementItem> sales = [ElementItem(0, '', '', '', 0, 0,true)];
+    List<ElementItem> sales = [ElementItem(0, '', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
     sales.clear();
     for(int cat = 0; cat < 7; cat++){
       HelpItemCount step = ItemCount(cat);

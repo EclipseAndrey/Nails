@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'FadeAnimation.dart';
 import 'home.dart';
@@ -24,93 +26,141 @@ class _DetailState extends State<Detail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     backgroundColor:  Color.fromRGBO(34, 15, 51, 1),
       body: Column(
         children: <Widget>[
-          Container(
-            alignment: Alignment.centerLeft,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(255, 164, 116, .5),
-                    spreadRadius: 3,
-                    blurRadius:10,
-                    offset: Offset(-2, 3), // changes position of shadow
-                  ),
-                ],
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    colors: [
-                      Color.fromRGBO(255, 116, 81, 0.8),
-                      Color.fromRGBO(255, 116, 81, 0.7),
-                      Color.fromRGBO(255, 116, 81, 0.7)
-                    ]
-                )
-            ),
-            child: Padding(
-                padding: const EdgeInsets.only(top: 5.0, left: 2.0, bottom: 5),
-                child: IconButton(
-                  color: Colors.white,
-                  iconSize: 28,
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context, '/MyOrders');
-                  },
-                )
-            ),
-          ),
-          Hero(
-            tag: elementItem.id,
-            child: Container(
-              height: 100,
-              width: 400,
-              decoration: BoxDecoration(
+          Stack(
+            overflow: Overflow.visible,
+            children: <Widget>[
+              Container(
+                height: 200,
+                alignment: Alignment.topLeft,
+                //width: double.infinity,
+                decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: Image.network(
-                      elementItem.picture,
-                      fit: BoxFit.fill,
-                    ).image,
-                    fit: BoxFit.fill),
-                color: Colors.white,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(5.0),
-                  bottomRight: Radius.circular(5.0),
+                  image: Image.network(elementItem.picture, fit: BoxFit.contain,).image, fit: BoxFit.fill),
+                ),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                  child: Padding(
+                      padding: const EdgeInsets.only(top: 9.0, left: 2.0, bottom: 5),
+                      child: IconButton(
+                        color: Colors.white,
+                        iconSize: 28,
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.pop(context, '/MyOrders');
+                        },
+                      )
+                  ),
                 ),
               ),
-            ),
-          ),
-          Container(
-            child: Padding(
-              padding: EdgeInsets.only(left: 10, top: 30),
-              child: Text(
-              'В частности, понимание сути ресурсосберегающих технологий прекрасно подходит для реализации поставленных обществом задач. '
-                  'Базовые сценарии поведения пользователей подвергнуты целой'
-                  ' серии независимых исследований.',
-                style: TextStyle(fontSize: 18, color: Colors.black54,),
-              ),
-            ),
-          ),
-          Expanded(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 30.0),
-                  child: FadeAnimation(0.6, Container(
-                    height: 50,
-                    margin: EdgeInsets.symmetric(horizontal: 30),
+              Positioned(
+                top: 50,
+                left: 120,
+                right: 120,
+                child: Hero(
+                  tag: elementItem.id,
+                  child: Container(
+                    height: 210,
+                    width: 170,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color.fromRGBO(255, 116, 81, 0.8)
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black45,
+                          blurRadius: 25.0, // soften the shadow
+                          spreadRadius: 5.0, //extend the shadow
+                          offset: Offset(
+                            -3.0, // Move to right 10  horizontally
+                            0.0, // Move to bottom 10 Vertically
+                          ),
+                        )
+                      ],
+                      image: DecorationImage(
+                          image: Image.network(
+                            elementItem.picture,
+                            fit: BoxFit.contain,
+                          ).image,
+                          fit: BoxFit.fill),
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(15.0),
+                        topLeft: Radius.circular(15.0),
+                        topRight: Radius.circular(15.0),
+                        bottomRight: Radius.circular(15.0),
+                      ),
                     ),
-                    child: Center(
-                      child: Text("Добавить в корзину", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
-                    ),
-                  ),
                   ),
                 ),
-              ))
+              ),
+            ],
+          ),
+          SizedBox(height: 80,),
+          Container(
+            color:  Color.fromRGBO(34, 15, 51, 1),
+            child: Column(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(elementItem.head, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),),
+                    Text(elementItem.price.toString() + "₽", style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: Colors.white),),
+                  ],
+                ),
+                SizedBox(height: 40,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    FlatButton(
+                      onPressed: (){
+
+                      },
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                          side: BorderSide(color: Colors.white)),
+                      color: Colors.transparent,
+                      textColor: Colors.pinkAccent,
+                      child: Text("В корзину",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: "MPLUS",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    FlatButton(
+                      onPressed: (){
+
+                      },
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                          side: BorderSide(color: Colors.white)),
+                      color: Colors.transparent,
+                      textColor: Colors.pinkAccent,
+                      child: Text("В избранное",
+                        style: TextStyle(
+                            color: Colors.pinkAccent,
+                            fontSize: 16,
+                            fontFamily: "MPLUS",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20,),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  child: Text("Таким образом новая модель организационной деятельности способствует подготовки и реализации форм развития. "
+                      "Повседневная практика показывает, что консультация с широким активом позволяет выполнять важРазнообразный и богатый "
+                      "опыт рамки и место обучения кадров способствует подготовки и реализации форм развития. Идейные соображения высшего "
+                      "кадров, соответствует насущным потребностям.", style: TextStyle(fontSize: 16, color: Colors.white),),
+                )
+              ],
+            ),
+          ),
+
         ],
       ),
     );
