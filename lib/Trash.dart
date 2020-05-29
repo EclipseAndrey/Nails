@@ -51,8 +51,9 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
 
   var controller1 = new MaskedTextController(mask: '+0 000 000 00 00');
 
+  List<ElementItem> reItems = [];
 
-  List<ElementItem> items2  = items;
+  List<ElementItem> items2 = [];
   final GlobalKey<AnimatedListState> animatedListKey = GlobalKey<AnimatedListState>();
   bool resum = false;
 
@@ -60,6 +61,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
   List<double> cancel;
   bool permissionCancel = true;
   Order order = Order();
+  bool reorderCall = false;
 
   @override
   void initState() {
@@ -114,158 +116,104 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
   }
 
   Widget BodyTrash(Order order, BuildContext context) {
-
+    if(items.length > 0){
+      items2.addAll(items);
+    }
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              Divider(),
-              Container(
-              child: AnimatedList(
-                shrinkWrap: true,
-                key: animatedListKey,
-                initialItemCount: items2.length,
-                itemBuilder: (context, index, animation){
-                  return _buildItem(items2[index], animation, index);
-                },
-              ),
-              ),
-              _RegistrationZakaza(context, controller1),
-            ],
-          ),
+          _OrderList(),
           _TrashIsEmpty(context),
+          _reorder()
         ],
       ),
     );
   }
 
-  Widget _ElementTrash(int i) {
-    Animation<double> remove;
-    Tween tween = new Tween<double>(begin: 50, end: 0);
 
-    remove = tween.animate(controller[i]);
 
-    @override
-    void dispose(){
-      controller[i].dispose();
-      super.dispose();
+  Widget _OrderList(){
+    if (items2.length > 0 ){
+      return Column(
+        children: <Widget>[
+          Divider(),
+          Container(
+            child: AnimatedList(
+              shrinkWrap: true,
+              key: animatedListKey,
+              initialItemCount: items2.length,
+              itemBuilder: (context, index, animation){
+                return _buildItem(items2[index], animation, index);
+              },
+            ),
+          ),
+          _RegistrationZakaza(context, controller1),
+        ],
+      );
+    } else return SizedBox();
+  }
+
+  Widget _reorder(){
+    if(reItems.length == 0){
+      Future<http.Response> res() async {
+        return await http
+            .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+      }
+      print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+      var response;
+      res().then((value) {
+        if (value.statusCode == 200) {
+          response = jsonDecode(value.body);
+          print(response);
+          print("Count  " + response['count'].toString());
+
+          if (response['count'] > 0) {
+            List<dynamic> ids = response['orders'][0]['ids'];
+            print("Кол-во проходов цикла " + ids.length.toString());
+            for (int i = 0; i < ids.length; i++) {
+              print("Проход " + i.toString());
+              int id = ids[i];
+              var item = elementInfo((id ~/ 100), id % 100);
+              if (reItems.isEmpty) {
+                List<ElementItem> step = [item];
+                reItems = step;
+              } else {
+                bool find = false;
+                print('find = $find');
+                if (!find) {
+                  reItems.add(item);
+                }
+              }
+              print("---------------------$items2");
+            }
+          }
+        }
+      });
     }
 
-    remove.addListener(() {
-      this.setState(() {});
-    });
-    remove.addStatusListener((status) {
-      print("Remove контроллер $i активен");
-      if (status == AnimationStatus.completed && okk[i]) {
-        setState(() {
-          print("Значение переменных контроллера $i \n  ок = ${okk[i]} \n items = ${items[i]} \n  items_counter = ${items_counter[i]}\n cancel = ${cancel[i]}\n permiss = ${permissionCancel}");
-          if(okk[i]) controller.removeAt(i);
-          if(okk[i]) remove = null;
-          if(okk[i]) items.removeAt(i);
-       //   controller[i].dispose();
-
-          if(okk[i]) items_counter.removeAt(i);
-          if(okk[i]) okk.removeAt(i);
-          if(okk[i]) cancel.removeAt(i);
-          if(okk[i]) permissionCancel = true;
-
-
-          okk[i] = false;
-
-
-        });
-      }
-
-    });
-
-    print('generate $i');
-    return Container(
-      height: remove.value,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: Row(
-
-          children: <Widget>[
-            Expanded(
-                flex: 10,
-                child: ImagePodbor(items[i].picture)),
-            Expanded(
-              flex: 65,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Column(
-                  children: <Widget>[
-                    Text(items[i].head),
-                    Text('${items[i].price - items[i].sale} руб.'),
-                  ],
-                ),
-              ),
+    if (items2.length == 0 && reorderCall == true) {
+      items2.addAll(reItems);
+      print("111111111111$items2");
+      return Column(
+        children: <Widget>[
+          Divider(),
+          Container(
+            child: AnimatedList(
+              shrinkWrap: true,
+              key: animatedListKey,
+              initialItemCount: items2.length,
+              itemBuilder: (context, index, animation){
+                return _buildItem(items2[index], animation, index);
+              },
             ),
-            Expanded(
-              flex: 35,
-              child: Row(
-                children: <Widget>[
-                  Opacity(
-                    opacity: cancel[i],
-                    child: GestureDetector(
-                        onTap:(){
-                          setState(() {
-                            items_counter[i]++;
-                          });
-                        },
-                        child: Icon(Icons.add_circle)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(items_counter[i].toString()),
-                  ),
-                  Opacity(
-                    opacity: cancel[i],
-                    child: GestureDetector(
-                      onTap: (){
-                        if(items_counter[i] == 1){
-                          setState(() {
-                            if(permissionCancel)
-                            cancel[i] = 0.0;
-                          });
-                          if(permissionCancel)
-                            controller[i].forward();
-                          if(permissionCancel)
-                            ok();
-                        }else
-                        setState(() {
-                          items_counter[i]--;
-                        });
-
-                      },
-                        child: Icon(Icons.remove_circle)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18.0),
-                    child: Opacity(
-                        opacity: cancel[i],
-                      child: GestureDetector(
-                          onTap: () {
-                            if(permissionCancel) {
-                              permissionCancel = false;
-                              setState(() {
-                                cancel[i] = 0.0;
-                              });
-                              controller[i].forward();
-                            }
-                          },
-                          child: Icon(Icons.cancel, color: Colors.grey,)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-          ],
-        ),
-      ),
-    );
+          ),
+          _RegistrationZakaza(context, controller1),
+        ],
+      );
+    }
+    else
+      return
+      SizedBox();
   }
 
   Widget ImagePodbor(String image) {
@@ -279,7 +227,7 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
   }
 
   Widget _TrashIsEmpty(BuildContext context) {
-    if (items.length == 0)
+    if (items2.length == 0 && reorderCall == false)
       return Padding(
         padding: const EdgeInsets.all(18.0),
         child: Center(
@@ -298,62 +246,9 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
               ),
               GestureDetector(
                 onTap: () {
-                  if (items.length == 0){
-                    Future<http.Response> res() async {
-                      return await http
-                          .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
-                    }
-                    print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
-                    var response;
-                    res().then((value) {
-                      if (value.statusCode == 200) {
-                        response = jsonDecode(value.body);
-                        print(response);
-
-                        print("Count  "+response['count'].toString());
-
-                        if (response['count'] > 0) {
-
-                          List<dynamic> ids = response['orders'][0]['ids'];
-
-                          print("Кол-во проходов цикла "+ids.length.toString());
-                          for(int i = 0; i < ids.length; i++){
-
-                            print("Проход "+i.toString());
-                            int id =ids[i];
-                            var item = elementInfo((id ~/ 100), id % 100);
-                            if(items.isEmpty){
-                              items_counter = [1];
-                              List<ElementItem> step = [item];
-                              items = step;
-                            }else{
-                              bool find = false;
-                              for(int i = 0 ; i  < items.length; i++){
-                                print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
-                                if(items[i].id == item.id){
-                                  items_counter[i]++;
-                                  print('Элементов id${items[i].id} - ${items_counter[i]}');
-                                  find = true;
-                                  break;
-                                }
-                              }
-                              print('find = $find');
-                              if(!find) {
-                                items.add(item);
-                                items_counter.add(1);
-                              }
-
-
-                            }
-                            print("---------------------$items");
-                          }
-                        }
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => EmptyTrash(items)));
-                      }
-
-                    });
-                  }
-
+                  setState(() {
+                    reorderCall = true;
+                  });
 
                 },
                 child: Container(
@@ -426,8 +321,6 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
   }
 
   Widget _RegistrationZakaza(BuildContext context, var controller1) {
-
-    if (items2.length > 0)
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -499,8 +392,6 @@ class _Trash extends State<Trash> with TickerProviderStateMixin {
           Center(child: _buttonSend()),
         ],
       );
-    else
-      return SizedBox();
   }
   String datetx = "Дата";
 

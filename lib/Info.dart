@@ -5,7 +5,7 @@ import 'package:flutterapp32/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'main.dart';
 
-class Info extends StatefulWidget {
+class   Info extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _Info();

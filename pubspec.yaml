@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  flare_flutter: any
   carousel_slider: ^2.0.0
   numeric_keyboard: ^1.0.0
   mask_text_input_formatter: ^1.0.6
@@ -56,6 +57,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/chel.flr
     - assets/images/vk.png
     - assets/images/
     - assets/images/inst.png

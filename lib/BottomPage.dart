@@ -1,4 +1,5 @@
 
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/Account.dart';
 import 'package:flutterapp32/HomeCatalog.dart';
@@ -227,36 +228,51 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
           borderRadius: BorderRadius.all(Radius.circular(30.0))
         ),
         child: BottomNavigationBar(
+         // showSelectedLabels: false,
+          //showUnselectedLabels: false,
           type: BottomNavigationBarType.fixed,
-          selectedIconTheme: IconThemeData(size: 30),
-          unselectedIconTheme: IconThemeData(size: 23),
-          unselectedFontSize: 12,
-          selectedFontSize: 13,
-          selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
           backgroundColor: Color.fromRGBO(34, 15, 45, 1),
-          
-          items: const <BottomNavigationBarItem>[
+
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(custicon.Nails.heart_empty, color: Colors.white,),
-              title: Text('Избранное', style: TextStyle(color: Colors.white),),
+              title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
             ),
             BottomNavigationBarItem(
               icon: Icon(custicon.Nails.bookmark_empty, color: Colors.white,),
-              title: Text('Записи', style: TextStyle(color: Colors.white)),
+              title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
             ),
             BottomNavigationBarItem(
               icon: Icon(custicon.Nails.menu, color: Colors.white,),
-              title: Text('Каталог', style: TextStyle(color: Colors.white)),
+              title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
             ),
             BottomNavigationBarItem(
               icon: Icon(custicon.Nails.telega_2, color: Colors.white,),
-              title: Text('Корзина', style: TextStyle(color: Colors.white)),
+              title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
             ),
             BottomNavigationBarItem(
-              icon: Icon(custicon.Nails.krugly_chel, color: Colors.white,),
-              title: Text('Аккаунт', style: TextStyle(color: Colors.white)),
-            ),
-          ],
+              title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
+              icon: Container(
+                height: 26,
+                child: FlareActor(
+                  'assets/chel.flr',
+                  color: Colors.white,
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "idle",
+                ),
+              ),
+              activeIcon: Container(
+                height: 26,
+                child: FlareActor(
+                  'assets/chel.flr',
+                  color: Colors.white,
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "go",
+                ),
+              ),
+            ),          ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.transparent,
           onTap: _onItemTapped,

@@ -514,3 +514,25 @@ Widget _price(int price, int sale) {
     );
   }
 }
+
+
+
+class homeInheritedWidget extends InheritedWidget{
+  final _Home myState;
+
+  homeInheritedWidget({
+    Key key,
+    Widget child,
+    @required this.myState
+  }
+  ) : super(key: key);
+  @override
+  bool updateShouldNotify(homeInheritedWidget oldWidget) {
+    return false;
+  }
+
+  static homeInheritedWidget of(BuildContext context){
+    return context.dependOnInheritedWidgetOfExactType();
+  }
+
+}
