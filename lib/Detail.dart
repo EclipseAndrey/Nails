@@ -3,10 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'FadeAnimation.dart';
 import 'home.dart';
-import 'home.dart';
-import 'home.dart';
-import 'home.dart';
-import 'home.dart';
+import './CustomDesign/nails_icons.dart' as custicon;
+
 
 class Detail extends StatefulWidget {
   ElementItem _elementItem;
@@ -23,145 +21,326 @@ class _DetailState extends State<Detail> {
     this.elementItem = elementItem;
   }
 
+  bool Save = false;
+  bool Like = false;
+  String Liketx = "В избранное";
+  String Savetx = "В корзину";
+
+  Widget Prise(ElementItem itemForSales){
+    if(itemForSales.sale>0){
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+
+        children: <Widget>[
+          Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, fontSize: 16, decoration: TextDecoration.lineThrough,),),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text("${itemForSales.price - itemForSales.sale} руб.", style: TextStyle(color: Colors.pinkAccent, fontSize: 16),),
+
+
+          ),
+        ],
+      );
+    }else{
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, fontSize: 16, ),),
+        ],
+      );
+    }
+  }
+
+  Widget SaveButton(){
+
+    Widget icon(){
+      if(!Save){
+        return Icon(Icons.add_shopping_cart, color: Colors.white, size: 24,);
+      }
+      else
+      {
+        return Icon(custicon.Nails.telega_2, color: Colors.purpleAccent, size: 24,);
+      }
+
+
+    }
+
+
+    return FlatButton(
+      onPressed: (){
+        setState(() {
+          Save = !Save;
+        });
+      },
+      shape: new RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+          side: BorderSide(color: Colors.white)),
+      color: Colors.transparent,
+      textColor: Colors.pinkAccent,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Text(Save?"Добавлено":"В корзину",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontFamily: "MPLUS",
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w500),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, ),
+              child: icon(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget LikeButton(){
+
+    Widget icon(){
+      if(!Like){
+        return Icon(custicon.Nails.heart_empty, color: Colors.white, size: 24,);
+      }
+      else
+        {
+        return  Icon(custicon.Nails.heart, color: Colors.pink, size: 24,);
+        }
+
+
+    }
+
+    return FlatButton(
+      onPressed: (){
+        setState(() {
+          Like = !Like;
+
+        });
+      },
+      shape: new RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+          side: BorderSide(color: Colors.white)),
+      color: Colors.transparent,
+      textColor: Colors.pinkAccent,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Text(Like?"В избранном":"В избранное",
+              style: TextStyle(
+                  color: Colors.pinkAccent,
+                  fontSize: 18,
+                  fontFamily: "MPLUS",
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w500),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, ),
+              child: icon(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
      backgroundColor:  Color.fromRGBO(34, 15, 51, 1),
-      body: Column(
-        children: <Widget>[
-          Stack(
-            overflow: Overflow.visible,
-            children: <Widget>[
-              Container(
-                height: 200,
-                alignment: Alignment.topLeft,
-                //width: double.infinity,
-                decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: Image.network(elementItem.picture, fit: BoxFit.contain,).image, fit: BoxFit.fill),
-                ),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                  child: Padding(
-                      padding: const EdgeInsets.only(top: 9.0, left: 2.0, bottom: 5),
-                      child: IconButton(
-                        color: Colors.white,
-                        iconSize: 28,
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: () {
-                          Navigator.pop(context, '/MyOrders');
-                        },
-                      )
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 50,
-                left: 120,
-                right: 120,
-                child: Hero(
-                  tag: elementItem.id,
-                  child: Container(
-                    height: 210,
-                    width: 170,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black45,
-                          blurRadius: 25.0, // soften the shadow
-                          spreadRadius: 5.0, //extend the shadow
-                          offset: Offset(
-                            -3.0, // Move to right 10  horizontally
-                            0.0, // Move to bottom 10 Vertically
-                          ),
-                        )
-                      ],
-                      image: DecorationImage(
-                          image: Image.network(
-                            elementItem.picture,
-                            fit: BoxFit.contain,
-                          ).image,
-                          fit: BoxFit.fill),
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15.0),
-                        topLeft: Radius.circular(15.0),
-                        topRight: Radius.circular(15.0),
-                        bottomRight: Radius.circular(15.0),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 80,),
-          Container(
-            color:  Color.fromRGBO(34, 15, 51, 1),
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Stack(
+              overflow: Overflow.visible,
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(elementItem.head, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),),
-                    Text(elementItem.price.toString() + "₽", style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: Colors.white),),
-                  ],
-                ),
-                SizedBox(height: 40,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    FlatButton(
-                      onPressed: (){
+                AspectRatio(
+                  aspectRatio: 12/9,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    alignment: Alignment.topLeft,
+                    //width: double.infinity,
+                   child: Stack(
+                     children: <Widget>[
+                       AspectRatio(
+                         aspectRatio: 2/1,
+                         child: Container(
+                           width: MediaQuery.of(context).size.width,
+                           child: Stack(
+                             children: <Widget>[
+                               AspectRatio(
+                                 aspectRatio: 2/1,
+                                 child: Container(
+                                     width: MediaQuery.of(context).size.width,
+                                     child: Image.network(elementItem.picture, fit: BoxFit.cover,)),
+                               ),
+                               AspectRatio(
+                                 aspectRatio: 2/1,
+                                 child: Container(
+                                   width: MediaQuery.of(context).size.width,
+                                   child: BackdropFilter(
+                                     filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                                     child: Container(
+                                       color: Colors.black.withOpacity(0),
+                                     ),
+                                   ),
+                                 ),
+                               ),
+                             ],
+                           ),
+                         ),
+                       ),
+                       Align(
+                         alignment: Alignment.bottomCenter,
+                         child: Container(
+                           width: MediaQuery.of(context).size.width*0.450,
+                           child: AspectRatio(
+                             aspectRatio: 9/12,
+                             child: Hero(
+                               tag: elementItem.id,
+                               child: ClipRRect(
+                                 borderRadius: BorderRadius.circular(15),
+                                 child: Container(
+                                   decoration: BoxDecoration(
+                                     boxShadow: [
+                                       BoxShadow(
+                                         color: Colors.black45,
+                                         blurRadius: 25.0, // soften the shadow
+                                         spreadRadius: 5.0, //extend the shadow
+                                         offset: Offset(
+                                           -3.0, // Move to right 10  horizontally
+                                           0.0, // Move to bottom 10 Vertically
+                                         ),
+                                       )
+                                     ],
+                                   ),
+                                   child:AspectRatio(
+                                     aspectRatio: 9/12,
+                                     child: Container(
 
-                      },
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                          side: BorderSide(color: Colors.white)),
-                      color: Colors.transparent,
-                      textColor: Colors.pinkAccent,
-                      child: Text("В корзину",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontFamily: "MPLUS",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    FlatButton(
-                      onPressed: (){
+                                       child: Image.network(
+                                         elementItem.picture,
+                                       ),
+                                     ),
+                                   ) ,
+                                 ),
+                               ),
+                             ),
+                           ),
+                         ),
+                       ),
 
-                      },
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                          side: BorderSide(color: Colors.white)),
-                      color: Colors.transparent,
-                      textColor: Colors.pinkAccent,
-                      child: Text("В избранное",
-                        style: TextStyle(
-                            color: Colors.pinkAccent,
-                            fontSize: 16,
-                            fontFamily: "MPLUS",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ],
+                       Align(
+                         alignment: Alignment.topLeft,
+                         child: Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child: IconButton(
+                             color: Colors.white,
+                             iconSize: 28,
+                             icon: Icon(Icons.arrow_back),
+                             onPressed: () {
+                               Navigator.pop(context, '/MyOrders');
+                             },
+                           ),
+                         ),
+                       )
+                     ],
+                   ),
+                  ),
                 ),
-                SizedBox(height: 20,),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text("Таким образом новая модель организационной деятельности способствует подготовки и реализации форм развития. "
-                      "Повседневная практика показывает, что консультация с широким активом позволяет выполнять важРазнообразный и богатый "
-                      "опыт рамки и место обучения кадров способствует подготовки и реализации форм развития. Идейные соображения высшего "
-                      "кадров, соответствует насущным потребностям.", style: TextStyle(fontSize: 16, color: Colors.white),),
-                )
+
               ],
             ),
-          ),
+           SizedBox(height: 20,),
+            Container(
+              color:  Color.fromRGBO(34, 15, 51, 1),
+              child: Column(
 
-        ],
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(elementItem.head, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),),
+                      Padding(
+                        padding: const EdgeInsets.only(top :8.0),
+                        child: Prise(elementItem),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 40,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+
+                      SaveButton(),
+                      LikeButton(),
+                    ],
+                  ),
+                  SizedBox(height: 20,),
+                  Padding(
+                    padding:  EdgeInsets.symmetric(vertical: 0, horizontal: MediaQuery.of(context).size.width*0.10),
+                    child: Divider(color: Colors.white,
+
+                    ),
+                  ),
+
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.85,
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Row(
+                            children: <Widget>[
+                              Text("Описание",style: TextStyle(fontSize: 20, color: Colors.white),),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Icon(Icons.check, color: Colors.white,),
+                              )
+                            ],
+                          ),
+                        ),
+                        Text("Уход за ногтями – обязательное мероприятие по сохранению красоты и здоровья рук. Выступая "
+                            "в роли индикатора общего состояния, ногти, подвергаясь влиянию агрессивных внешних факторов, "
+                            "ломаются и трескаются. Для их поддержания существуют мероприятия по укреплению.\n\nИспользование "
+                            "геля безопасно, он не изменяет природную толщину ногтя, создавая поверх защитный слой. В отличие от "
+                            "наращивания акрилом или тканевой системой с помощью файбергласса, сама процедура выполняется быстрее и"
+                            " проще.", style: TextStyle(fontSize: 16, color: Colors.white),),
+
+                        Padding(
+                          padding: const EdgeInsets.only(top: 18.0, bottom: 8),
+                          child: Divider(color: Colors.white, height: 2,),
+                        ),
+                         Padding(
+                           padding: const EdgeInsets.only(bottom: 12.0),
+                           child: Row(
+                            children: <Widget>[
+                              Text("Как проходит процедура",style: TextStyle(fontSize: 20, color: Colors.white),),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Icon(Icons.check, color: Colors.white,),
+                              )
+                            ],
+                        ),
+                         ),
+                        Text("Мастер наносит кистью гелевый слой, не касаясь околоногтевых валиков. Полимеризирует гель под действием УФ-лампы, наносит еще один слой.", style: TextStyle(fontSize: 16, color: Colors.white),),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+          ],
+        ),
       ),
     );
   }

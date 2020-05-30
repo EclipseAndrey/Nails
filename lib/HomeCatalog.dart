@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
-
+import 'package:flutter_regex_validator/constant.dart';
+import 'package:flutter_regex_validator/validator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import 'package:http/http.dart' as http;
 import 'MyOrders.dart';
 import 'main.dart';
 import 'home.dart';
+import 'style.dart';
 
 
 class HomeCatalog extends StatefulWidget{
@@ -78,6 +80,16 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
   double SizedPlus1 = 0;
   double SizedPlus2 = 0;
   double MarginPlus = 0;
+
+
+  bool SeachOpasity = false;
+  List<int> SearchIds = [];
+  double SearchPadding = 0.0;
+  var _controller = TextEditingController();
+  bool cancel = true;
+  String SearchResultText = "";
+
+
   List<int> Likes =[101,202];
   var currentPageC = UrlImage_c.length-1.0;
   var currentPageS = UrlImage_c.length-1.0;
@@ -309,6 +321,566 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
     }
 
 
+    Widget SearchInput(){
+     TextEditingController cont = TextEditingController();
+
+
+      return  Container(
+        width: MediaQuery.of(context).size.width*0.90,
+        child: Center(
+          child: TextField(
+            onChanged: (text) {
+              cont.text = text;
+              print("Search: $text");
+              SearchIds.clear();
+
+              if(text.length>0) {
+                cancel = true;
+                SeachOpasity = true;
+
+                for (int i = 0; i < 7; i ++) {
+                  for (int j = 0; j < ItemCount(i).count; j++) {
+                    ElementItem step = elementInfo(i, j);
+                    RegExp exp = new RegExp(text.toLowerCase());
+                    String str = step.head.toLowerCase();
+                    if(exp.hasMatch(str)){
+                      SearchIds.add(step.id);
+                    }
+                    setState(() {
+
+                    });
+
+
+                  }
+                }
+                for (int i = 0; i < 7; i ++) {
+                  for (int j = 0; j < ItemCount(i).count; j++) {
+                    ElementItem step = elementInfo(i, j);
+                    RegExp exp = new RegExp(text.toLowerCase());
+                    String str2 = step.tx.toLowerCase();
+                    if(exp.hasMatch(str2)){
+                      SearchIds.add(step.id);
+                    }
+                    setState(() {
+
+                    });
+
+
+                  }
+                }
+                if(SearchIds.length>0){
+                  SearchResultText = "Вот что мы нашли";
+                }else{
+                  SearchResultText = "Мы ничего не нашли :(";
+                }
+              }else{
+                SearchIds.clear();
+                SeachOpasity = false;
+                cancel = false;
+                setState(() {
+
+                });
+              }
+            },
+
+            controller: _controller,
+            style: TextStyle(color: Colors.white),
+            maxLines: 1,
+            decoration: InputDecoration(
+              hintText: "Поиск",
+              hintStyle: TextStyle(color: Colors.white60),
+              enabledBorder: const OutlineInputBorder(
+                // width: 0.0 produces a thin "hairline" border
+                borderSide: const BorderSide(color: Colors.white, width: 1.2),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(30),
+
+                ),
+              ),
+
+              labelStyle: TextStyle(color: Colors.white),
+              border: OutlineInputBorder(
+
+                borderSide:  BorderSide(color: Colors.white, width: 1.0),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(30),
+
+                ),
+              ),
+
+              fillColor: Colors.transparent,
+              filled: true,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  cancel = false;
+                  SeachOpasity = false;
+                  _controller.clear();
+                  setState(() {
+
+                  });},
+                icon: Icon(cancel?Icons.cancel:Icons.search),
+                color: Colors.white70,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+
+    Widget Search() {
+
+
+      int count = SearchIds.length;
+      int ColumnOne;
+      int ColumnTwo;
+
+      if(!SeachOpasity){
+
+        return Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width*0.90,
+                child:
+                Text("Категории",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 44,
+                      fontFamily: "MPLUS",
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w300),
+                ),
+
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width*0.90,
+              child:Align(
+                alignment: Alignment.topLeft,
+                child: Row(
+                  children: <Widget>[
+                    FlatButton(
+                      onPressed: (){
+
+                        setState(() {
+                          SeachOpasity = !SeachOpasity;
+                        });
+                      },
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                          side: BorderSide(color: Colors.white)),
+                      color: Colors.transparent,
+                      textColor: Colors.pinkAccent,
+                      child: Text("Акции",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: "MPLUS",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left:14.0),
+                      child: Text("more 30+",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: "MPLUS",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+
+            //
+            //
+            //
+            //_______________________________________________________
+            //
+            //
+            //
+            SlideCategories(),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width*0.90,
+                child:
+                Text("Скидки",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontFamily: "MPLUS",
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w300),
+                ),
+
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width*0.90,
+              child:Align(
+                alignment: Alignment.topLeft,
+                child: Row(
+                  children: <Widget>[
+                    FlatButton(
+                      onPressed: (){
+                        scrollControllerHome.animateTo(0.0, duration: Duration(milliseconds: 200), curve: Curves.easeInCubic);
+                      },
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                          side: BorderSide(color: Colors.white)),
+                      color: Colors.transparent,
+                      textColor: Colors.pinkAccent,
+                      child: Text("Подробнее",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: "MPLUS",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left:14.0),
+                      child: Text("Мои купоны",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: "MPLUS",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+            //
+            //
+            //
+            //______________________________________________________________
+            //
+            //
+            //
+            Container(
+                margin: EdgeInsets.only(bottom: 0, top: 12),
+                child: SliderSales1()),
+            //
+            //
+            //
+            //______________________________________________________________
+            //
+            //
+            //
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width*0.90,
+                child:
+                Center(
+                  child: Text("Популярное",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300),
+                  ),
+                ),
+
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width*0.90,
+              child:Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlatButton(
+                      onPressed: (){
+                        scrollControllerHome.animateTo(0.0, duration: Duration(milliseconds: 200), curve: Curves.easeInCubic);
+                      },
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                          side: BorderSide(color: Colors.white)),
+                      color: Colors.transparent,
+                      textColor: Colors.pinkAccent,
+                      child: Text("Подробнее",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: "MPLUS",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            //
+            //
+            //
+            //______________________________________________________________
+            //
+            //
+            //
+            Container(
+                margin: EdgeInsets.only(bottom: 0, top: 12),
+                child: SliderPop()),
+            //
+            //
+            //
+            //______________________________________________________________
+            //
+            //
+            //
+            //
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width*0.90,
+                child:
+                Center(
+                  child: Text("Избранное",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300),
+                  ),
+                ),
+
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width*0.90,
+              child:Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlatButton(
+                      onPressed: (){
+                        scrollControllerHome.animateTo(0.0, duration: Duration(milliseconds: 200), curve: Curves.easeInCubic);
+                      },
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                          side: BorderSide(color: Colors.white)),
+                      color: Colors.transparent,
+                      textColor: Colors.pinkAccent,
+                      child: Text("Перейти",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: "MPLUS",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            //
+            //
+            //
+            //______________________________________________________________
+            //
+            //
+            //
+            Container(
+                margin: EdgeInsets.only(bottom: 0, top: 12),
+                child: SliderLikes()),
+          ],
+        );
+
+        //_________________________________________________________________________________
+
+
+
+      }
+      else
+        {
+
+      if (count % 2 > 0) {
+        ColumnOne = count ~/ 2 + 1;
+        ColumnTwo = count ~/ 2;
+      } else {
+        ColumnOne = count ~/ 2;
+        ColumnTwo = count ~/ 2;
+      }
+
+
+      List<ElementItem> SearchResult=[];
+
+
+      for(int i = 0; i < SearchIds.length;i++){
+        SearchResult.add(elementInfo(SearchIds[i]~/100-1, SearchIds[i]%100-1));
+      }
+
+
+
+      return Container(
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        child:
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Text(
+                  SearchResultText,
+                  style: TextStyle(color: Colors.white, fontSize: 35,),
+                ),
+              ),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+
+                Column(
+                  children:
+                  List.generate(ColumnOne, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 18.0),
+                      child: Container(
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.44,
+                        child: Column(
+                          children: <Widget>[
+                            AspectRatio(
+                              aspectRatio: 9 / 12,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.network(
+                                    SearchResult[index*2]
+                                        .picture, fit: BoxFit.fill,)),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 16.0, top: 4),
+                                        child: Text(SearchResult[index*2]
+                                            .head, style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16),),
+                                      ),
+                                      Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 16.0),
+                                          child: Prise(SearchResult[index*2])
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Icon(Icons.add_shopping_cart,
+                                    color: Colors.white,),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children:
+                  List.generate(ColumnTwo, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 18.0),
+                      child: Container(
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.44,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            AspectRatio(
+                              aspectRatio: 9 / 12,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.network(SearchResult[index*2+1]
+                                      .picture, fit: BoxFit.fill,)),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 16.0, top: 4),
+                                        child: Text(SearchResult[index*2+1]
+                                            .head, style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16),),
+                                      ),
+                                      Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 16.0),
+                                          child: Prise(SearchResult[index*2+1])
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Icon(Icons.add_shopping_cart,
+                                    color: Colors.white,),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            ),
+
+          ],
+        ),
+      );
+    }
+
+    }
+
+
+
     Widget PageCatalog(){
 
       if(controllerHomeOffset.status != AnimationStatus.completed)
@@ -327,6 +899,11 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+
+                  Padding(
+                    padding: const EdgeInsets.only(top : 18.0),
+                    child: SearchInput(),
+                  ),
                   //
                   //
                   //
@@ -335,62 +912,6 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                   //
                   //
 
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width*0.90,
-                      child:
-                      Text("Категории",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 44,
-                            fontFamily: "MPLUS",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w300),
-                      ),
-
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width*0.90,
-                    child:Align(
-                      alignment: Alignment.topLeft,
-                      child: Row(
-                        children: <Widget>[
-                          FlatButton(
-                            onPressed: (){
-                              controllerHomeOffset.forward();
-                            },
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                                side: BorderSide(color: Colors.white)),
-                            color: Colors.transparent,
-                            textColor: Colors.pinkAccent,
-                            child: Text("Акции",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: "MPLUS",
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left:14.0),
-                            child: Text("more 30+",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: "MPLUS",
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ),
-
-                        ],
-                      ),
-                    ),
-                  ),
 
                   //
                   //
@@ -399,207 +920,11 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                   //
                   //
                   //
-                  SlideCategories(),
-                  //
-                  //
-                  //
-                  //_______________________________________________________
-                  //
-                  //
-                  //
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width*0.90,
-                      child:
-                      Text("Скидки",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            fontFamily: "MPLUS",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w300),
-                      ),
-
-                    ),
+                  AnimatedPadding(
+                    duration: Duration(milliseconds: 200),
+                    padding:  EdgeInsets.only(top: SearchPadding),
+                    child: Search(),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width*0.90,
-                    child:Align(
-                      alignment: Alignment.topLeft,
-                      child: Row(
-                        children: <Widget>[
-                          FlatButton(
-                            onPressed: (){
-                              scrollControllerHome.animateTo(0.0, duration: Duration(milliseconds: 200), curve: Curves.easeInCubic);
-                            },
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                                side: BorderSide(color: Colors.white)),
-                            color: Colors.transparent,
-                            textColor: Colors.pinkAccent,
-                            child: Text("Подробнее",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: "MPLUS",
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left:14.0),
-                            child: Text("Мои купоны",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: "MPLUS",
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ),
-
-                        ],
-                      ),
-                    ),
-                  ),
-                  //
-                  //
-                  //
-                  //______________________________________________________________
-                  //
-                  //
-                  //
-                  Container(
-                      margin: EdgeInsets.only(bottom: 0, top: 12),
-                      child: SliderSales1()),
-                  //
-                  //
-                  //
-                  //______________________________________________________________
-                  //
-                  //
-                  //
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width*0.90,
-                      child:
-                      Center(
-                        child: Text("Популярное",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 40,
-                              fontFamily: "MPLUS",
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ),
-
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width*0.90,
-                    child:Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          FlatButton(
-                            onPressed: (){
-                              scrollControllerHome.animateTo(0.0, duration: Duration(milliseconds: 200), curve: Curves.easeInCubic);
-                            },
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                                side: BorderSide(color: Colors.white)),
-                            color: Colors.transparent,
-                            textColor: Colors.pinkAccent,
-                            child: Text("Подробнее",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: "MPLUS",
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  //
-                  //
-                  //
-                  //______________________________________________________________
-                  //
-                  //
-                  //
-                  Container(
-                      margin: EdgeInsets.only(bottom: 0, top: 12),
-                      child: SliderPop()),
-                  //
-                  //
-                  //
-                  //______________________________________________________________
-                  //
-                  //
-                  //
-                  //
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width*0.90,
-                      child:
-                      Center(
-                        child: Text("Избранное",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 40,
-                              fontFamily: "MPLUS",
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ),
-
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width*0.90,
-                    child:Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          FlatButton(
-                            onPressed: (){
-                              scrollControllerHome.animateTo(0.0, duration: Duration(milliseconds: 200), curve: Curves.easeInCubic);
-                            },
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                                side: BorderSide(color: Colors.white)),
-                            color: Colors.transparent,
-                            textColor: Colors.pinkAccent,
-                            child: Text("Перейти",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: "MPLUS",
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  //
-                  //
-                  //
-                  //______________________________________________________________
-                  //
-                  //
-                  //
-                  Container(
-                      margin: EdgeInsets.only(bottom: 0, top: 12),
-                      child: SliderLikes()),
                 ],
               ),
             ),

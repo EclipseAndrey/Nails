@@ -161,6 +161,36 @@ InputDecoration inputDecorationPromo = InputDecoration(
   ),
 );
 
+InputDecoration inputDecorationSearch = InputDecoration(
+  hintText: "Поиск",
+  hintStyle: TextStyle(color: Colors.white60),
+  enabledBorder: const OutlineInputBorder(
+    // width: 0.0 produces a thin "hairline" border
+    borderSide: const BorderSide(color: Colors.white, width: 0.0),
+    borderRadius: BorderRadius.all(
+      Radius.circular(30),
+
+    ),
+  ),
+
+  labelStyle: TextStyle(color: Colors.white),
+  border: OutlineInputBorder(
+
+    borderSide:  BorderSide(color: Colors.white, width: 1.0),
+    borderRadius: BorderRadius.all(
+      Radius.circular(30),
+
+    ),
+  ),
+
+  fillColor: Colors.transparent,
+  filled: true,
+  suffixIcon: Icon(
+    Icons.search,
+    color: Colors.white70,
+  ),
+);
+
 
 
 

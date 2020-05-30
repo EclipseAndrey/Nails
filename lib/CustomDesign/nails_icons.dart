@@ -73,6 +73,7 @@ class Nails {
   static const IconData chel_2 = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData krugly_chel = IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData sozdat_dokument_10 = IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData heart = IconData(0xe818, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData book = IconData(0xe828, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData bookmark_empty = IconData(0xf097, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData list_ordered = IconData(0xf3a3, fontFamily: _kFontFam, fontPackage: _kFontPkg);
