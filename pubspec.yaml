@@ -59,6 +59,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/chel.flr
+    - assets/telega1.flr
+    - assets/i-catalog.flr
+    - assets/i-catalog1.flr
+    - assets/menu.flr
     - assets/images/vk.png
     - assets/images/
     - assets/images/inst.png

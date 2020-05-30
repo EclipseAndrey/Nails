@@ -243,17 +243,55 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
             ),
             BottomNavigationBarItem(
-              icon: Icon(custicon.Nails.menu, color: Colors.white,),
               title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(custicon.Nails.telega_2, color: Colors.white,),
-              title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
+              icon: Container(
+                height: 24,
+                child: FlareActor(
+                  'assets/menu.flr',
+                  color: Colors.white,
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "idle",
+                ),
+              ),
+              activeIcon: Container(
+                height: 30,
+                child: FlareActor(
+                  'assets/menu.flr',
+                  color: Colors.white,
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "go",
+                ),
+              ),
             ),
             BottomNavigationBarItem(
               title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
               icon: Container(
-                height: 26,
+                height: 24,
+                child: FlareActor(
+                  'assets/telega1.flr',
+                  color: Colors.white,
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "idle",
+                ),
+              ),
+              activeIcon: Container(
+                height: 30,
+                child: FlareActor(
+                  'assets/telega1.flr',
+                  color: Colors.white,
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "go",
+                ),
+              ),
+            ),
+            BottomNavigationBarItem(
+              title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
+              icon: Container(
+                height: 24,
                 child: FlareActor(
                   'assets/chel.flr',
                   color: Colors.white,
@@ -263,7 +301,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
                 ),
               ),
               activeIcon: Container(
-                height: 26,
+                height: 30,
                 child: FlareActor(
                   'assets/chel.flr',
                   color: Colors.white,

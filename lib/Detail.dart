@@ -174,25 +174,22 @@ class _DetailState extends State<Detail> {
                            width: MediaQuery.of(context).size.width,
                            child: Stack(
                              children: <Widget>[
-                               AspectRatio(
-                                 aspectRatio: 2/1,
-                                 child: Container(
-                                     width: MediaQuery.of(context).size.width,
-                                     child: Image.network(elementItem.picture, fit: BoxFit.cover,)),
-                               ),
-                               AspectRatio(
-                                 aspectRatio: 2/1,
-                                 child: Container(
+                               Container(
                                    width: MediaQuery.of(context).size.width,
-                                   child: BackdropFilter(
-                                     filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                                     child: Container(
-                                       color: Colors.black.withOpacity(0),
-                                     ),
-                                   ),
-                                 ),
-                               ),
+                                   child: Image.network(elementItem.picture, fit: BoxFit.cover,)),
                              ],
+                           ),
+                         ),
+                       ),
+                       AspectRatio(
+                         aspectRatio: 2/1,
+                         child: Container(
+                           width: MediaQuery.of(context).size.width,
+                           child: BackdropFilter(
+                             filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                             child: Container(
+                               color: Colors.black.withOpacity(0),
+                             ),
                            ),
                          ),
                        ),
@@ -204,32 +201,32 @@ class _DetailState extends State<Detail> {
                              aspectRatio: 9/12,
                              child: Hero(
                                tag: elementItem.id,
-                               child: ClipRRect(
-                                 borderRadius: BorderRadius.circular(15),
-                                 child: Container(
-                                   decoration: BoxDecoration(
-                                     boxShadow: [
-                                       BoxShadow(
-                                         color: Colors.black45,
-                                         blurRadius: 25.0, // soften the shadow
-                                         spreadRadius: 5.0, //extend the shadow
-                                         offset: Offset(
-                                           -3.0, // Move to right 10  horizontally
-                                           0.0, // Move to bottom 10 Vertically
-                                         ),
-                                       )
-                                     ],
-                                   ),
-                                   child:AspectRatio(
-                                     aspectRatio: 9/12,
+                               child: Container(
+                                 decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.all(Radius.circular(15)),
+                                   boxShadow: [
+                                     BoxShadow(
+                                       color: Colors.black45,
+                                       blurRadius: 4.0, // soften the shadow
+                                       spreadRadius: 1.0, //extend the shadow
+                                       offset: Offset(
+                                         -1.0, // Move to right 10  horizontally
+                                         1.0, // Move to bottom 10 Vertically
+                                       ),
+                                     )
+                                   ],
+                                 ),
+                                 child:AspectRatio(
+                                   aspectRatio: 9/12,
+                                   child: ClipRRect(
+                                     borderRadius: BorderRadius.circular(15),
                                      child: Container(
-
                                        child: Image.network(
                                          elementItem.picture,
                                        ),
                                      ),
-                                   ) ,
-                                 ),
+                                   ),
+                                 ) ,
                                ),
                              ),
                            ),
