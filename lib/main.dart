@@ -20,7 +20,8 @@ import 'BottomPage.dart';
 
 import 'CheckCode.dart';
 import 'Detail.dart';
-
+import 'package:flutter_rounded_progress_bar/flutter_icon_rounded_progress_bar.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 void main(){
 
@@ -71,6 +72,11 @@ String num;
 var response;
 var response2;
 
+List<List<Image>> images = [];
+List<Image> imagesCategory = [];
+
+
+
 class SplashScreen extends StatefulWidget  {
   final String nextRoute;
 
@@ -79,6 +85,35 @@ class SplashScreen extends StatefulWidget  {
   _SplashScreenState createState() => _SplashScreenState();
 }
 class _SplashScreenState extends State<SplashScreen>  {
+
+  double Loading = 0.0;
+  double LoadingComplete = 0.0;
+  double LoadingProgress = 0.0;
+  int LoadingP = 1;// LoadingProgress*1000~/LoadingComplete;
+
+  double LoadingCompleteChceck(){
+    for(int i = 0; i < 7; i++){
+      for(int j = 0; j < ItemCount(i).count; j++) {
+        LoadingComplete += 1.0;
+      }
+      }
+    LoadingComplete += 7.0;
+  }
+
+
+  void UpdateLoading(double up){
+    LoadingProgress += up;
+    LoadingP = (Loading*100).toInt();
+
+
+      if(LoadingProgress > 0.0)
+      Loading = LoadingProgress/LoadingComplete;
+      print(Loading.toString());
+      setState(() {
+
+      });
+
+  }
 
 
 
@@ -91,10 +126,71 @@ class _SplashScreenState extends State<SplashScreen>  {
     token = prefs.getString('token') ?? 'none';
     num = prefs.getString('num') ?? 'none';
 
+    images.clear();
+    imagesCategory.clear();
+
+
+    void _imageLoad() async {
+
+
+      for(int i = 0; i < 7; i ++ ){
+
+        //____________________________________________________________________________________
+        Image downloadImage =Image.network('http://eclipsedevelop.ru/images/c-${i+1}.png');
+        imagesCategory.add(downloadImage);
+
+        final ImageStream stream = downloadImage.image.resolve(ImageConfiguration.empty);
+        final Completer<void> completer = Completer<void>();
+        stream.addListener(ImageStreamListener((ImageInfo info, bool syncCall) => completer.complete()));
+        await completer.future;
+        //___________________________________________________________________________________
+
+        UpdateLoading(1.0);
+
+        if (mounted) {
+
+
+
+          List<Image> step = [];
+          for(int j = 0; j < ItemCount(i).count; j++){
+
+            print("Загрузка картинки $i $j");
+
+
+            //_____________________________________________________________________________________
+            Image downloadImage =Image.network('http://eclipsedevelop.ru/images/${(i+1)*100+(j+1)}.png');
+            step.add(downloadImage);
+
+            final ImageStream stream = downloadImage.image.resolve(ImageConfiguration.empty);
+            final Completer<void> completer = Completer<void>();
+            stream.addListener(ImageStreamListener((ImageInfo info, bool syncCall) => completer.complete()));
+            await completer.future;
+            //________________________________________________________________________________________
+
+
+            UpdateLoading(1.0);
+
+            print("Complited");
+          }
+          images.add(step);
+
+
+
+        }
+
+      }
+
+    }
+
+
+    await _imageLoad();
+
+
 
 
     if(info){
       if(auto) {
+
 
         if(token != 'none') {
 
@@ -156,13 +252,16 @@ class _SplashScreenState extends State<SplashScreen>  {
   void initState() {
 
     super.initState();
+    LoadingCompleteChceck();
+
     // Создаём таймер, который должен будет переключить SplashScreen на HomeScreen через 2 секунды
+    inf();
+
     Timer(
-        Duration(seconds: 2),
+        Duration(seconds: 2222),
         // Для этого используется статический метод навигатора
         // Это очень похоже на передачу лямбда функции в качестве аргумента std::function в C++
             () {
-          inf();
         }
     );
   }
@@ -170,12 +269,43 @@ class _SplashScreenState extends State<SplashScreen>  {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 230, 229, 1),
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.only(bottom: 60,right: 23),
-          child: Image.network('https://static.tildacdn.com/tild3230-6134-4236-b864-353236306434/Logo02102018.png',width: 300,height: 300, ),
-        ),
+      body: Stack(
+        children: <Widget>[
+          Center(
+            child: Container(
+              padding: EdgeInsets.only(bottom: 60,right: 23),
+              child: Image.network('https://static.tildacdn.com/tild3230-6134-4236-b864-353236306434/Logo02102018.png',width: 300,height: 300, ),
+            ),
 
+          ),
+
+          Align(
+            alignment: Alignment.bottomCenter,
+            child:Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: CircularPercentIndicator(
+                radius: 100.0,
+                lineWidth: 10.0,
+                animation: false,
+                percent: Loading,
+                center: new Text(
+
+                  "${LoadingP}%",
+                  style:
+                  new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                ),
+                footer: new Text(
+                  "Ща мы всё загрузим",
+                  style:
+                  new TextStyle( fontSize: 17.0),
+                ),
+                circularStrokeCap: CircularStrokeCap.round,
+                progressColor: Colors.purpleAccent,
+              ),
+            ) ,
+          )
+
+        ],
       ),
     );
   }
