@@ -309,7 +309,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               icon: Container(
                 height: 24,
                 child: FlareActor(
-                  'assets/telega1.flr',
+                  'assets/telega2.flr',
                   color: Colors.white,
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
@@ -319,7 +319,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               activeIcon: Container(
                 height: 30,
                 child: FlareActor(
-                  'assets/telega1.flr',
+                  'assets/telega2.flr',
                   color: Colors.white,
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
