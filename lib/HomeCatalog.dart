@@ -1315,24 +1315,8 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
             Stack(
               children: <Widget>[
                 GestureDetector(
-                  onTapDown: (TapDownDetails details){
-
-                    setState(() {
-                      SizedPlus1 = 10;
-                    });
-
-                  },
-                  onTapUp: (TapUpDetails details){
-                    setState(() {
-                      SizedPlus1 = 0;
-                    });
-
-                  },
-                  onTapCancel: (){
-                    setState(() {
-
-                      SizedPlus1 = 0;
-                    });
+                  onTap: (){
+                    Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(sales[itemIndex])));
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 100),
@@ -1340,10 +1324,13 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(16.0),
-                          child: Image(
-                            image: images[sales[itemIndex].id~/100-1][sales[itemIndex].id%100-1].image,
+                        Hero(
+                          tag: sales[itemIndex].id,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16.0),
+                            child: Image(
+                              image: images[sales[itemIndex].id~/100-1][sales[itemIndex].id%100-1].image,
+                            ),
                           ),
                         ),
                         Row(
@@ -1425,12 +1412,15 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(16.0),
-                            child: Image(
-                              image: imagesCategory[itemIndex].image,
-                            ),
+                          Hero(
+                            tag: itemIndex,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16.0),
+                              child: Image(
+                                image: imagesCategory[itemIndex].image,
+                              ),
 
+                            ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
