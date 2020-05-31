@@ -68,10 +68,14 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
     }
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+      floatingActionButton: ArrowDown(),
       body: PageCatalog(),
     );
   }
@@ -86,13 +90,33 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
   List<int> SearchIds = [];
   double SearchPadding = 0.0;
   var _controller = TextEditingController();
-  bool cancel = true;
+  bool cancel = false;
   String SearchResultText = "";
+
+  bool ArrowDownOpasity = true;
+  ScrollController scrollControllerHome = ScrollController();
 
 
   List<int> Likes =[101,202];
   var currentPageC = UrlImage_c.length-1.0;
   var currentPageS = UrlImage_c.length-1.0;
+
+  Widget ArrowDown(){
+    if(ArrowDownOpasity &&  controllerHomeOffset.status != AnimationStatus.completed)
+    return  FloatingActionButton(
+    child: Icon(Icons.keyboard_arrow_down,size: 30,),
+    onPressed: (){
+      scrollControllerHome.animateTo(250.0, duration: Duration(milliseconds: 200), curve: Curves.easeInCubic);
+      setState(() {
+        ArrowDownOpasity = false;
+      });
+    },
+    backgroundColor: Colors.white70,
+    foregroundColor: Colors.black,
+    );
+    else return SizedBox();
+  }
+
 
   Widget PageCatalog(){
 
@@ -130,7 +154,6 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
 
   Widget Content(){
-    ScrollController scrollControllerHome = ScrollController();
 
     tweenHomeOffset = Tween<double>(begin: 1.0, end: 0.0);
     animationHomeOffset = tweenHomeOffset.animate(controllerHomeOffset);
@@ -148,6 +171,11 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
     scrollControllerHome.addListener(() {
 
+      if(scrollControllerHome.offset> 150){
+        setState(() {
+          ArrowDownOpasity = false;
+        });
+      }
     });
     Widget Prise(ElementItem itemForSales){
       if(itemForSales.sale>0){
@@ -428,7 +456,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
     }
 
 
-    Widget Search()   {
+    Widget Search() {
 
 
       int count = SearchIds.length;
@@ -1034,7 +1062,8 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                         child: Stack(
                           fit: StackFit.expand,
                           children: <Widget>[
-                            Image.network(UrlImage_c[UrlImage_c.length-1 - i], fit: BoxFit.cover,),
+                            Image(
+                              image: imagesCategory[UrlImage_c.length-1 - i].image, fit: BoxFit.cover,),
                             Container(
                               width:200,
                               height: 200,
@@ -1138,7 +1167,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
 
   Widget SliderSales1(){
-    List<ElementItem> sales = [ElementItem(0, '','', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
+    List<ElementItem> sales = [ElementItem(0, '', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
     sales.clear();
     for(int cat = 0; cat < 7; cat++){
       HelpItemCount step = ItemCount(cat);
@@ -1176,7 +1205,13 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
                       child: Hero(
                         tag: sales[itemIndex].id,
-                        child: Image.network(sales[itemIndex].picture),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16.0),
+                          child:
+                          Image(
+                            image: images[sales[itemIndex].id~/100-1][sales[itemIndex].id%100-1].image,
+                          ),
+                        ),
                       ),
                     ),
                     Row(
@@ -1226,7 +1261,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
   Widget SliderPop(){
 
-    List<ElementItem> sales = [ElementItem(0, '','', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
+    List<ElementItem> sales = [ElementItem(0, '', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
     sales.clear();
     for(int cat = 0; cat < 7; cat++){
       HelpItemCount step = ItemCount(cat);
@@ -1306,7 +1341,9 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                       children: <Widget>[
                         ClipRRect(
                           borderRadius: BorderRadius.circular(16.0),
-                          child: Image.network(sales[itemIndex].picture),
+                          child: Image(
+                            image: images[sales[itemIndex].id~/100-1][sales[itemIndex].id%100-1].image,
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1389,7 +1426,10 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                         children: <Widget>[
                           ClipRRect(
                             borderRadius: BorderRadius.circular(16.0),
-                            child: Image.network(UrlImage_c[itemIndex]),
+                            child: Image(
+                              image: imagesCategory[itemIndex].image,
+                            ),
+
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1512,7 +1552,7 @@ class CardScrollWidgetSales extends StatelessWidget {
                       child: Stack(
                         fit: StackFit.expand,
                         children: <Widget>[
-                          Image.network(UrlImage_c[UrlImage_c.length-1 - i], fit: BoxFit.cover,),
+                          Image(image: imagesCategory[UrlImage_c.length-1 - i].image, fit: BoxFit.cover,),
                           Container(
                             width:200,
                             height: 200,
