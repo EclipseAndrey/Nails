@@ -74,7 +74,7 @@ var response2;
 
 List<List<Image>> images = [];
 List<Image> imagesCategory = [];
-
+List<int>TrashSave = [];
 
 
 class SplashScreen extends StatefulWidget  {

@@ -456,7 +456,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
     }
 
 
-    Widget Search() {
+    Widget Search()   {
 
 
       int count = SearchIds.length;
@@ -1167,7 +1167,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
 
   Widget SliderSales1(){
-    List<ElementItem> sales = [ElementItem(0, '', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
+    List<ElementItem> sales = [ElementItem(0, '','', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
     sales.clear();
     for(int cat = 0; cat < 7; cat++){
       HelpItemCount step = ItemCount(cat);
@@ -1205,6 +1205,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
                       child: Hero(
                         tag: sales[itemIndex].id,
+
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(16.0),
                           child:
@@ -1261,7 +1262,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
   Widget SliderPop(){
 
-    List<ElementItem> sales = [ElementItem(0, '', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
+    List<ElementItem> sales = [ElementItem(0, '','', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
     sales.clear();
     for(int cat = 0; cat < 7; cat++){
       HelpItemCount step = ItemCount(cat);
