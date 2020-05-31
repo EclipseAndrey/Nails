@@ -253,11 +253,19 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                 width: MediaQuery.of(context).size.width* 0.44,
                                 child: Column(
                                   children: <Widget>[
-                                    AspectRatio(
-                                      aspectRatio: 9/12,
-                                      child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(15),
-                                          child: Image.network(elementInfo(SelectedCategories, index*2).picture, fit: BoxFit.fill,)),
+                                    GestureDetector(
+                                      onTap: (){
+                                        Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(((elementInfo(SelectedCategories, index*2))))));
+                                      },
+                                      child: Hero(
+                                        tag: elementInfo(SelectedCategories, index*2).id,
+                                        child: AspectRatio(
+                                          aspectRatio: 9/12,
+                                          child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(15),
+                                              child: Image.network(elementInfo(SelectedCategories, index*2).picture, fit: BoxFit.fill,)),
+                                        ),
+                                      ),
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -300,11 +308,19 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  AspectRatio(
-                                    aspectRatio: 9/12,
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(15),
-                                        child: Image.network(elementInfo(SelectedCategories, index*2+1).picture, fit: BoxFit.fill,)),
+                                  GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(((elementInfo(SelectedCategories, index*2))))));
+                                    },
+                                    child: Hero(
+                                      tag: elementInfo(SelectedCategories, index*2+1).id,
+                                      child: AspectRatio(
+                                        aspectRatio: 9/12,
+                                        child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(15),
+                                            child: Image.network(elementInfo(SelectedCategories, index*2+1).picture, fit: BoxFit.fill,)),
+                                      ),
+                                    ),
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -792,13 +808,21 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                             .width * 0.44,
                         child: Column(
                           children: <Widget>[
-                            AspectRatio(
-                              aspectRatio: 9 / 12,
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Image.network(
-                                    SearchResult[index*2]
-                                        .picture, fit: BoxFit.fill,)),
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail( SearchResult[index*2])));
+                              },
+                              child: Hero(
+                                tag:  SearchResult[index*2].id,
+                                child: AspectRatio(
+                                  aspectRatio: 9 / 12,
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.network(
+                                        SearchResult[index*2]
+                                            .picture, fit: BoxFit.fill,)),
+                                ),
+                              ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment
@@ -852,12 +876,20 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            AspectRatio(
-                              aspectRatio: 9 / 12,
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Image.network(SearchResult[index*2+1]
-                                      .picture, fit: BoxFit.fill,)),
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail( SearchResult[index*2+1])));
+                              },
+                              child: Hero(
+                                tag: SearchResult[index*2+1].id,
+                                child: AspectRatio(
+                                  aspectRatio: 9 / 12,
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.network(SearchResult[index*2+1]
+                                          .picture, fit: BoxFit.fill,)),
+                                ),
+                              ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment
