@@ -3,6 +3,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/Account.dart';
 import 'package:flutterapp32/HomeCatalog.dart';
+import 'package:flutterapp32/TrashCustom.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'EmptyTrash.dart';
 import 'home.dart';
@@ -210,7 +211,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
       ),
       MyOrders(),
       HomeCatalog(),
-      Trash(items),
+      TrashCustom(),
       Account(),
     ];
 

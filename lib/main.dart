@@ -17,6 +17,7 @@ import 'package:flutterapp32/Contacts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'BottomPage.dart';
+import 'package:intl/intl.dart';
 
 import 'CheckCode.dart';
 import 'Detail.dart';
@@ -74,7 +75,7 @@ var response2;
 
 List<List<Image>> images = [];
 List<Image> imagesCategory = [];
-
+List<int> TrashSave = [];
 
 
 class SplashScreen extends StatefulWidget  {
@@ -108,7 +109,6 @@ class _SplashScreenState extends State<SplashScreen>  {
 
       if(LoadingProgress > 0.0)
       Loading = LoadingProgress/LoadingComplete;
-      print(Loading.toString());
       setState(() {
 
       });
@@ -131,6 +131,10 @@ class _SplashScreenState extends State<SplashScreen>  {
 
 
     void _imageLoad() async {
+
+
+      var start = new DateTime.now();
+
 
 
       for(int i = 0; i < 7; i ++ ){
@@ -158,7 +162,7 @@ class _SplashScreenState extends State<SplashScreen>  {
 
 
             //_____________________________________________________________________________________
-            Image downloadImage =Image.network('http://eclipsedevelop.ru/images/${(i+1)*100+(j+1)}.png');
+            Image downloadImage =Image.network('http://eclipsedevelop.ru/images/${(i+1)*100+(j+1)}.jpg');
             step.add(downloadImage);
 
             final ImageStream stream = downloadImage.image.resolve(ImageConfiguration.empty);
@@ -179,6 +183,10 @@ class _SplashScreenState extends State<SplashScreen>  {
         }
 
       }
+
+      var end = new DateTime.now();
+
+      print("Загрузка "+end.difference(start).inSeconds.toString()+" секунд");
 
     }
 

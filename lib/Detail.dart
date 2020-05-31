@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'FadeAnimation.dart';
 import 'home.dart';
 import './CustomDesign/nails_icons.dart' as custicon;
-
+import 'main.dart';
 
 class Detail extends StatefulWidget {
   ElementItem _elementItem;
@@ -69,6 +69,7 @@ class _DetailState extends State<Detail> {
     return FlatButton(
       onPressed: (){
         setState(() {
+
           Save = !Save;
         });
       },
@@ -100,6 +101,7 @@ class _DetailState extends State<Detail> {
   }
 
   Widget LikeButton(){
+
 
     Widget icon(){
       if(!Like){
