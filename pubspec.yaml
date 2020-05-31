@@ -62,8 +62,12 @@ flutter:
   assets:
     - assets/chel.flr
     - assets/telega1.flr
+    - assets/hearthero.flr
+    - assets/heartmenu.flr
+    - assets/bookmark.flr
     - assets/i-catalog.flr
     - assets/i-catalog1.flr
+    - assets/icatalog2.flr
     - assets/menu.flr
     - assets/images/vk.png
     - assets/images/
