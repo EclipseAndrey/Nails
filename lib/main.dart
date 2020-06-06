@@ -18,7 +18,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'BottomPage.dart';
 import 'package:intl/intl.dart';
-
+import 'Objects.dart';
 import 'CheckCode.dart';
 import 'Detail.dart';
 import 'package:flutter_rounded_progress_bar/flutter_icon_rounded_progress_bar.dart';
@@ -76,6 +76,12 @@ var response2;
 List<List<Image>> images = [];
 List<Image> imagesCategory = [];
 List<int> TrashSave = [];
+
+Like ObjectLikes = Like.r();
+List<int> ListLike = [];
+
+TrashList ObjectTrash = TrashList.r();
+List<int> ListTrash = [];
 
 
 class SplashScreen extends StatefulWidget  {
@@ -141,6 +147,7 @@ class _SplashScreenState extends State<SplashScreen>  {
 
         //____________________________________________________________________________________
         Image downloadImage =Image.network('http://eclipsedevelop.ru/images/c-${i+1}.png');
+        print('http://eclipsedevelop.ru/images/c-${i+1}.png');
         imagesCategory.add(downloadImage);
 
         final ImageStream stream = downloadImage.image.resolve(ImageConfiguration.empty);
@@ -191,7 +198,12 @@ class _SplashScreenState extends State<SplashScreen>  {
     }
 
 
+
     await _imageLoad();
+
+
+
+
 
 
 
@@ -209,8 +221,11 @@ class _SplashScreenState extends State<SplashScreen>  {
           }
 
           print('Валидность $token  '+res.toString());
-          res().then((value) {
-            var response = jsonDecode(value.body);
+
+          var value1 = await res();
+
+          if(value1.statusCode == 200) {
+            var response = jsonDecode(value1.body);
             String Response = response["response"];
             print(Response);
             if (Response == "11") {
@@ -219,20 +234,36 @@ class _SplashScreenState extends State<SplashScreen>  {
             else if(Response == "13"){
 
 
-              Future<http.Response> res() async {
+              Future<http.Response> res2() async {
                 return await http
                     .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
               }
               print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
 
-              res().then((value) {
-                if (value.statusCode == 200) {
-                  response2 = jsonDecode(value.body);
+              var value2 =await res2();
+
+              if(value2.statusCode == 200) {
+                if (value2.statusCode == 200) {
+                  response2 = jsonDecode(value2.body);
                   print(response2);
+                  ObjectLikes = Like(token);
+                  // ignore: non_constant_identifier_names
+                  Future<bool> acceptGet = ObjectLikes.Likes();
+                  if(await acceptGet){
+                     ObjectLikes.getLikes();
+                  }
+                  ObjectTrash = TrashList(token);
+                  // ignore: non_constant_identifier_names
+                  Future<bool> acceptGetTrash = ObjectTrash.TrashListUp();
+                  if(await acceptGetTrash){
+                    ObjectTrash.getTrash();
+                  }
+
+
                   Navigator.of(context).pushReplacementNamed('/BottomPage');
 
                 }
-              });
+              }
 
 
 
@@ -240,7 +271,7 @@ class _SplashScreenState extends State<SplashScreen>  {
               Navigator.of(context).pushReplacementNamed('/Login');
               prefs.setString('token', 'none');
             }
-          });
+          }
 
 
         }else{

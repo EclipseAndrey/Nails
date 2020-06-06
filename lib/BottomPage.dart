@@ -6,6 +6,7 @@ import 'package:flutterapp32/HomeCatalog.dart';
 import 'package:flutterapp32/TrashCustom.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'EmptyTrash.dart';
+import 'LikePage.dart';
 import 'home.dart';
 import 'Contacts.dart';
 import 'Trash.dart';
@@ -157,7 +158,10 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
 
     // call back
     if(index == 0){
-      _makePhoneCall('tel:+79307229602');
+      setState(() {
+        headerTx = "Color Bird";
+        _selectedIndex = index;
+      });
     }
     if(index == 1){
       setState(() {
@@ -205,10 +209,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     List<Widget> _widgetOptions = <Widget>[
-      Text(
-        'Index 0: Home',
-        style: optionStyle,
-      ),
+      LikePage(),
       MyOrders(),
       HomeCatalog(),
       TrashCustom(),
@@ -240,7 +241,50 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               icon: Container(
                 height: 24,
                 child: FlareActor(
-                  'assets/heartmenu.flr',
+                  'assets/animations/item_heart2.flr',
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "unselect",
+                ),
+              ),
+              activeIcon: Container(
+                height: 30,
+                child: FlareActor(
+                  'assets/animations/item_heart2.flr',
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "select",
+                ),
+              ),
+            ),
+            BottomNavigationBarItem(
+              title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
+              icon: Container(
+                height: 24,
+                child: FlareActor(
+                  'assets/animations/bookmark1.flr',
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "unselect",
+                ),
+              ),
+              activeIcon: Container(
+                height: 30,
+                child: FlareActor(
+                  'assets/animations/bookmark1.flr',
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "select",
+                ),
+              ),
+
+            ),
+            BottomNavigationBarItem(
+              title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
+              icon: Container(
+                height: 24,
+                child: FlareActor(
+                  'assets/animations/icatalog2.flr',
                   color: Colors.white,
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
@@ -250,66 +294,20 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               activeIcon: Container(
                 height: 30,
                 child: FlareActor(
-                  'assets/heartmenu.flr',
-                  color: Colors.white,
-                  alignment: Alignment.center,
-                  fit: BoxFit.contain,
-                  animation: "go",
-                ),
-              ),
-            ),
-            BottomNavigationBarItem(
-              title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
-              icon: Container(
-                height: 24,
-                child: FlareActor(
-                  'assets/bookmark.flr',
+                  'assets/animations/icatalog2.flr',
                   color: Colors.white,
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
                   animation: "idle",
                 ),
               ),
-              activeIcon: Container(
-                height: 30,
-                child: FlareActor(
-                  'assets/bookmark.flr',
-                  color: Colors.white,
-                  alignment: Alignment.center,
-                  fit: BoxFit.contain,
-                  animation: "Untitled",
-                ),
-              ),
             ),
             BottomNavigationBarItem(
               title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
               icon: Container(
                 height: 24,
                 child: FlareActor(
-                  'assets/icatalog2.flr',
-                  color: Colors.white,
-                  alignment: Alignment.center,
-                  fit: BoxFit.contain,
-                  animation: "idle",
-                ),
-              ),
-              activeIcon: Container(
-                height: 30,
-                child: FlareActor(
-                  'assets/icatalog2.flr',
-                  color: Colors.white,
-                  alignment: Alignment.center,
-                  fit: BoxFit.contain,
-                  animation: "go",
-                ),
-              ),
-            ),
-            BottomNavigationBarItem(
-              title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
-              icon: Container(
-                height: 24,
-                child: FlareActor(
-                  'assets/telega2.flr',
+                  'assets/animations/telega2.flr',
                   color: Colors.white,
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
@@ -319,7 +317,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               activeIcon: Container(
                 height: 30,
                 child: FlareActor(
-                  'assets/telega2.flr',
+                  'assets/animations/telega2.flr',
                   color: Colors.white,
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
@@ -332,7 +330,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               icon: Container(
                 height: 24,
                 child: FlareActor(
-                  'assets/chel.flr',
+                  'assets/animations/chel.flr',
                   color: Colors.white,
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
@@ -342,7 +340,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               activeIcon: Container(
                 height: 30,
                 child: FlareActor(
-                  'assets/chel.flr',
+                  'assets/animations/chel.flr',
                   color: Colors.white,
                   alignment: Alignment.center,
                   fit: BoxFit.contain,

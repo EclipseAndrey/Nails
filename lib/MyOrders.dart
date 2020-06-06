@@ -108,36 +108,68 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
+            child: Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height*0.10,
+                  child: Column(
+                    children: [
+                      Text("Записи",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 44,
+                            fontFamily: "MPLUS",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w300),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 48.0, right: 48),
+                        child: Divider(
+                          height: 1,
+                          color: Colors.white60,
 
-                  Padding(
-                    padding: const EdgeInsets.only(top:10.0),
-                    child: Column(children:List.generate(response2['count'], (index) {
-                      animPadding.add(6.0);
-                      animColor.add(225);
-                      animorders.add(40);
-                      animOpen.add(false);
-
-                      tw.add(Tween<double>(begin: 0, end: 90));
-
-                      anime.add(tw[index]
-                          .animate(controller[index]));
-
-                      controller[index].addListener(() {
-                        setState((){});
-                      });
-
-                      ElementItemOrder itemOrder = ElementItemOrder(response2['orders'][index]['order']['id'], response2['orders'][index]['order']['date'], response2['orders'][index]['order']['time'],
-                          response2['orders'][index]['ids'], int.parse(response2['orders'][index]['order']['status']));
-                      print("JOPA " + itemOrder.id.toString());
-                      return ElementOrder(itemOrder, context,index, anime[index],controller[index],controller);
-                    })
-                      ,),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+
+                Container(
+                  height: MediaQuery.of(context).size.height*0.80,
+
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+
+                        Padding(
+                          padding: const EdgeInsets.only(top:10.0),
+                          child: Column(children:List.generate(response2['count'], (index) {
+                            animPadding.add(6.0);
+                            animColor.add(225);
+                            animorders.add(40);
+                            animOpen.add(false);
+
+                            tw.add(Tween<double>(begin: 0, end: 90));
+
+                            anime.add(tw[index]
+                                .animate(controller[index]));
+
+                            controller[index].addListener(() {
+                              setState((){});
+                            });
+
+                            ElementItemOrder itemOrder = ElementItemOrder(response2['orders'][index]['order']['id'], response2['orders'][index]['order']['date'], response2['orders'][index]['order']['time'],
+                                response2['orders'][index]['ids'], int.parse(response2['orders'][index]['order']['status']));
+                            print("JOPA " + itemOrder.id.toString());
+                            return ElementOrder(itemOrder, context,index, anime[index],controller[index],controller);
+                          })
+                            ,),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

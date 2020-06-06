@@ -151,7 +151,29 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
       ),
     );
   }
+  Widget Prise(ElementItem itemForSales){
+    if(itemForSales.sale>0){
+      return Row(
 
+        children: <Widget>[
+          Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, fontSize: 16, decoration: TextDecoration.lineThrough,),),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text("${itemForSales.price - itemForSales.sale} руб.", style: TextStyle(color: Colors.pinkAccent, fontSize: 16),),
+
+
+          ),
+        ],
+      );
+    }else{
+      return Row(
+
+        children: <Widget>[
+          Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, fontSize: 16, ),),
+        ],
+      );
+    }
+  }
 
   Widget Content(){
 
@@ -177,29 +199,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
         });
       }
     });
-    Widget Prise(ElementItem itemForSales){
-      if(itemForSales.sale>0){
-        return Row(
 
-          children: <Widget>[
-            Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, fontSize: 16, decoration: TextDecoration.lineThrough,),),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text("${itemForSales.price - itemForSales.sale} руб.", style: TextStyle(color: Colors.pinkAccent, fontSize: 16),),
-
-
-            ),
-          ],
-        );
-      }else{
-        return Row(
-
-          children: <Widget>[
-            Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, fontSize: 16, ),),
-          ],
-        );
-      }
-    }
 
     double Trans = MediaQuery.of(context).size.width*(1.0-animationHomeOffset.value);
     double OpasityHome = animationHomeOffset.value;
@@ -310,7 +310,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                 children: <Widget>[
                                   GestureDetector(
                                     onTap: (){
-                                      Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(((elementInfo(SelectedCategories, index*2))))));
+                                      Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(((elementInfo(SelectedCategories, index*2+1))))));
                                     },
                                     child: Hero(
                                       tag: elementInfo(SelectedCategories, index*2+1).id,
@@ -688,52 +688,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
             //
             //
             //
-            Padding(
-              padding: const EdgeInsets.only(top: 15.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width*0.90,
-                child:
-                Center(
-                  child: Text("Избранное",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 40,
-                        fontFamily: "MPLUS",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w300),
-                  ),
-                ),
 
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width*0.90,
-              child:Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    FlatButton(
-                      onPressed: (){
-                        scrollControllerHome.animateTo(0.0, duration: Duration(milliseconds: 200), curve: Curves.easeInCubic);
-                      },
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                          side: BorderSide(color: Colors.white)),
-                      color: Colors.transparent,
-                      textColor: Colors.pinkAccent,
-                      child: Text("Перейти",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontFamily: "MPLUS",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
             //
             //
             //
@@ -806,15 +761,12 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                             .of(context)
                             .size
                             .width * 0.44,
-                        child: Column(
+                        child: Stack(
                           children: <Widget>[
-                            GestureDetector(
-                              onTap: (){
-                                Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail( SearchResult[index*2])));
-                              },
-                              child: Hero(
-                                tag:  SearchResult[index*2].id,
-                                child: AspectRatio(
+
+                            Column(
+                              children: <Widget>[
+                                AspectRatio(
                                   aspectRatio: 9 / 12,
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(15),
@@ -822,39 +774,53 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                         SearchResult[index*2]
                                             .picture, fit: BoxFit.fill,)),
                                 ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .spaceBetween,
-                              children: <Widget>[
-                                Container(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 16.0, top: 4),
-                                        child: Text(SearchResult[index*2]
-                                            .head, style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16),),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween,
+                                  children: <Widget>[
+                                    Container(
+                                      child: Expanded(
+                                        flex: 7,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment
+                                              .start,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 16.0, top: 4, right: 2),
+                                              child: FittedBox(
+                                                fit: BoxFit.contain,
+                                                child: Text(SearchResult[index*2]
+                                                    .head, style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16),),
+                                              ),
+                                            ),
+                                            Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 16.0),
+                                                child: Prise(SearchResult[index*2])
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 16.0),
-                                          child: Prise(SearchResult[index*2])
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(right: 8.0),
+                                        child: Icon(Icons.add_shopping_cart,
+                                          color: Colors.white,),
                                       ),
-                                    ],
-                                  ),
+                                    )
+                                  ],
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Icon(Icons.add_shopping_cart,
-                                    color: Colors.white,),
-                                )
                               ],
+                            ),
+                            Positioned(
+                              top: 10,
+                              right: 10,
+                              child: LikeButton(SearchResult[index*2]),
                             ),
                           ],
                         ),
@@ -863,7 +829,6 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                   }),
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children:
                   List.generate(ColumnTwo, (index) {
                     return Padding(
@@ -873,55 +838,66 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                             .of(context)
                             .size
                             .width * 0.44,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        child: Stack(
                           children: <Widget>[
-                            GestureDetector(
-                              onTap: (){
-                                Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail( SearchResult[index*2+1])));
-                              },
-                              child: Hero(
-                                tag: SearchResult[index*2+1].id,
-                                child: AspectRatio(
+
+                            Column(
+                              children: <Widget>[
+                                AspectRatio(
                                   aspectRatio: 9 / 12,
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(15),
-                                      child: Image.network(SearchResult[index*2+1]
-                                          .picture, fit: BoxFit.fill,)),
+                                      child: Image.network(
+                                        SearchResult[index*2+1]
+                                            .picture, fit: BoxFit.fill,)),
                                 ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .spaceBetween,
-                              children: <Widget>[
-                                Container(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 16.0, top: 4),
-                                        child: Text(SearchResult[index*2+1]
-                                            .head, style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16),),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween,
+                                  children: <Widget>[
+                                    Container(
+                                      child: Expanded(
+                                        flex: 7,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment
+                                              .start,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 16.0, top: 4, right: 2),
+                                              child: FittedBox(
+                                                fit: BoxFit.contain,
+                                                child: Text(SearchResult[index*2+1]
+                                                    .head, style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16),),
+                                              ),
+                                            ),
+                                            Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 16.0),
+                                                child: Prise(SearchResult[index*2+1])
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 16.0),
-                                          child: Prise(SearchResult[index*2+1])
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(right: 8.0),
+                                        child: Icon(Icons.add_shopping_cart,
+                                          color: Colors.white,),
                                       ),
-                                    ],
-                                  ),
+                                    )
+                                  ],
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Icon(Icons.add_shopping_cart,
-                                    color: Colors.white,),
-                                )
                               ],
+                            ),
+                            Positioned(
+                              top: 10,
+                              right: 10,
+                              child: LikeButton(SearchResult[index*2+1]),
                             ),
                           ],
                         ),
@@ -1199,6 +1175,10 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
 
   Widget SliderSales1(){
+
+
+
+
     List<ElementItem> sales = [ElementItem(0, '','', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
     sales.clear();
     for(int cat = 0; cat < 7; cat++){
@@ -1286,7 +1266,11 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                   ],
                 ),
               ),
-
+              Positioned(
+                top: 10,
+                right: 10,
+                child: LikeButton(sales[itemIndex]),
+              ),
             ],
           ),
     );
@@ -1394,7 +1378,11 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                     ),
                   ),
                 ),
-
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: LikeButton(sales[itemIndex]),
+                ),
               ],
             ),
       );
@@ -1402,101 +1390,150 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
   Widget SliderLikes(){
 
-    if(Likes.length>0){
+    if(ObjectLikes.getLikes().length>2){
+
+     List<ElementItem> LikesList = [];
+
+     for(int i = 0 ; i < ObjectLikes.getLikes().length; i ++){
+       LikesList.add(elementInfo(int.parse(ObjectLikes.getLikes()[i])~/100-1,  int.parse(ObjectLikes.getLikes()[i])%100-1));
+     }
 
       return
-        CarouselSlider.builder(
-          itemCount: UrlImage_c.length,
-          options: CarouselOptions(
-            height: 400,
-            aspectRatio: 12/9,
-            initialPage: 0,
-            enableInfiniteScroll: true,
-            viewportFraction: 0.55,
-            enlargeCenterPage: true,
-          ),
-          itemBuilder: (BuildContext context, int itemIndex) =>
-              Stack(
-                children: <Widget>[
-                  GestureDetector(
-                    onTapDown: (TapDownDetails details){
+        Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width*0.90,
+                child:
+                Center(
+                  child: Text("Избранное",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300),
+                  ),
+                ),
 
-                      setState(() {
-                        SizedPlus2 = 10;
-                      });
-
-                    },
-                    onTapUp: (TapUpDetails details){
-                      setState(() {
-                        SizedPlus2 = 0;
-                      });
-
-                    },
-                    onTapCancel: (){
-                      setState(() {
-
-                        SizedPlus2 = 0;
-                      });
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 100),
-                      margin: EdgeInsets.all(SizedPlus2),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Hero(
-                            tag: itemIndex,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(16.0),
-                              child: Image(
-                                image: imagesCategory[itemIndex].image,
-                              ),
-
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(left : 16.0, top: 4),
-                                      child: Text("XS Комплекс", style: TextStyle(color: Colors.white, fontSize: 16),),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 16.0),
-                                      child: Row(
-
-                                        children: <Widget>[
-                                          Text("1600 руб.", style: TextStyle(color: Colors.white, fontSize: 16, decoration: TextDecoration.lineThrough,),),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8.0),
-                                            child: Text("1099 руб.", style: TextStyle(color: Colors.pinkAccent, fontSize: 16),),
-
-
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right:8.0),
-                                child: Icon(Icons.add_shopping_cart, color: Colors.white,),
-                              )
-                            ],
-                          ),
-
-                        ],
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width*0.90,
+              child:Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlatButton(
+                      onPressed: (){
+                        scrollControllerHome.animateTo(0.0, duration: Duration(milliseconds: 200), curve: Curves.easeInCubic);
+                      },
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                          side: BorderSide(color: Colors.white)),
+                      color: Colors.transparent,
+                      textColor: Colors.pinkAccent,
+                      child: Text("Перейти",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: "MPLUS",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
-                  ),
-
-                ],
+                  ],
+                ),
               ),
+            ),
+            CarouselSlider.builder(
+              itemCount: ObjectLikes.getLikes().length,
+              options: CarouselOptions(
+                height: 400,
+                aspectRatio: 12/9,
+                initialPage: 0,
+                enableInfiniteScroll: false,
+                viewportFraction: 0.55,
+                enlargeCenterPage: true,
+              ),
+              itemBuilder: (BuildContext context, int itemIndex) =>
+                  Stack(
+                    children: <Widget>[
+                      GestureDetector(
+                        onTapDown: (TapDownDetails details){
+
+                          setState(() {
+                            SizedPlus2 = 10;
+                          });
+
+                        },
+                        onTapUp: (TapUpDetails details){
+                          setState(() {
+                            SizedPlus2 = 0;
+                          });
+
+                        },
+                        onTapCancel: (){
+                          setState(() {
+
+                            SizedPlus2 = 0;
+                          });
+                        },
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: 100),
+                          margin: EdgeInsets.all(SizedPlus2),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Hero(
+                                tag: itemIndex,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  child: Image(
+                                    image: images[int.parse(ObjectLikes.getLikes()[itemIndex])~/100-1][int.parse(ObjectLikes.getLikes()[itemIndex])%100-1].image,
+                                  ),
+
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.only(left : 16.0, top: 4),
+                                          child: Text(LikesList[itemIndex].head, style: TextStyle(color: Colors.white, fontSize: 16),),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 16.0),
+                                          child: Prise(LikesList[itemIndex]),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right:8.0),
+                                    child: Icon(Icons.add_shopping_cart, color: Colors.white,),
+                                  )
+                                ],
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 10,
+                        right: 10,
+                        child: LikeButton(LikesList[itemIndex]),
+                      ),
+                    ],
+                  ),
+            ),
+          ],
         );
 
 

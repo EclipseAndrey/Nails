@@ -34,6 +34,8 @@ dependencies:
   simple_animations: ^2.1.1
   flutter_swiper: ^1.1.6
   url_launcher: ^5.4.2
+  pull_to_refresh: ^1.5.7
+  flutter_gifimage: ^1.0.1
   flutter:
     sdk: flutter
   flutter_rounded_date_picker: 1.0.0
@@ -60,15 +62,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/chel.flr
-    - assets/telega2.flr
-    - assets/hearthero.flr
-    - assets/heartmenu.flr
-    - assets/bookmark.flr
-    - assets/i-catalog.flr
-    - assets/i-catalog1.flr
-    - assets/icatalog2.flr
-    - assets/menu.flr
+    - assets/animations/
     - assets/images/vk.png
     - assets/images/
     - assets/images/inst.png

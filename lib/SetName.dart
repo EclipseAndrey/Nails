@@ -15,10 +15,14 @@ class _SetNameState extends State<SetName> {
 
 
   TextEditingController _numcontroller = new TextEditingController();
+
   bool check = true;
   String title = "Введите имя";
   @override
   Widget build(BuildContext context) {
+    _numcontroller.addListener(() {
+      print(_numcontroller.text);
+    });
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -105,9 +109,9 @@ class _SetNameState extends State<SetName> {
                               final token = prefs.getString('token') ?? 'none';
 
                               Future<http.Response> fetchAlbum() async {
+                                print('http://eclipsedevelop.ru/api.php/cbsetname?name=${_numcontroller.text}&token=$token');
                                 return await http.get(
-                                    'http://eclipsedevelop.ru/api.php/cbsetname?name=${_numcontroller
-                                        .text}&token=$token');
+                                    'http://eclipsedevelop.ru/api.php/cbsetname?name=${_numcontroller.text}&token=$token');
                               }
 
                                fetchAlbum().then((value) {

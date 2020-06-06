@@ -26,6 +26,21 @@ class _DetailState extends State<Detail> {
   String Liketx = "В избранное";
   String Savetx = "В корзину";
 
+  void stateLike(){
+    print("+++++++++++++++++++++++++++++++++++++++++++");
+    if(ObjectLikes.checkLike(elementItem.id))
+      {
+        print("++++++++++++++++++++++++++++"+ ObjectLikes.checkLike(elementItem.id).toString());
+        Like = true;
+      }else{
+      print("++++++++++++++++++++++++++++"+ ObjectLikes.checkLike(elementItem.id).toString());
+
+      Like = false;
+    }
+
+  }
+
+
   Widget Prise(ElementItem itemForSales){
     if(itemForSales.sale>0){
       return Row(
@@ -105,6 +120,7 @@ class _DetailState extends State<Detail> {
 
     Widget icon(){
       if(!Like){
+
         return Icon(custicon.Nails.heart_empty, color: Colors.white, size: 24,);
       }
       else
@@ -116,11 +132,23 @@ class _DetailState extends State<Detail> {
     }
 
     return FlatButton(
-      onPressed: (){
-        setState(() {
-          Like = !Like;
+      onPressed: ()async{
 
-        });
+          Like = !Like;
+          if(!Like){
+            print(await ObjectLikes.deleteLikes(elementItem.id));
+            ObjectLikes.Likes();
+            setState(() {
+
+            });
+          }else{
+            print(await ObjectLikes.addLikes(elementItem.id));
+            ObjectLikes.Likes();
+            setState(() {
+            });
+          }
+
+        //  setState(() { });
       },
       shape: new RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
@@ -151,6 +179,11 @@ class _DetailState extends State<Detail> {
 
 
 
+@override
+  void initState() {
+  stateLike();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

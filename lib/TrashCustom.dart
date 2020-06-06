@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -114,9 +115,95 @@ class _TrashCustomState extends State<TrashCustom> {
     }
 
 
-    if(TrashSave.length > 0){
+    if(ObjectTrash.getTrash().length > 0){
+      List<dynamic> spisok = ObjectTrash.getTrash();
+      var size = MediaQuery.of(context).size;
+
+      List<ElementItem> elemts = [];
+      for(int i = 0; i < ObjectTrash.getTrash().length; i++){
+        elemts.add(elementInfo(int.parse(ObjectTrash.getTrash()[i])~/100-1, int.parse(ObjectTrash.getTrash()[i])%100-1));
+      }
+
+
+      return SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: List.generate(ObjectTrash.getTrash().length, (index) {
+              return ClipRRect(
+
+                child: Card(
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(width: 1, color:Colors.white ),
+                    ),
+
+//                color: Color(0xff8A1FFF),
+                    child: Container(
+                      color: Colors.transparent,
+                      width: size.width * 0.95,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image(
+                                    image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 4,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 14.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 12.0),
+                                    child: Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
+                                  ),
+
+                                ],
+                              ),
+                            ),),
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 14.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom:10.0),
+                                    child: LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
+                                  ),
+                                  TrashButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1))
+
+                                ],
+                              ),
+                            ),),
+                        ],
+                      ),
+                    )),
+              );
+            }),
+          ),
+        ),
+      );
 
     }else{
+
 
 
 
@@ -184,47 +271,66 @@ class _TrashCustomState extends State<TrashCustom> {
                                       .of(context)
                                       .size
                                       .width * 0.44,
-                                  child: Column(
+                                  child: Stack(
                                     children: <Widget>[
-                                      AspectRatio(
-                                        aspectRatio: 9 / 12,
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(15),
-                                            child: Image.network(
-                                              SearchResult[index*2]
-                                                  .picture, fit: BoxFit.fill,)),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .spaceBetween,
+
+                                      Column(
                                         children: <Widget>[
-                                          Container(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment
-                                                  .start,
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 16.0, top: 4),
-                                                  child: Text(SearchResult[index*2]
-                                                      .head, style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16),),
-                                                ),
-                                                Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        left: 16.0),
-                                                    child: Prise(SearchResult[index*2])
-                                                ),
-                                              ],
-                                            ),
+                                          AspectRatio(
+                                            aspectRatio: 9 / 12,
+                                            child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(15),
+                                                child: Image.network(
+                                                    SearchResult[index*2]
+                                                      .picture, fit: BoxFit.fill,)),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(right: 8.0),
-                                            child: Icon(Icons.add_shopping_cart,
-                                              color: Colors.white,),
-                                          )
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .spaceBetween,
+                                            children: <Widget>[
+                                              Container(
+                                                child: Expanded(
+                                                  flex: 7,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment
+                                                        .start,
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(
+                                                            left: 16.0, top: 4, right: 2),
+                                                        child: FittedBox(
+                                                          fit: BoxFit.contain,
+                                                          child: Text(SearchResult[index*2]
+                                                              .head, style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontSize: 16),),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                          padding: const EdgeInsets.only(
+                                                              left: 16.0),
+                                                          child: Prise(SearchResult[index*2])
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(right: 8.0),
+                                                  child: Icon(Icons.add_shopping_cart,
+                                                    color: Colors.white,),
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ],
+                                      ),
+                                      Positioned(
+                                        top: 10,
+                                        right: 10,
+                                        child: LikeButton(elementInfo(populations[index*2]~/100-1, populations[index*2]%100-1)),
                                       ),
                                     ],
                                   ),
@@ -233,7 +339,6 @@ class _TrashCustomState extends State<TrashCustom> {
                             }),
                           ),
                           Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children:
                             List.generate(ColumnTwo, (index) {
                               return Padding(
@@ -243,47 +348,66 @@ class _TrashCustomState extends State<TrashCustom> {
                                       .of(context)
                                       .size
                                       .width * 0.44,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                  child: Stack(
                                     children: <Widget>[
-                                      AspectRatio(
-                                        aspectRatio: 9 / 12,
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(15),
-                                            child: Image.network(SearchResult[index*2+1]
-                                                .picture, fit: BoxFit.fill,)),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .spaceBetween,
+
+                                      Column(
                                         children: <Widget>[
-                                          Container(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment
-                                                  .start,
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 16.0, top: 4),
-                                                  child: Text(SearchResult[index*2+1]
-                                                      .head, style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16),),
-                                                ),
-                                                Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        left: 16.0),
-                                                    child: Prise(SearchResult[index*2+1])
-                                                ),
-                                              ],
-                                            ),
+                                          AspectRatio(
+                                            aspectRatio: 9 / 12,
+                                            child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(15),
+                                                child: Image.network(
+                                                  SearchResult[index*2+1]
+                                                      .picture, fit: BoxFit.fill,)),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(right: 8.0),
-                                            child: Icon(Icons.add_shopping_cart,
-                                              color: Colors.white,),
-                                          )
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .spaceBetween,
+                                            children: <Widget>[
+                                              Container(
+                                                child: Expanded(
+                                                  flex: 7,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment
+                                                        .start,
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(
+                                                            left: 16.0, top: 4, right: 2),
+                                                        child: FittedBox(
+                                                          fit: BoxFit.contain,
+                                                          child: Text(SearchResult[index*2+1]
+                                                              .head, style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontSize: 16),),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                          padding: const EdgeInsets.only(
+                                                              left: 16.0),
+                                                          child: Prise(SearchResult[index*2+1])
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(right: 8.0),
+                                                  child: Icon(Icons.add_shopping_cart,
+                                                    color: Colors.white,),
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ],
+                                      ),
+                                      Positioned(
+                                        top: 10,
+                                        right: 10,
+                                        child: LikeButton(elementInfo(populations[index*2+1]~/100-1, populations[index*2+1]%100-1)),
                                       ),
                                     ],
                                   ),
