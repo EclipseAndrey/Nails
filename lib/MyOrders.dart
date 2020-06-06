@@ -111,7 +111,7 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height*0.10,
+                  height: 73,
                   child: Column(
                     children: [
                       Text("Записи",
@@ -134,9 +134,9 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
                   ),
                 ),
 
-                Container(
-                  height: MediaQuery.of(context).size.height*0.80,
+                Expanded(
 
+                  flex: 86,
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[

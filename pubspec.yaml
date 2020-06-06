@@ -36,6 +36,7 @@ dependencies:
   url_launcher: ^5.4.2
   pull_to_refresh: ^1.5.7
   flutter_gifimage: ^1.0.1
+  flutter_launcher_icons: ^0.7.5
   flutter:
     sdk: flutter
   flutter_rounded_date_picker: 1.0.0
@@ -47,6 +48,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.4
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/Eclipse.webp"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -67,7 +74,6 @@ flutter:
     - assets/images/
     - assets/images/inst.png
     - assets/images/ok.png
-    - assets/images/Eclipse.png
     - assets/images/zayavka.png
     - assets/icons/puc.ico
     - assets/icons/phone.ico

@@ -123,83 +123,177 @@ class _TrashCustomState extends State<TrashCustom> {
       for(int i = 0; i < ObjectTrash.getTrash().length; i++){
         elemts.add(elementInfo(int.parse(ObjectTrash.getTrash()[i])~/100-1, int.parse(ObjectTrash.getTrash()[i])%100-1));
       }
+      Widget Prise(ElementItem itemForSales){
+        if(itemForSales.sale>0){
+          return Row(
+
+            children: <Widget>[
+              Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, fontSize: 16, decoration: TextDecoration.lineThrough,),),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text("${itemForSales.price - itemForSales.sale} руб.", style: TextStyle(color: Colors.pinkAccent, fontSize: 16),),
 
 
-      return SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: List.generate(ObjectTrash.getTrash().length, (index) {
-              return ClipRRect(
+              ),
+            ],
+          );
+        }else{
+          return Row(
 
-                child: Card(
-                    color: Colors.transparent,
-                    shape: RoundedRectangleBorder(
+            children: <Widget>[
+              Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, fontSize: 16, ),),
+            ],
+          );
+        }
+      }
 
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(width: 1, color:Colors.white ),
-                    ),
+
+      return Column(
+        children: [
+          Container(
+            height: 73,
+            child: Column(
+              children: [
+                Text("Корзина",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 44,
+                      fontFamily: "MPLUS",
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w300),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 48.0, right: 48),
+                  child: Divider(
+                    height: 1,
+                    color: Colors.white60,
+
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: List.generate(ObjectTrash.getTrash().length, (index) {
+                    return ClipRRect(
+                      child: Card(
+                          color: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(width: 1, color:Colors.white ),
+                          ),
 
 //                color: Color(0xff8A1FFF),
-                    child: Container(
-                      color: Colors.transparent,
-                      width: size.width * 0.95,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image(
-                                    image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                          child: Container(
+                            color: Colors.transparent,
+                            width: size.width * 0.95,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image(
+                                          image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                                Expanded(
+                                  flex: 4,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 14.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 12.0),
+                                              child: Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
+                                            ),
+                                          ],
+                                        ),
+
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(top:18.0),
+                                              child: Prise(elemts[index]),
+                                            ),
+                                          ],
+                                        ),
+
+
+                                      ],
+                                    ),
+                                  ),),
+                                Expanded(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 14.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.only(bottom:10.0),
+                                          child: TrashButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),),
+                              ],
                             ),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 14.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 12.0),
-                                    child: Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
-                                  ),
-
-                                ],
-                              ),
-                            ),),
-                          Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 14.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom:10.0),
-                                    child: LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
-                                  ),
-                                  TrashButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1))
-
-                                ],
-                              ),
-                            ),),
-                        ],
-                      ),
-                    )),
-              );
-            }),
+                          )),
+                    );
+                  }),
+                ),
+              ),
+            ),
           ),
-        ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromRGBO(34, 15, 45, 1),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 4.0, bottom: 4, left: 30, right: 30),
+              child: FlatButton(
+                onPressed: (){
+
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                    side: BorderSide(color: Colors.white)),
+                color: Colors.transparent,
+                textColor: Colors.pinkAccent,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30.0, right: 30, top: 8, bottom: 8),
+                  child: Text("Оформить заказ",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       );
 
     }else{

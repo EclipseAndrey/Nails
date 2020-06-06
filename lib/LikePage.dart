@@ -26,7 +26,34 @@ class _LikePageState extends State<LikePage> {
               fit: BoxFit.fill,
             ),
           ),
-          SingleChildScrollView(child: _Content()),
+          Column(
+            children: [
+              Container(
+                height: 73,
+                child: Column(
+                  children: [
+                    Text("Избранное",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 44,
+                          fontFamily: "MPLUS",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w300),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 58.0, right: 58),
+                      child: Divider(
+                        height: 1,
+                        color: Colors.white60,
+
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(child: SingleChildScrollView(child: _Content())),
+            ],
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
