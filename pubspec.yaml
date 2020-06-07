@@ -37,6 +37,7 @@ dependencies:
   pull_to_refresh: ^1.5.7
   flutter_gifimage: ^1.0.1
   flutter_launcher_icons: ^0.7.5
+  rounded_modal: ^1.0.1
   flutter:
     sdk: flutter
   flutter_rounded_date_picker: 1.0.0

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutterapp32/MakeOrder.dart';
 import 'package:flutterapp32/home.dart';
+import 'package:rounded_modal/rounded_modal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'EmptyTrash.dart';
 import 'Objects.dart';
@@ -358,7 +359,39 @@ class _TrashCustomState extends State<TrashCustom> {
               padding: const EdgeInsets.only(top: 4.0, bottom: 4, left: 30, right: 30),
               child: FlatButton(
                 onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MakeOrder()));
+                  void _showModalBottomSheet(BuildContext context) {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      barrierColor: Colors.black45,
+                      shape : RoundedRectangleBorder(
+                          borderRadius : BorderRadius.circular(20)
+                      ),
+                      isScrollControlled: true,
+                      builder: (context) {
+                        return MakeOrder();
+
+                      },
+                    );
+
+                  }
+                  _showModalBottomSheet(context);
+
+//                  showRoundedModalBottomSheet(
+//                    context: context,
+//                    autoResize: false,
+//                    dismissOnTap: false,
+//
+//
+//                    radius: 20.0,  // This is the default
+//                    color: Colors.white,  // Also default
+//                    builder: (context){
+//                      return BottomMakeOrder("+7(930)722-96-02",16.0);
+//                    },
+//                  );
+
+
+                  //Navigator.push(context, MaterialPageRoute(builder: (context) => MakeOrder()));
+
 
                 },
                 shape: RoundedRectangleBorder(
@@ -617,9 +650,443 @@ class _TrashCustomState extends State<TrashCustom> {
 
 
 
+
+  }
+  double sizeText = 16;
+
+  String _month(String month){
+    switch(month){
+      case "1": return "января"; break;
+      case "2": return "февраля"; break;
+      case "3": return "марта"; break;
+      case "4": return "апреля"; break;
+      case "5": return "мая"; break;
+      case "6": return "июня"; break;
+      case "7": return "июля"; break;
+      case "8": return "августа"; break;
+      case "9": return "сентября"; break;
+      case "10": return "октября"; break;
+      case "11": return "ноября"; break;
+      case "12": return "декабря"; break;
+    }
   }
 
 
+  Widget Date(DateTime date){
+    if(!selectedDate){
+      return Row(
+        children: [
+          Text("Выберите ", style:  TextStyle(
+              color: Colors.black,
+              fontSize: sizeText,
+              fontFamily: "MPLUS",
+//              decoration: TextDecoration.underline,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w300),),
+          GestureDetector(
+            onTap: (){
+
+            },
+            child: Text("дату", style:  TextStyle(
+                color: Colors.blueAccent,
+                fontSize: sizeText,
+                fontFamily: "MPLUS",
+                decoration: TextDecoration.underline,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w300),),
+          ),
+        ],
+      );
+    }else{
+      return Row(
+        children: [
+          Text("Дата ", style:  TextStyle(
+              color: Colors.black,
+              fontSize: sizeText,
+              fontFamily: "MPLUS",
+//              decoration: TextDecoration.underline,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w300),),
+          GestureDetector(
+            onTap: (){
+
+            },
+            child: Text(date.day.toString()+" "+_month(date.month.toString()), style:  TextStyle(
+                color: Colors.blueAccent,
+                fontSize: sizeText,
+                fontFamily: "MPLUS",
+                decoration: TextDecoration.underline,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w300),),
+          ),
+        ],
+      );
+
+    }
+  }
+
+
+  //НЕ ЗАБЫТЬ ПОСАВИТЬ ФЛАГ selected КОГДА ВЫБРАНО ВРЕМЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  Widget Time(DateTime time){
+    if(!selectedTime){
+      return Row(
+        children: [
+          Text("Выберите ", style:  TextStyle(
+              color: Colors.black,
+              fontSize: sizeText,
+              fontFamily: "MPLUS",
+//              decoration: TextDecoration.underline,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w300),),
+          GestureDetector(
+            onTap: (){
+
+            },
+            child: Text("время", style:  TextStyle(
+                color: Colors.blueAccent,
+                fontSize: sizeText,
+                fontFamily: "MPLUS",
+                decoration: TextDecoration.underline,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w300),),
+          ),
+        ],
+      );
+    }else{
+      return Row(
+        children: [
+          Text("Время ", style:  TextStyle(
+              color: Colors.black,
+              fontSize: sizeText,
+              fontFamily: "MPLUS",
+//              decoration: TextDecoration.underline,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w300),),
+          GestureDetector(
+            onTap: (){
+
+            },
+            child: Text("${time.hour}:${time.minute%60}", style:  TextStyle(
+                color: Colors.blueAccent,
+                fontSize: sizeText,
+                fontFamily: "MPLUS",
+                decoration: TextDecoration.underline,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w300),),
+          ),
+        ],
+      );
+    }
+  }
+
+  Widget Adress(){
+    if(!selectedAdress){
+      return Row(
+        children: [
+          Text("Укажите ", style:  TextStyle(
+              color: Colors.black,
+              fontSize: sizeText,
+              fontFamily: "MPLUS",
+//              decoration: TextDecoration.underline,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w300),),
+          GestureDetector(
+            onTap: (){
+
+            },
+            child: Text("адрес", style:  TextStyle(
+                color: Colors.blueAccent,
+                fontSize: sizeText,
+                fontFamily: "MPLUS",
+                decoration: TextDecoration.underline,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w300),),
+          ),
+        ],
+      );
+    }else{
+      return Row(
+        children: [
+          Text("По адресу  ", style:  TextStyle(
+              color: Colors.black,
+              fontSize: sizeText,
+              fontFamily: "MPLUS",
+//              decoration: TextDecoration.underline,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w300),),
+          GestureDetector(
+            onTap: (){
+
+            },
+            child: Text("Adress", style:  TextStyle(
+                color: Colors.blueAccent,
+                fontSize: sizeText,
+                fontFamily: "MPLUS",
+                decoration: TextDecoration.underline,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w300),),
+          ),
+        ],
+      );
+
+    }
+  }
+
+  Widget Telephone(String tel){
+
+    return Row(
+      children: [
+        Text("По номеру "+ tel+ " (", style:  TextStyle(
+            color: Colors.black,
+            fontSize: sizeText,
+            fontFamily: "MPLUS",
+//              decoration: TextDecoration.underline,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w300),),
+        GestureDetector(
+          onTap: (){
+
+          },
+          child: Text("изменить", style:  TextStyle(
+              color: Colors.blueAccent,
+              fontSize: sizeText,
+              fontFamily: "MPLUS",
+              decoration: TextDecoration.underline,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w300),),
+        ),
+        Text(")", style:  TextStyle(
+            color: Colors.black,
+            fontSize: sizeText,
+            fontFamily: "MPLUS",
+//              decoration: TextDecoration.underline,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w300),),
+      ],
+    );
+  }
+
+  Widget MakeOrder(){
+    return Container(
+
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16)
+        ),
+      ),
+
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height*0.95,
+      child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+//                  color: Colors.white70,
+                  height: 70,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0, top : 20),
+                        child: GestureDetector(
+                          onTap: (){
+
+                          },
+                          child: Text("Отмена", style:  TextStyle(
+                              color: Colors.blueAccent,
+                              fontSize: sizeText,
+                              fontFamily: "MPLUS",
+                              decoration: TextDecoration.underline,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500),),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(height: 3, color: Colors.black45,),
+                Container(
+                  width: MediaQuery.of(context).size.width*0.90,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          children: [
+                            Text("Когда", style:  TextStyle(
+                                color: Colors.black,
+                                fontSize: sizeText+4,
+                                fontFamily: "MPLUS",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w500),),
+                            Text(" приехать мастеру?", style:  TextStyle(
+                                color: Colors.black,
+                                fontSize: sizeText+4,
+                                fontFamily: "MPLUS",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w400),),
+                          ],
+                        ),
+                      ),
+                      Date(TrashDate),
+                      Time(TrashTime),
+
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: Row(
+                          children: [
+                            Text("Куда", style:  TextStyle(
+                                color: Colors.black,
+                                fontSize: sizeText+4,
+                                fontFamily: "MPLUS",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w500),),
+                            Text(" приехать мастеру?", style:  TextStyle(
+                                color: Colors.black,
+                                fontSize: sizeText+4,
+                                fontFamily: "MPLUS",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w400),),
+                          ],
+                        ),
+                      ),
+                      Adress(),
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: Row(
+                          children: [
+                            Text("Как", style:  TextStyle(
+                                color: Colors.black,
+                                fontSize: sizeText+4,
+                                fontFamily: "MPLUS",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w500),),
+                            Text(" с вами связаться?", style:  TextStyle(
+                                color: Colors.black,
+                                fontSize: sizeText+4,
+                                fontFamily: "MPLUS",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w400),),
+                          ],
+                        ),
+                      ),
+                      Text("Вам позвонит менеджер \nдля подтверждения записи", style:  TextStyle(
+                          color: Colors.black54,
+                          fontSize: sizeText-4,
+//                          fontFamily: "MPLUS",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w300),),
+                      Telephone("+7(930)722-96-02"),
+                      Padding(
+                        padding:  EdgeInsets.only(left:  MediaQuery.of(context).size.width*0, right: MediaQuery.of(context).size.width*0, top: 10),
+                        child: Divider(height: 3, color: Colors.black45,),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: Row(
+                          children: [
+                            Text("", style:  TextStyle(
+                                color: Colors.black,
+                                fontSize: sizeText+4,
+                                fontFamily: "MPLUS",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w500),),
+                            Text("Промокод", style:  TextStyle(
+                                color: Colors.black,
+                                fontSize: sizeText+4,
+                                fontFamily: "MPLUS",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w300),),
+                          ],
+                        ),
+                      ),
+
+                      Text("Оставьте поле пустым, если\nу вас нет промокода", style:  TextStyle(
+                          color: Colors.black54,
+                          fontSize: sizeText-4,
+//                          fontFamily: "MPLUS",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w300),),
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: Row(
+                          children: [
+                            Text("", style:  TextStyle(
+                                color: Colors.black,
+                                fontSize: sizeText+4,
+                                fontFamily: "MPLUS",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w500),),
+                            Text("Комментарий к записи", style:  TextStyle(
+                                color: Colors.black,
+                                fontSize: sizeText+4,
+                                fontFamily: "MPLUS",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w300),),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child:
+                          Center(
+                            child: FlatButton(
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(25.0),
+                                  side: BorderSide(color: Colors.black)),
+                              color: Colors.white,
+                              textColor: Colors.purple,
+                              padding: EdgeInsets.all(8.0),
+                              onPressed: () {
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(left : 8.0, right: 8.0),
+                                child: Text(
+                                  'Записаться',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    color: Colors.black,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      //------------------------------------------------------------------------------------------------------------Сюда наполнение заказа
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Text("Оформление", style:  TextStyle(
+                    color: Colors.black,
+                    fontSize: sizeText+10,
+                    fontFamily: "MPLUS",
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w500),),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
 
 

@@ -515,7 +515,120 @@ class _TrashButtonState extends State<TrashButton> {
 
 
 
+class BottomSheetContent extends StatelessWidget {
+  String tel;
+  double sizeText;
+  BottomSheetContent(String tel, double sizeText){
+    this.sizeText = sizeText;
+    this.tel =tel;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height*0.95,
+      child: Column(
+        children: [
+          Container(
+            height: 70,
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: (){
 
+                  },
+                  child: Text("Отмена", style:  TextStyle(
+                      color: Colors.blueAccent,
+                      fontSize: sizeText,
+                      fontFamily: "MPLUS",
+                      decoration: TextDecoration.underline,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w300),),
+                ),
+              ],
+            ),
+          ),
+          const Divider(thickness: 1),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 21,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text("txt"),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+
+}
+
+class BottomMakeOrder extends StatefulWidget {
+  String tel;
+  double sizeText;
+  BottomMakeOrder(this.tel, this.sizeText);
+
+  @override
+  _BottomMakeOrderState createState() => _BottomMakeOrderState(tel,sizeText);
+}
+
+class _BottomMakeOrderState extends State<BottomMakeOrder> {
+  String tel;
+  double sizeText;
+  _BottomMakeOrderState(this.tel, this.sizeText);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16)
+        ),
+      ),
+      height: MediaQuery.of(context).size.height*0.95,
+      width: MediaQuery.of(context).size.width,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+             Container(
+
+               height: 70,
+               child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0),
+                    child: GestureDetector(
+                      onTap: (){
+
+                      },
+                      child: Text("Отмена", style:  TextStyle(
+                          color: Colors.blueAccent,
+                          fontSize: sizeText,
+                          fontFamily: "MPLUS",
+                          decoration: TextDecoration.underline,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500),),
+                    ),
+                  ),
+                  Divider(thickness: 1),
+
+                  Container(
+                    height: 700,
+                  ),
+                ],
+            ),
+             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 
 

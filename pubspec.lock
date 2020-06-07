@@ -315,6 +315,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.8"
+  rounded_modal:
+    dependency: "direct main"
+    description:
+      name: rounded_modal
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   sa_anicoto:
     dependency: transitive
     description:

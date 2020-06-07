@@ -90,7 +90,7 @@ class _LikePageState extends State<LikePage> {
       return SingleChildScrollView(
         child: Center(
           child: Column(
-            children: List.generate(ObjectTrash.getTrash().length, (index) {
+            children: List.generate(ObjectLikes.getLikes().length, (index) {
               return ClipRRect(
                 child: Card(
                     color: Colors.transparent,

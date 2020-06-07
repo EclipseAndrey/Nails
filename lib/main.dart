@@ -45,6 +45,7 @@ void main(){
   runApp(
       MaterialApp(
 
+
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
@@ -83,6 +84,10 @@ List<int> ListLike = [];
 TrashList ObjectTrash = TrashList.r();
 List<int> ListTrash = [];
 
+
+var TrashDate = new DateFormat("dd.MM.yyyy", "en_US").parse("00.00.0000");
+var TrashTime = new DateFormat("HH:mm", "en_US").parse("12:30");
+bool selectedDate = false, selectedTime= false, selectedAdress = false;
 
 class SplashScreen extends StatefulWidget  {
   final String nextRoute;
