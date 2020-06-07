@@ -3,6 +3,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutterapp32/MakeOrder.dart';
 import 'package:flutterapp32/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'EmptyTrash.dart';
@@ -357,6 +358,7 @@ class _TrashCustomState extends State<TrashCustom> {
               padding: const EdgeInsets.only(top: 4.0, bottom: 4, left: 30, right: 30),
               child: FlatButton(
                 onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MakeOrder()));
 
                 },
                 shape: RoundedRectangleBorder(
