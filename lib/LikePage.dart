@@ -45,7 +45,6 @@ class _LikePageState extends State<LikePage> {
                       child: Divider(
                         height: 1,
                         color: Colors.white60,
-
                       ),
                     ),
                   ],
@@ -88,35 +87,30 @@ class _LikePageState extends State<LikePage> {
       }
 
 
-      return Center(
-        child: Column(
-          children: List.generate(ObjectLikes.getLikes().length, (index) {
-            return ClipRRect(
-
-              child: Card(
-                color: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: BorderSide(width: 1, color:Colors.white ),
-                  ),
+      return Expanded(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: List.generate(ObjectTrash.getTrash().length, (index) {
+                return ClipRRect(
+                  child: Card(
+                      color: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(width: 1, color:Colors.white ),
+                      ),
 
 //                color: Color(0xff8A1FFF),
-                  child: Container(
-                    color: Colors.transparent,
-                width: size.width * 0.95,
-                child: Stack(
-                  children: [
-                    Container(
-                      width: size.width*0.85,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: size.width * 0.95,
+                        height: size.height * 0.20,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Flexible(
                               child: Container(
+                                padding: EdgeInsets.only(left: 5, top: 6),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image(
@@ -125,56 +119,47 @@ class _LikePageState extends State<LikePage> {
                                 ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                              flex: 4,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 14.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 12.0),
-                                      child: Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
-                                    ),
-
-                                  ],
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 12.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 8.0),
+                                        child: Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),),
-                        ],
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 14.0),
-                        child: Stack(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(bottom:10.0),
-                              child: LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
+                              ),
+                            ),
+                            Flexible(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom:8.0),
+                                    child: TrashButton(
+                                        elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding:  EdgeInsets.only(top: 68.0),
-                        child: TrashButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              ),
-            );
-          }),
+                      )),
+                );
+              }),
+            ),
+          ),
         ),
       );
-    }
+
+  }
   }
 }

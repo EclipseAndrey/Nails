@@ -367,12 +367,14 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
     Widget SearchInput(){
      TextEditingController cont = TextEditingController();
+     FocusNode focusNode = FocusNode();
 
 
       return  Container(
         width: MediaQuery.of(context).size.width*0.90,
         child: Center(
           child: TextField(
+            focusNode: focusNode,
             onChanged: (text) {
               cont.text = text;
               print("Search: $text");
@@ -763,7 +765,6 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                             .width * 0.44,
                         child: Stack(
                           children: <Widget>[
-
                             Column(
                               children: <Widget>[
                                 AspectRatio(
@@ -918,7 +919,6 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
 
     Widget PageCatalog(){
-
       if(controllerHomeOffset.status != AnimationStatus.completed)
       return
       Opacity(
@@ -1267,8 +1267,8 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                 ),
               ),
               Positioned(
-                top: 10,
-                right: 10,
+                top: -5,
+                right: -5,
                 child: LikeButton(sales[itemIndex]),
               ),
             ],
@@ -1379,8 +1379,8 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                   ),
                 ),
                 Positioned(
-                  top: 10,
-                  right: 10,
+                  top: -5,
+                  right: -5,
                   child: LikeButton(sales[itemIndex]),
                 ),
               ],
@@ -1526,8 +1526,8 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                         ),
                       ),
                       Positioned(
-                        top: 10,
-                        right: 10,
+                        top: -5,
+                        right: -5,
                         child: LikeButton(LikesList[itemIndex]),
                       ),
                     ],

@@ -230,7 +230,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
           borderRadius: BorderRadius.all(Radius.circular(30.0))
         ),
         child: BottomNavigationBar(
-         // showSelectedLabels: false,
+          //showSelectedLabels: false,
           //showUnselectedLabels: false,
           type: BottomNavigationBarType.fixed,
           backgroundColor: Color.fromRGBO(34, 15, 45, 1),
@@ -311,7 +311,7 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
                   color: Colors.white,
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
-                  animation: "norm",
+                  animation: "idle",
                 ),
               ),
               activeIcon: Container(
