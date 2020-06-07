@@ -50,7 +50,7 @@ class _LikePageState extends State<LikePage> {
                   ],
                 ),
               ),
-              Expanded(child: SingleChildScrollView(child: _Content())),
+              Expanded(child: _Content()),
             ],
           ),
           Align(
@@ -87,75 +87,73 @@ class _LikePageState extends State<LikePage> {
       }
 
 
-      return Expanded(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: List.generate(ObjectTrash.getTrash().length, (index) {
-                return ClipRRect(
-                  child: Card(
-                      color: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        side: BorderSide(width: 1, color:Colors.white ),
-                      ),
+      return SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: List.generate(ObjectTrash.getTrash().length, (index) {
+              return ClipRRect(
+                child: Card(
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(width: 1, color:Colors.white ),
+                    ),
 
 //                color: Color(0xff8A1FFF),
-                      child: Container(
-                        width: size.width * 0.95,
-                        height: size.height * 0.20,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Flexible(
-                              child: Container(
-                                padding: EdgeInsets.only(left: 5, top: 6),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image(
-                                    image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
-                                  ),
+                    child: Container(
+                      width: size.width * 0.95,
+                      height: size.height * 0.20,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Flexible(
+                            child: Container(
+                              padding: EdgeInsets.only(left: 5, top: 6),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image(
+                                  image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
                                 ),
                               ),
                             ),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 12.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 8.0),
-                                        child: Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
-                                      ),
-                                    ],
-                                  ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            Flexible(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom:8.0),
-                                    child: TrashButton(
-                                        elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
-                                  ),
-                                ],
-                              ),
+                          ),
+                          Flexible(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom:8.0),
+                                  child: TrashButton(
+                                      elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      )),
-                );
-              }),
-            ),
+                          ),
+                        ],
+                      ),
+                    )),
+              );
+            }),
           ),
         ),
       );

@@ -146,6 +146,112 @@ class _TrashCustomState extends State<TrashCustom> {
           );
         }
       }
+      Widget PriceEnd(List<dynamic> ids){
+        int sum = 0;
+        int sale = 0;
+        int endSum = 0;
+        int count  = ObjectTrash.getTrash().length;
+         for(int i = 0; i < count; i++){
+           ElementItem step = elementInfo(int.parse(ids[i])~/100-1, int.parse(ids[i])%100-1);
+           sum += step.price;
+           sale+= step.sale;
+         }
+         endSum = sum - sale;
+
+         double spaseLine = 3;
+
+         return Container(
+           width: size.width*0.75,
+           child: Column(
+             children: [
+               Padding(
+                 padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   children: [
+                     Text("Выбранно услуг",style: TextStyle(
+                     color: Colors.white,
+                     fontSize: 16,
+                     fontFamily: "MPLUS",
+                     fontStyle: FontStyle.normal,
+                     fontWeight: FontWeight.w300),),
+                     Text(count.toString(),style: TextStyle(
+                         color: Colors.white,
+                         fontSize: 16,
+                         fontFamily: "MPLUS",
+                         fontStyle: FontStyle.normal,
+                         fontWeight: FontWeight.w300),),
+                   ],
+                 ),
+               ),               Padding(
+                 padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   children: [
+                     Text("На сумму ",style: TextStyle(
+                     color: Colors.white,
+                     fontSize: 16,
+                     fontFamily: "MPLUS",
+                     fontStyle: FontStyle.normal,
+                     fontWeight: FontWeight.w300),),
+                     Text(sum.toString()+" руб.",style: TextStyle(
+                         color: Colors.white,
+                         fontSize: 16,
+                         fontFamily: "MPLUS",
+                         fontStyle: FontStyle.normal,
+                         fontWeight: FontWeight.w300),),
+                   ],
+                 ),
+               ),               Padding(
+                 padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   children: [
+                     Text("Скидка ",style: TextStyle(
+                     color: Colors.white,
+                     fontSize: 16,
+                     fontFamily: "MPLUS",
+                     fontStyle: FontStyle.normal,
+                     fontWeight: FontWeight.w300),),
+                     Text(sale.toString()+" руб.",style: TextStyle(
+                         color: Colors.white,
+                         fontSize: 16,
+                         fontFamily: "MPLUS",
+                         fontStyle: FontStyle.normal,
+                         fontWeight: FontWeight.w300),),
+                   ],
+                 ),
+               ),
+               Divider(
+                 color: Colors.white,
+                 height: 3,),
+               Padding(
+                 padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   children: [
+                     Text("Итого ",style: TextStyle(
+                     color: Colors.white,
+                     fontSize: 18,
+                     fontFamily: "MPLUS",
+                     fontStyle: FontStyle.normal,
+                     fontWeight: FontWeight.w500),),
+                     Text(endSum.toString()+ " руб.",style: TextStyle(
+                         color: Colors.white,
+                         fontSize: 18,
+                         fontFamily: "MPLUS",
+                         fontStyle: FontStyle.normal,
+                         fontWeight: FontWeight.w500),),
+                   ],
+                 ),
+               ),
+             ],
+           ),
+         );
+
+
+
+      }
 
 
       return Column(
@@ -177,7 +283,10 @@ class _TrashCustomState extends State<TrashCustom> {
             child: SingleChildScrollView(
               child: Center(
                 child: Column(
-                  children: List.generate(ObjectTrash.getTrash().length, (index) {
+                  children: List.generate(ObjectTrash.getTrash().length+1, (index) {
+                    if(index == ObjectTrash.getTrash().length){
+                      return PriceEnd(ObjectTrash.getTrash());
+                    }else
                     return ClipRRect(
                       child: Card(
                           color: Colors.transparent,
