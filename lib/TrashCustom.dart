@@ -778,6 +778,154 @@ class _TrashCustomState extends State<TrashCustom> {
       );
     }
   }
+  Widget city(){
+    String _simpleValue = "Москва";
+    void showAndSetMenuSelection(BuildContext context, String value) {
+      print(_simpleValue);
+      setState(() {
+        _simpleValue = value;
+      });
+      print(_simpleValue);
+    }
+
+   return Container(
+     width: MediaQuery.of(context).size.width,
+     child: PopupMenuButton<String>(
+       padding: EdgeInsets.zero,
+       initialValue: _simpleValue,
+       onSelected: (value) => showAndSetMenuSelection(context, value),
+       child: ListTile(
+         title: Text("Выберите город"),
+         subtitle: Text(_simpleValue),
+       ),
+       itemBuilder: (context) => <PopupMenuItem<String>>[
+         PopupMenuItem<String>(
+           value: "Москва",
+           child: Text("Москва"),
+         ),
+         PopupMenuItem<String>(
+           value: "Омск",
+           child: Text("Омск"),
+         ),
+         PopupMenuItem<String>(
+           value: "Казань",
+           child: Text("Казань"),
+         ),
+       ],
+     ),
+   );
+  }
+
+  Widget SelectAddress(){
+    return Container(
+
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16)
+        ),
+      ),
+
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height*0.95,
+      child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+//                  color: Colors.white70,
+                  height: 70,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0, top : 20),
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.pop(context);
+                          },
+                          child: Text("Отмена", style:  TextStyle(
+                              color: Colors.blueAccent,
+                              fontSize: sizeText,
+                              fontFamily: "MPLUS",
+                              decoration: TextDecoration.underline,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500),),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(height: 3, color: Colors.black45,),
+                Container(
+                  width: MediaQuery.of(context).size.width*0.90,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      city(),
+                      TextFormField(
+                      //  cursorColor: Colors.purple,
+                        decoration: InputDecoration(
+                          filled: true,
+                          labelText: "Улица*",
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child:
+                          Center(
+                            child: FlatButton(
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(25.0),
+                                  side: BorderSide(color: Colors.black)),
+                              color: Colors.white,
+                              textColor: Colors.purple,
+                              padding: EdgeInsets.all(8.0),
+                              onPressed: () {
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(left : 8.0, right: 8.0),
+                                child: Text(
+                                  'Применить',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    color: Colors.black,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      //------------------------------------------------------------------------------------------------------------Сюда наполнение заказа
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Text("Выбор адреса", style:  TextStyle(
+                    color: Colors.black,
+                    fontSize: sizeText+10,
+                    fontFamily: "MPLUS",
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w500),),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+  }
 
   Widget Adress(){
     if(!selectedAdress){
@@ -792,7 +940,22 @@ class _TrashCustomState extends State<TrashCustom> {
               fontWeight: FontWeight.w300),),
           GestureDetector(
             onTap: (){
+              void _showModalBottomSheet(BuildContext context) {
+                showModalBottomSheet<void>(
+                  context: context,
+                  barrierColor: Colors.black45,
+                  shape : RoundedRectangleBorder(
+                      borderRadius : BorderRadius.circular(20)
+                  ),
+                  isScrollControlled: true,
+                  builder: (context) {
+                    return SelectAddress();
 
+                  },
+                );
+
+              }
+              _showModalBottomSheet(context);
             },
             child: Text("адрес", style:  TextStyle(
                 color: Colors.blueAccent,
@@ -894,7 +1057,7 @@ class _TrashCustomState extends State<TrashCustom> {
                         padding: const EdgeInsets.only(left: 18.0, top : 20),
                         child: GestureDetector(
                           onTap: (){
-
+                            Navigator.pop(context);
                           },
                           child: Text("Отмена", style:  TextStyle(
                               color: Colors.blueAccent,
