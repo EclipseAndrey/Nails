@@ -636,6 +636,20 @@ class _BottomMakeOrderState extends State<BottomMakeOrder> {
 
 
 
+class adress{
+  String
+  street,
+  city,
+  house,
+  corpus,
+  stroenie,
+  kv;
+  adress(this.city,this.street,this.house, this.corpus, this.stroenie, this.kv);
+}
+
+
+
+
 
 
 

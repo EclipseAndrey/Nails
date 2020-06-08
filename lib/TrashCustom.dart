@@ -816,6 +816,10 @@ class _TrashCustomState extends State<TrashCustom> {
    );
   }
 
+
+
+
+
   Widget SelectAddress(){
     return Container(
 
@@ -912,7 +916,7 @@ class _TrashCustomState extends State<TrashCustom> {
               alignment: Alignment.topCenter,
               child: Padding(
                 padding: const EdgeInsets.only(top: 12.0),
-                child: Text("Выбор адреса", style:  TextStyle(
+                child: Text("Добавить адрес", style:  TextStyle(
                     color: Colors.black,
                     fontSize: sizeText+10,
                     fontFamily: "MPLUS",
@@ -927,6 +931,83 @@ class _TrashCustomState extends State<TrashCustom> {
 
   }
 
+
+  Widget adressSelect(){
+    String _simpleValue = "Москва";
+    void showAndSetMenuSelection(BuildContext context, String value) {
+      print(_simpleValue);
+
+      setState(() {
+        _simpleValue = value;
+      });
+      if(_simpleValue == "0"){
+        print("yeah");
+        showModalBottomSheet<void>(
+          context: context,
+          barrierColor: Colors.black45,
+          shape : RoundedRectangleBorder(
+              borderRadius : BorderRadius.circular(20)
+          ),
+          isScrollControlled: true,
+          builder: (context) {
+            return SelectAddress();
+
+          },
+        );
+      }
+      print(_simpleValue);
+    }
+
+    return Container(
+      child: PopupMenuButton<String>(
+        padding: EdgeInsets.zero,
+        initialValue: _simpleValue,
+        onSelected: (value) => showAndSetMenuSelection(context, value),
+        child: Adress(),
+        itemBuilder: (context) => List.generate(ListAdress.length+1, (index) {
+
+          if(index == ListAdress.length){
+            return PopupMenuItem<String>(
+              value: "0",
+              child: Row(
+                children: [
+                  Icon(Icons.add),
+                  Padding(
+                    padding:  EdgeInsets.only(left:8.0),
+                    child: Text("Добавить адрес"),
+                  ),
+                ],
+              ),
+            );
+          }
+          adress step = ListAdress[index];
+          String buildAdress(){
+            String total = step.city+", "+step.street+ " "+ step.house;
+            if(step.corpus!= ""){
+              total+= step.corpus;
+            }
+            if(step.stroenie!= ""){
+              total+= "C"+step.stroenie;
+            }
+            if(step.kv!= ""){
+              total+= ", кв. "+step.kv;
+            }
+            return total;
+          }
+          return PopupMenuItem<String>(
+            value: index.toString(),
+            child: Text(buildAdress(), style:  TextStyle(
+                color: Colors.black,
+                fontSize: sizeText,
+                fontFamily: "MPLUS",
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w500)),
+          );
+        }),
+      ),
+    );
+  }
+
   Widget Adress(){
     if(!selectedAdress){
       return Row(
@@ -938,33 +1019,13 @@ class _TrashCustomState extends State<TrashCustom> {
 //              decoration: TextDecoration.underline,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w300),),
-          GestureDetector(
-            onTap: (){
-              void _showModalBottomSheet(BuildContext context) {
-                showModalBottomSheet<void>(
-                  context: context,
-                  barrierColor: Colors.black45,
-                  shape : RoundedRectangleBorder(
-                      borderRadius : BorderRadius.circular(20)
-                  ),
-                  isScrollControlled: true,
-                  builder: (context) {
-                    return SelectAddress();
-
-                  },
-                );
-
-              }
-              _showModalBottomSheet(context);
-            },
-            child: Text("адрес", style:  TextStyle(
-                color: Colors.blueAccent,
-                fontSize: sizeText,
-                fontFamily: "MPLUS",
-                decoration: TextDecoration.underline,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w300),),
-          ),
+          Text("адрес", style:  TextStyle(
+              color: Colors.blueAccent,
+              fontSize: sizeText,
+              fontFamily: "MPLUS",
+              decoration: TextDecoration.underline,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w300),),
         ],
       );
     }else{
@@ -1119,7 +1180,7 @@ class _TrashCustomState extends State<TrashCustom> {
                           ],
                         ),
                       ),
-                      Adress(),
+                      adressSelect(),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0),
