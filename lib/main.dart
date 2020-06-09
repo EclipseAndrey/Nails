@@ -84,8 +84,8 @@ List<int> ListLike = [];
 TrashList ObjectTrash = TrashList.r();
 List<int> ListTrash = [];
 
-
-List<adress> ListAdress = [adress("Москва","Авиамоторная","8","А","7","320")];
+AdressList ObjectAddress = AdressList.r();
+List<adress> ListAdress = [];
 
 
 var TrashDate = new DateFormat("dd.MM.yyyy", "en_US").parse("00.00.0000");
@@ -266,6 +266,12 @@ class _SplashScreenState extends State<SplashScreen>  {
                   if(await acceptGetTrash){
                     ObjectTrash.getTrash();
                   }
+                  ObjectAddress = AdressList(token);
+                  Future<bool> acceptGetAddress = ObjectAddress.AdressListUp();
+                  if(await acceptGetAddress){
+                    ObjectAddress.getAddresses();
+                  }
+
 
 
                   Navigator.of(context).pushReplacementNamed('/BottomPage');

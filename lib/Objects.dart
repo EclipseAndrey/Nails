@@ -644,9 +644,121 @@ class adress{
   corpus,
   stroenie,
   kv;
-  adress(this.city,this.street,this.house, this.corpus, this.stroenie, this.kv);
+  adress({this.city,this.street,this.house, this.corpus, this.stroenie, this.kv});
+
+  factory adress.fromJson(Map<String,dynamic> json){
+    return adress(
+      city: json['city'] as String,
+      street: json['street'] as String,
+      house: json['house'] as String,
+      stroenie: json['stroenie'] as String,
+      corpus: json['corpus'] as String,
+      kv: json['kv'] as String
+    );
+
+  }
+
 }
 
+class AdressList{
+  List<dynamic> adreses = [];
+  var response;
+  int count;
+  String token;
+  AdressList.r();
+  AdressList(this.token);
+
+  Future<bool> AdressListUp() async {
+    Future<bool> res() async {
+      var a = await http
+          .get('http://eclipsedevelop.ru/api.php/cbgetaddresses?token=$token');
+
+      if (a.statusCode == 200) {
+        this.response = jsonDecode(a.body);
+        print('response ' + this.response.toString());
+
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    print('http://eclipsedevelop.ru/api.php/cbgetaddresses?token=$token');
+
+    //
+
+    bool a = await res();
+
+    if (a) {
+      print("Address ok" + this.response['response']);
+      if (this.response['response'] == '200') {
+        print("ADDRESS 200");
+        count = response['count'];
+        count > 0 ? adreses = response['addresses'].map((i) => adress.fromJson(i)).toList() : adreses = [];
+        return true;
+      } else if (this.response == '202') {
+        print("ADDRESSES 202");
+
+        return false;
+      } else if (this.response == '203') {
+        print("ADRESSES 203");
+
+        return false;
+      } else {
+        print("ADRESSES 0");
+
+        return false;
+      }
+    } else
+      return false;
+  }
+
+  List<dynamic> getAddresses() {
+    return adreses;
+  }
+
+  Future<bool> addAddress(adress Address) async {
+    Future<bool> res() async {
+      var a = await http.get(
+          'http://eclipsedevelop.ru/api.php/cbaddaddress?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
+
+      if (a.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    print('http://eclipsedevelop.ru/api.php/cbaddaddress?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
+    if (await res()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> deleteAddress(adress Address) async {
+    Future<bool> res() async {
+      var a = await http.get(
+          'http://eclipsedevelop.ru/api.php/cbdeleteaddress?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
+
+      if (a.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    print('http://eclipsedevelop.ru/api.php/cbdeleteaddress?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
+    if (await res()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+}
 
 
 
