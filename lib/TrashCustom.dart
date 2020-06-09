@@ -153,103 +153,103 @@ class _TrashCustomState extends State<TrashCustom> {
         int sale = 0;
         int endSum = 0;
         int count  = ObjectTrash.getTrash().length;
-         for(int i = 0; i < count; i++){
-           ElementItem step = elementInfo(int.parse(ids[i])~/100-1, int.parse(ids[i])%100-1);
-           sum += step.price;
-           sale+= step.sale;
-         }
-         endSum = sum - sale;
+        for(int i = 0; i < count; i++){
+          ElementItem step = elementInfo(int.parse(ids[i])~/100-1, int.parse(ids[i])%100-1);
+          sum += step.price;
+          sale+= step.sale;
+        }
+        endSum = sum - sale;
 
-         double spaseLine = 3;
+        double spaseLine = 3;
 
-         return Container(
-           width: size.width*0.75,
-           child: Column(
-             children: [
-               Padding(
-                 padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
-                 child: Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [
-                     Text("Выбранно услуг",style: TextStyle(
-                     color: Colors.white,
-                     fontSize: 16,
-                     fontFamily: "MPLUS",
-                     fontStyle: FontStyle.normal,
-                     fontWeight: FontWeight.w300),),
-                     Text(count.toString(),style: TextStyle(
-                         color: Colors.white,
-                         fontSize: 16,
-                         fontFamily: "MPLUS",
-                         fontStyle: FontStyle.normal,
-                         fontWeight: FontWeight.w300),),
-                   ],
-                 ),
-               ),               Padding(
-                 padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
-                 child: Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [
-                     Text("На сумму ",style: TextStyle(
-                     color: Colors.white,
-                     fontSize: 16,
-                     fontFamily: "MPLUS",
-                     fontStyle: FontStyle.normal,
-                     fontWeight: FontWeight.w300),),
-                     Text(sum.toString()+" руб.",style: TextStyle(
-                         color: Colors.white,
-                         fontSize: 16,
-                         fontFamily: "MPLUS",
-                         fontStyle: FontStyle.normal,
-                         fontWeight: FontWeight.w300),),
-                   ],
-                 ),
-               ),               Padding(
-                 padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
-                 child: Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [
-                     Text("Скидка ",style: TextStyle(
-                     color: Colors.white,
-                     fontSize: 16,
-                     fontFamily: "MPLUS",
-                     fontStyle: FontStyle.normal,
-                     fontWeight: FontWeight.w300),),
-                     Text(sale.toString()+" руб.",style: TextStyle(
-                         color: Colors.white,
-                         fontSize: 16,
-                         fontFamily: "MPLUS",
-                         fontStyle: FontStyle.normal,
-                         fontWeight: FontWeight.w300),),
-                   ],
-                 ),
-               ),
-               Divider(
-                 color: Colors.white,
-                 height: 3,),
-               Padding(
-                 padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
-                 child: Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [
-                     Text("Итого ",style: TextStyle(
-                     color: Colors.white,
-                     fontSize: 18,
-                     fontFamily: "MPLUS",
-                     fontStyle: FontStyle.normal,
-                     fontWeight: FontWeight.w500),),
-                     Text(endSum.toString()+ " руб.",style: TextStyle(
-                         color: Colors.white,
-                         fontSize: 18,
-                         fontFamily: "MPLUS",
-                         fontStyle: FontStyle.normal,
-                         fontWeight: FontWeight.w500),),
-                   ],
-                 ),
-               ),
-             ],
-           ),
-         );
+        return Container(
+          width: size.width*0.75,
+          child: Column(
+            children: [
+              Padding(
+                padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Выбранно услуг",style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300),),
+                    Text(count.toString(),style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300),),
+                  ],
+                ),
+              ),               Padding(
+                padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("На сумму ",style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300),),
+                    Text(sum.toString()+" руб.",style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300),),
+                  ],
+                ),
+              ),               Padding(
+                padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Скидка ",style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300),),
+                    Text(sale.toString()+" руб.",style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300),),
+                  ],
+                ),
+              ),
+              Divider(
+                color: Colors.white,
+                height: 3,),
+              Padding(
+                padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Итого ",style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500),),
+                    Text(endSum.toString()+ " руб.",style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontFamily: "MPLUS",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500),),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
 
 
 
@@ -289,64 +289,64 @@ class _TrashCustomState extends State<TrashCustom> {
                     if(index == ObjectTrash.getTrash().length){
                       return PriceEnd(ObjectTrash.getTrash());
                     }else
-                    return ClipRRect(
-                      child: Card(
-                          color: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(width: 1, color:Colors.white ),
-                          ),
+                      return ClipRRect(
+                        child: Card(
+                            color: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(width: 1, color:Colors.white ),
+                            ),
 
 //                color: Color(0xff8A1FFF),
-                          child: Container(
-                            width: size.width * 0.95,
-                            height: size.height * 0.20,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Flexible(
-                                  child: Container(
-                                    padding: EdgeInsets.only(left: 5, top: 6),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image(
-                                        image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                            child: Container(
+                              width: size.width * 0.95,
+                              height: size.height * 0.20,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: Container(
+                                      padding: EdgeInsets.only(left: 5, top: 6),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image(
+                                          image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
-                                            Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
-                                          ],
-                                        ),
-                                        Prise(elemts[index]),
-                                      ],
+                                  Expanded(
+                                    flex: 2,
+                                    child: Container(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
+                                              Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
+                                            ],
+                                          ),
+                                          Prise(elemts[index]),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Flexible(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 18.0),
-                                    child: TrashButton(
-                                        elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
-                                    //LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1))
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 18.0),
+                                      child: TrashButton(
+                                          elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
+                                      //LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1))
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          )),
-                    );
+                                ],
+                              ),
+                            )),
+                      );
                   }),
                 ),
               ),
@@ -495,7 +495,7 @@ class _TrashCustomState extends State<TrashCustom> {
                                             child: ClipRRect(
                                                 borderRadius: BorderRadius.circular(15),
                                                 child: Image.network(
-                                                    SearchResult[index*2]
+                                                  SearchResult[index*2]
                                                       .picture, fit: BoxFit.fill,)),
                                           ),
                                           Row(
@@ -788,32 +788,32 @@ class _TrashCustomState extends State<TrashCustom> {
       print(_simpleValue);
     }
 
-   return Container(
-     width: MediaQuery.of(context).size.width,
-     child: PopupMenuButton<String>(
-       padding: EdgeInsets.zero,
-       initialValue: _simpleValue,
-       onSelected: (value) => showAndSetMenuSelection(context, value),
-       child: ListTile(
-         title: Text("Выберите город"),
-         subtitle: Text(_simpleValue),
-       ),
-       itemBuilder: (context) => <PopupMenuItem<String>>[
-         PopupMenuItem<String>(
-           value: "Москва",
-           child: Text("Москва"),
-         ),
-         PopupMenuItem<String>(
-           value: "Омск",
-           child: Text("Омск"),
-         ),
-         PopupMenuItem<String>(
-           value: "Казань",
-           child: Text("Казань"),
-         ),
-       ],
-     ),
-   );
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: PopupMenuButton<String>(
+        padding: EdgeInsets.zero,
+        initialValue: _simpleValue,
+        onSelected: (value) => showAndSetMenuSelection(context, value),
+        child: ListTile(
+          title: Text("Выберите город"),
+          subtitle: Text(_simpleValue),
+        ),
+        itemBuilder: (context) => <PopupMenuItem<String>>[
+          PopupMenuItem<String>(
+            value: "Москва",
+            child: Text("Москва"),
+          ),
+          PopupMenuItem<String>(
+            value: "Омск",
+            child: Text("Омск"),
+          ),
+          PopupMenuItem<String>(
+            value: "Казань",
+            child: Text("Казань"),
+          ),
+        ],
+      ),
+    );
   }
 
 
@@ -821,8 +821,12 @@ class _TrashCustomState extends State<TrashCustom> {
 
 
   Widget SelectAddress(){
+    TextEditingController streetController = TextEditingController(),
+        houseController = TextEditingController(),
+        kvController = TextEditingController(),
+        stroenieController = TextEditingController(),
+        corpusController = TextEditingController();
     return Container(
-
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -869,12 +873,115 @@ class _TrashCustomState extends State<TrashCustom> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       city(),
-                      TextFormField(
-                      //  cursorColor: Colors.purple,
-                        decoration: InputDecoration(
-                          filled: true,
-                          labelText: "Улица*",
-                        ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left:0.0),
+                                child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text("*Улица:", style: TextStyle(fontSize: 16),)),
+                              )),
+                          Expanded(
+                            flex: 4,
+                            child: TextFormField(
+                              controller: streetController,
+                              //  cursorColor: Colors.purple,
+                              decoration: InputDecoration(
+                                filled: false,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text("*Дом:", style: TextStyle(fontSize: 16),)),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: TextFormField(
+                              controller: houseController,
+                              //  cursorColor: Colors.purple,
+                              decoration: InputDecoration(
+                                filled: false,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width*0.03,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 5,
+                            child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text("Квартира:", style: TextStyle(fontSize: 16),)),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: TextFormField(
+                              controller: kvController,
+                              //  cursorColor: Colors.purple,
+                              decoration: InputDecoration(
+                                filled: false,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                              flex: 3,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left:0.0),
+                                child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text("Строение:", style: TextStyle(fontSize: 16),)),
+                              )),
+                          Expanded(
+                            flex: 2,
+                            child: TextFormField(
+                              controller: stroenieController,
+                              //  cursorColor: Colors.purple,
+                              decoration: InputDecoration(
+                                filled: false,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.02,
+                            ),
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left:0.0),
+                                child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text("Корпус:", style: TextStyle(fontSize: 16),)),
+                              )),
+                          Expanded(
+                            flex: 3,
+                            child: TextFormField(
+                              controller: corpusController,
+                              //  cursorColor: Colors.purple,
+                              decoration: InputDecoration(
+                                filled: false,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0),
@@ -890,6 +997,7 @@ class _TrashCustomState extends State<TrashCustom> {
                               textColor: Colors.purple,
                               padding: EdgeInsets.all(8.0),
                               onPressed: () {
+
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(left : 8.0, right: 8.0),
@@ -1090,6 +1198,30 @@ class _TrashCustomState extends State<TrashCustom> {
     );
   }
 
+  Widget commentField(){
+    return TextField(
+        decoration: InputDecoration(
+          focusColor: Colors.black,
+          border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.circular(10.0)
+          ),
+        )
+    );
+  }
+
+  Widget promoField(){
+    return TextField(
+        obscureText: true,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.circular(10.0)
+          ),
+        )
+    );
+  }
+
   Widget MakeOrder(){
     return Container(
 
@@ -1238,6 +1370,7 @@ class _TrashCustomState extends State<TrashCustom> {
 //                          fontFamily: "MPLUS",
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w300),),
+                      promoField(),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0),
@@ -1258,6 +1391,7 @@ class _TrashCustomState extends State<TrashCustom> {
                           ],
                         ),
                       ),
+                      commentField(),
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0),
                         child: Container(
