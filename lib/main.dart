@@ -90,6 +90,7 @@ List<int> ListTrash = [];
 
 AdressList ObjectAddress = AdressList.r();
 List<adress> ListAdress = [];
+String selectAdress = "-1";
 
 
 var TrashDate = new DateFormat("dd.MM.yyyy", "en_US").parse("00.00.0000");
