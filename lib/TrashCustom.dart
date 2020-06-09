@@ -816,10 +816,6 @@ class _TrashCustomState extends State<TrashCustom> {
     );
   }
 
-
-
-
-
   Widget SelectAddress(){
     TextEditingController streetController = TextEditingController(),
         houseController = TextEditingController(),
@@ -1041,14 +1037,13 @@ class _TrashCustomState extends State<TrashCustom> {
 
 
   Widget adressSelect(){
-    String _simpleValue = "Москва";
     void showAndSetMenuSelection(BuildContext context, String value) {
-      print(_simpleValue);
+      print(selectAdress);
 
       setState(() {
-        _simpleValue = value;
+        selectAdress = value;
       });
-      if(_simpleValue == "0"){
+      if(selectAdress == "0"){
         print("yeah");
         showModalBottomSheet<void>(
           context: context,
@@ -1063,18 +1058,24 @@ class _TrashCustomState extends State<TrashCustom> {
           },
         );
       }
-      print(_simpleValue);
+      print(selectAdress);
+
     }
 
     return Container(
       child: PopupMenuButton<String>(
         padding: EdgeInsets.zero,
-        initialValue: _simpleValue,
-        onSelected: (value) => showAndSetMenuSelection(context, value),
-        child: Adress(),
+        initialValue: selectAdress,
+        onSelected: (value) { showAndSetMenuSelection(context, value);
+
+        setState(() {
+          selectAdress = value;
+        });},
+        child: Adress(selectAdress),
         itemBuilder: (context) => List.generate(ObjectAddress.getAddresses().length+1, (index) {
+          setState(() {
 
-
+          });
           if(index == ObjectAddress.getAddresses().length){
             return PopupMenuItem<String>(
               value: "0",
@@ -1105,7 +1106,7 @@ class _TrashCustomState extends State<TrashCustom> {
             return total;
           }
           return PopupMenuItem<String>(
-            value: index.toString(),
+            value: (index+1).toString(),
             child: Text(buildAdress(), style:  TextStyle(
                 color: Colors.black,
                 fontSize: sizeText,
@@ -1119,8 +1120,9 @@ class _TrashCustomState extends State<TrashCustom> {
 
   }
 
-  Widget Adress(){
-    if(!selectedAdress){
+  Widget Adress(String selectAdress){
+    if(selectAdress == "-1" || selectAdress == "0"){
+      print("address $selectAdress");
       return Row(
         children: [
           Text("Укажите ", style:  TextStyle(
@@ -1140,6 +1142,25 @@ class _TrashCustomState extends State<TrashCustom> {
         ],
       );
     }else{
+
+      print("1address $selectAdress");
+
+      adress step = ObjectAddress.getAddresses()[int.parse(selectAdress)-1];
+
+      String buildAdress(){
+        String total = step.city+", "+step.street+ " "+ step.house;
+        if(step.corpus!= "null"){
+          total+= step.corpus;
+        }
+        if(step.stroenie!= "null"){
+          total+= "C"+step.stroenie;
+        }
+        if(step.kv!= "null"){
+          total+= ", кв. "+step.kv;
+        }
+        return total;
+      }
+
       return Row(
         children: [
           Text("По адресу  ", style:  TextStyle(
@@ -1153,7 +1174,7 @@ class _TrashCustomState extends State<TrashCustom> {
             onTap: (){
 
             },
-            child: Text("Adress", style:  TextStyle(
+            child: Text(buildAdress(), style:  TextStyle(
                 color: Colors.blueAccent,
                 fontSize: sizeText,
                 fontFamily: "MPLUS",
