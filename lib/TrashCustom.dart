@@ -836,7 +836,7 @@ class _TrashCustomState extends State<TrashCustom> {
       ),
 
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height*0.95,
+      height: MediaQuery.of(context).size.height*0.5,
       child: SingleChildScrollView(
         child: Stack(
           children: [
@@ -1002,7 +1002,7 @@ class _TrashCustomState extends State<TrashCustom> {
                               child: Padding(
                                 padding: const EdgeInsets.only(left : 8.0, right: 8.0),
                                 child: Text(
-                                  'Применить',
+                                  'Добавить',
                                   style: TextStyle(
                                     decoration: TextDecoration.none,
                                     color: Colors.black,
@@ -1072,9 +1072,10 @@ class _TrashCustomState extends State<TrashCustom> {
         initialValue: _simpleValue,
         onSelected: (value) => showAndSetMenuSelection(context, value),
         child: Adress(),
-        itemBuilder: (context) => List.generate(ListAdress.length+1, (index) {
+        itemBuilder: (context) => List.generate(ObjectAddress.getAddresses().length+1, (index) {
 
-          if(index == ListAdress.length){
+
+          if(index == ObjectAddress.getAddresses().length){
             return PopupMenuItem<String>(
               value: "0",
               child: Row(
@@ -1088,16 +1089,17 @@ class _TrashCustomState extends State<TrashCustom> {
               ),
             );
           }
-          adress step = ListAdress[index];
+          adress step = ObjectAddress.getAddresses()[index];
+
           String buildAdress(){
             String total = step.city+", "+step.street+ " "+ step.house;
-            if(step.corpus!= ""){
+            if(step.corpus!= "null"){
               total+= step.corpus;
             }
-            if(step.stroenie!= ""){
+            if(step.stroenie!= "null"){
               total+= "C"+step.stroenie;
             }
-            if(step.kv!= ""){
+            if(step.kv!= "null"){
               total+= ", кв. "+step.kv;
             }
             return total;
@@ -1114,6 +1116,7 @@ class _TrashCustomState extends State<TrashCustom> {
         }),
       ),
     );
+
   }
 
   Widget Adress(){
