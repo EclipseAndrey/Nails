@@ -673,7 +673,21 @@ class _TrashCustomState extends State<TrashCustom> {
 
 
   Widget Date(DateTime date){
+    _showDatePicker() async {
+      date = await showDatePicker(
+        helpText: "",
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2015, 1),
+        lastDate: DateTime(2100),
+      );
+        print("=========================");
+        setState(() {
+          selectedDate = true;
+        });
+    }
     if(!selectedDate){
+      print("Дата невыбрана");
       return Row(
         children: [
           Text("Выберите ", style:  TextStyle(
@@ -685,7 +699,7 @@ class _TrashCustomState extends State<TrashCustom> {
               fontWeight: FontWeight.w300),),
           GestureDetector(
             onTap: (){
-
+              _showDatePicker();
             },
             child: Text("дату", style:  TextStyle(
                 color: Colors.blueAccent,
@@ -698,6 +712,7 @@ class _TrashCustomState extends State<TrashCustom> {
         ],
       );
     }else{
+      print("SIFASLFASKJASKG");
       return Row(
         children: [
           Text("Дата ", style:  TextStyle(
@@ -709,7 +724,7 @@ class _TrashCustomState extends State<TrashCustom> {
               fontWeight: FontWeight.w300),),
           GestureDetector(
             onTap: (){
-
+              _showDatePicker();
             },
             child: Text(date.day.toString()+" "+_month(date.month.toString()), style:  TextStyle(
                 color: Colors.blueAccent,
@@ -836,7 +851,7 @@ class _TrashCustomState extends State<TrashCustom> {
       ),
 
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height*0.5,
+     // height: MediaQuery.of(context).size.height*0.5,
       child: SingleChildScrollView(
         child: Stack(
           children: [
@@ -870,121 +885,125 @@ class _TrashCustomState extends State<TrashCustom> {
                 Container(
                   width: MediaQuery.of(context).size.width*0.90,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      city(),
-                      Row(
+                      Column(
                         children: <Widget>[
-                          Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left:0.0),
+                          city(),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left:0.0),
+                                    child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text("*Улица:", style: TextStyle(fontSize: 16),)),
+                                  )),
+                              Expanded(
+                                flex: 4,
+                                child: TextFormField(
+                                  controller: streetController,
+                                  //  cursorColor: Colors.purple,
+                                  decoration: InputDecoration(
+                                    filled: false,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                flex: 2,
                                 child: FittedBox(
                                     fit: BoxFit.scaleDown,
-                                    child: Text("*Улица:", style: TextStyle(fontSize: 16),)),
-                              )),
-                          Expanded(
-                            flex: 4,
-                            child: TextFormField(
-                              controller: streetController,
-                              //  cursorColor: Colors.purple,
-                              decoration: InputDecoration(
-                                filled: false,
+                                    child: Text("*Дом:", style: TextStyle(fontSize: 16),)),
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text("*Дом:", style: TextStyle(fontSize: 16),)),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: TextFormField(
-                              controller: houseController,
-                              //  cursorColor: Colors.purple,
-                              decoration: InputDecoration(
-                                filled: false,
+                              Expanded(
+                                flex: 2,
+                                child: TextFormField(
+                                  controller: houseController,
+                                  //  cursorColor: Colors.purple,
+                                  decoration: InputDecoration(
+                                    filled: false,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width*0.03,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 5,
-                            child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text("Квартира:", style: TextStyle(fontSize: 16),)),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: TextFormField(
-                              controller: kvController,
-                              //  cursorColor: Colors.purple,
-                              decoration: InputDecoration(
-                                filled: false,
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width*0.03,
+                                ),
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Expanded(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left:0.0),
+                              Expanded(
+                                flex: 5,
                                 child: FittedBox(
                                     fit: BoxFit.scaleDown,
-                                    child: Text("Строение:", style: TextStyle(fontSize: 16),)),
-                              )),
-                          Expanded(
-                            flex: 2,
-                            child: TextFormField(
-                              controller: stroenieController,
-                              //  cursorColor: Colors.purple,
-                              decoration: InputDecoration(
-                                filled: false,
+                                    child: Text("Квартира:", style: TextStyle(fontSize: 16),)),
                               ),
-                            ),
-                          ),
-                          Expanded(
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.02,
-                            ),
-                          ),
-                          Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left:0.0),
-                                child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text("Корпус:", style: TextStyle(fontSize: 16),)),
-                              )),
-                          Expanded(
-                            flex: 3,
-                            child: TextFormField(
-                              controller: corpusController,
-                              //  cursorColor: Colors.purple,
-                              decoration: InputDecoration(
-                                filled: false,
+                              Expanded(
+                                flex: 2,
+                                child: TextFormField(
+                                  controller: kvController,
+                                  //  cursorColor: Colors.purple,
+                                  decoration: InputDecoration(
+                                    filled: false,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                  flex: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left:0.0),
+                                    child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text("Строение:", style: TextStyle(fontSize: 16),)),
+                                  )),
+                              Expanded(
+                                flex: 2,
+                                child: TextFormField(
+                                  controller: stroenieController,
+                                  //  cursorColor: Colors.purple,
+                                  decoration: InputDecoration(
+                                    filled: false,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.02,
+                                ),
+                              ),
+                              Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left:0.0),
+                                    child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text("Корпус:", style: TextStyle(fontSize: 16),)),
+                                  )),
+                              Expanded(
+                                flex: 3,
+                                child: TextFormField(
+                                  controller: corpusController,
+                                  //  cursorColor: Colors.purple,
+                                  decoration: InputDecoration(
+                                    filled: false,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 18.0),
+                        padding: const EdgeInsets.only(top: 48.0, bottom: 28),
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           child:

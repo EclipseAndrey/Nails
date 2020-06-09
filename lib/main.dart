@@ -44,6 +44,10 @@ void main(){
 
   runApp(
       MaterialApp(
+        theme: ThemeData(
+          primaryColor: Colors.purple,
+          primarySwatch: Colors.deepPurple
+        ),
 
 
         localizationsDelegates: [
