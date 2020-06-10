@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/Login.dart';
@@ -326,13 +327,18 @@ class _SplashScreenState extends State<SplashScreen>  {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 230, 229, 1),
+      backgroundColor: Color.fromRGBO(0, 0, 0, 1),
       body: Stack(
         children: <Widget>[
           Center(
             child: Container(
               padding: EdgeInsets.only(bottom: 60,right: 23),
-              child: Image.network('https://static.tildacdn.com/tild3230-6134-4236-b864-353236306434/Logo02102018.png',width: 300,height: 300, ),
+              child: FlareActor(
+                'assets/animations/Eclipse1.flr',
+                alignment: Alignment.center,
+                fit: BoxFit.contain,
+                animation: "go",
+              ),
             ),
 
           ),
@@ -350,7 +356,7 @@ class _SplashScreenState extends State<SplashScreen>  {
 
                   "${LoadingP}%",
                   style:
-                  new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                  new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.white),
                 ),
                 footer: new Text(
                   "Ща мы всё загрузим",
