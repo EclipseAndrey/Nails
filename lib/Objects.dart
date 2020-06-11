@@ -252,16 +252,16 @@ class _LikeButtonState extends State<LikeButton> {
   Widget Button(bool active){
     if(active){
       return Container(
-      height: 710,
-      width: 710,
-      child: FlareActor(
+        height: 710,
+        width: 710,
+        child: FlareActor(
 
-        'assets/animations/Like4.flr',
-        alignment: Alignment.center,
-        fit: BoxFit.contain,
-        animation: "Like",
-      ),
-    );
+          'assets/animations/Like4.flr',
+          alignment: Alignment.center,
+          fit: BoxFit.contain,
+          animation: "Like",
+        ),
+      );
     }else{
       return Container(
         width: 710,
@@ -286,10 +286,10 @@ class _LikeButtonState extends State<LikeButton> {
     active = ObjectLikes.checkLike(item.id);
 
 //          return Icon(Icons.add);
-      return Container(
-        height: 61,
-        width: 61,
-        child: GestureDetector(
+    return Container(
+      height: 61,
+      width: 61,
+      child: GestureDetector(
           onTap: () async {
             if (!ObjectLikes.checkLike(item.id)) {
               await ObjectLikes.addLikes(item.id);
@@ -303,8 +303,8 @@ class _LikeButtonState extends State<LikeButton> {
             setState(() {});
           },
           child: Button(active)
-        ),
-      );
+      ),
+    );
 
   }
 }
@@ -595,10 +595,10 @@ class _BottomMakeOrderState extends State<BottomMakeOrder> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-             Container(
+            Container(
 
-               height: 70,
-               child: Row(
+              height: 70,
+              child: Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 18.0),
@@ -621,8 +621,8 @@ class _BottomMakeOrderState extends State<BottomMakeOrder> {
                     height: 700,
                   ),
                 ],
+              ),
             ),
-             ),
           ],
         ),
       ),
@@ -639,21 +639,21 @@ class _BottomMakeOrderState extends State<BottomMakeOrder> {
 class adress{
   String
   street,
-  city,
-  house,
-  corpus,
-  stroenie,
-  kv;
+      city,
+      house,
+      corpus,
+      stroenie,
+      kv;
   adress({this.city,this.street,this.house, this.corpus, this.stroenie, this.kv});
 
   factory adress.fromJson(Map<String,dynamic> json){
     return adress(
-      city: json['city'] as String,
-      street: json['street'] as String,
-      house: json['house'] as String,
-      stroenie: json['stroenie'] as String,
-      corpus: json['corpus'] as String,
-      kv: json['kv'] as String
+        city: json['city'] as String,
+        street: json['street'] as String,
+        house: json['house'] as String,
+        stroenie: json['stroenie'] as String,
+        corpus: json['corpus'] as String,
+        kv: json['kv'] as String
     );
 
   }
@@ -718,9 +718,18 @@ class AdressList{
   }
 
   Future<bool> addAddress(adress Address) async {
+    if (Address.stroenie == ""){
+      Address.stroenie = "null";
+    }
+    if (Address.corpus == ""){
+      Address.corpus = "null";
+    }
+    if (Address.kv == ""){
+      Address.kv = "null";
+    }
     Future<bool> res() async {
       var a = await http.get(
-          'http://eclipsedevelop.ru/api.php/cbaddaddress?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
+          'http://eclipsedevelop.ru/api.php/cbaddaddresses?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
 
       if (a.statusCode == 200) {
         return true;
@@ -756,21 +765,7 @@ class AdressList{
       return false;
     }
   }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
