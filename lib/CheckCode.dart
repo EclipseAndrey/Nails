@@ -170,9 +170,9 @@ class _CheckCodeState extends State<CheckCode> {
         child: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-                Color.fromRGBO(255, 188, 173, 1),
-                Color.fromRGBO(255, 188, 173, 0.8),
-                Color.fromRGBO(255, 188, 173, 0.5)
+                Color.fromRGBO(34, 15, 45, 1),
+                Color.fromRGBO(34, 15, 45, 0.8),
+                Color.fromRGBO(34, 15, 45, 0.5)
               ])),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -190,7 +190,7 @@ class _CheckCodeState extends State<CheckCode> {
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.all(
                               Radius.circular(50)),
-                          color: Color.fromRGBO(255, 188, 173,
+                          color: Color.fromRGBO(34, 15, 45,
                               1), //Если че можно задать фон кнопки назад
                         ),
                         child: IconButton(
@@ -276,7 +276,7 @@ class _CheckCodeState extends State<CheckCode> {
                           margin: EdgeInsets.symmetric(horizontal: 50),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Color.fromRGBO(255, 188, 173, 1)
+                              color: Color.fromRGBO(54, 25, 58, 1)
                           ),
                           child: Center(
                             child: Text("Подтвердить", style: TextStyle(
@@ -289,10 +289,10 @@ class _CheckCodeState extends State<CheckCode> {
                       SizedBox(height: 10,),
                       NumericKeyboard(
                         onKeyboardTap: _onKeyboardTap,
-                        textColor: Color.fromRGBO(255, 188, 173, 1),
+                        textColor: Color.fromRGBO(34, 15, 45, 1),
                         rightIcon: Icon(
                           Icons.backspace,
-                          color: Color.fromRGBO(255, 188, 173, 1),
+                          color: Color.fromRGBO(34, 15, 45, 1),
                         ),
                         rightButtonFn: () {
                           setState(() {

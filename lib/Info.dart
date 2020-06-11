@@ -89,7 +89,8 @@ class _Info extends State<Info> {
         gradient:  LinearGradient(
         begin: FractionalOffset.topCenter,
         end: FractionalOffset.bottomCenter,
-        colors: [Colors.white,Color.fromRGBO(255, 230, 229, 1)],
+        colors: [Color.fromRGBO(34, 15, 45, 1),
+          Color.fromRGBO(25, 2 , 58, 1)],
           //stops: [0.3,0.7],
       )
       ),
@@ -109,10 +110,10 @@ class _Info extends State<Info> {
                     children: <Widget>[
                       Image.asset(
                         _images[index],
-                        height: 130,
+                        height: 110,
                         fit: BoxFit.fitHeight,
-                        color: Colors.black,
-                        width: 130,
+                        color: Colors.white,
+                        width: 110,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0, left: 20,right: 20),
@@ -121,7 +122,7 @@ class _Info extends State<Info> {
                             _htx[index],
                             style: TextStyle(
 //                              color: Colors.black87,
-                                color: Color.fromRGBO(219, 33, 76, 1),
+                                color: Color.fromRGBO(255, 255, 255, 1),
                                 fontSize: 25,
                                 decoration: TextDecoration.none,fontWeight: FontWeight.w300),
                           ),
@@ -133,7 +134,7 @@ class _Info extends State<Info> {
                           child: Text(
                             _tx[index],
                             style: TextStyle(
-                                color: Colors.black45,
+                                color: Colors.white60,
                                 fontSize: 16,
                                 decoration: TextDecoration.none,
                                 fontFamily: 'Helvetica'),
@@ -166,7 +167,7 @@ class _Info extends State<Info> {
                               decoration: BoxDecoration(
                                 color: Colors.transparent,
                                 shape: BoxShape.rectangle,
-                                border: Border.all(color: Colors.black45),
+                                border: Border.all(color: Colors.white54),
                                 borderRadius: BorderRadius.all(Radius.circular(25)),
                               ),
                               child: Center(
@@ -174,7 +175,7 @@ class _Info extends State<Info> {
                                   'Понятно',
                                   style: TextStyle(
                                     decoration: TextDecoration.none,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                     fontSize: 17,
                                   ),
                                 ),
@@ -214,12 +215,12 @@ Widget _topOchka (int i, BuildContext context){
               width: 80,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color.fromRGBO(255, 230, 229, 1),
+                color: Color.fromRGBO(78, 30, 90, 1),
               ),
               child: Center(
                 child: Text(
                   '${i+1}',
-                  style: TextStyle(color: Colors.black, fontSize: 25,fontWeight: FontWeight.bold,decoration: TextDecoration.none),
+                  style: TextStyle(color: Colors.white70, fontSize: 25,fontWeight: FontWeight.bold,decoration: TextDecoration.none),
                 ),
               ),
             ),
@@ -228,7 +229,7 @@ Widget _topOchka (int i, BuildContext context){
             height: 2,
             width: MediaQuery.of(context).size.width / 2 - 42,
             child: Container(
-              color: Colors.black,
+              color: Colors.white60,
             ),
           ),
         ],
@@ -245,7 +246,7 @@ Widget _topOchka (int i, BuildContext context){
             height: 2,
             width: MediaQuery.of(context).size.width / 2 - 42,
             child: Container(
-              color: Colors.black,
+              color: Colors.white60,
             ),
           ),
           Padding(
@@ -255,13 +256,13 @@ Widget _topOchka (int i, BuildContext context){
               width: 80,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color.fromRGBO(255, 230, 229, 1),
+                color: Color.fromRGBO(78, 30, 90, 1),
 
               ),
               child: Center(
                 child: Text(
                   '${i+1}',
-                  style: TextStyle(color: Colors.black, fontSize: 25,fontWeight: FontWeight.bold,decoration: TextDecoration.none),
+                  style: TextStyle(color: Colors.white70, fontSize: 25,fontWeight: FontWeight.bold,decoration: TextDecoration.none),
                 ),
               ),
             ),
@@ -282,7 +283,7 @@ Widget _topOchka (int i, BuildContext context){
             height: 2,
             width: MediaQuery.of(context).size.width / 2 - 42,
             child: Container(
-              color: Colors.black,
+              color: Colors.white60,
             ),
           ),
           Padding(
@@ -292,12 +293,12 @@ Widget _topOchka (int i, BuildContext context){
               width: 80,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color.fromRGBO(255, 230, 229, 1),
+                color: Color.fromRGBO(78, 30, 90, 1),
               ),
               child: Center(
                 child: Text(
                   '${i+1}',
-                  style: TextStyle(color: Colors.black, fontSize: 25,fontWeight: FontWeight.bold,decoration: TextDecoration.none),
+                  style: TextStyle(color: Colors.white70, fontSize: 25,fontWeight: FontWeight.bold,decoration: TextDecoration.none),
                 ),
               ),
             ),
@@ -306,7 +307,7 @@ Widget _topOchka (int i, BuildContext context){
             height: 2,
             width: MediaQuery.of(context).size.width / 2 - 42,
             child: Container(
-              color: Colors.black,
+              color: Colors.white60,
             ),
           ),
         ],

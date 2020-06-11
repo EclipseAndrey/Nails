@@ -31,6 +31,11 @@ class TrashCustom extends StatefulWidget {
 }
 
 class _TrashCustomState extends State<TrashCustom> {
+  void _a(){
+    setState(() {
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -254,6 +259,7 @@ class _TrashCustomState extends State<TrashCustom> {
 
 
       }
+
 
 
       return Column(
@@ -1062,6 +1068,7 @@ class _TrashCustomState extends State<TrashCustom> {
       setState(() {
         selectAdress = value;
       });
+      _a();
       if(selectAdress == "0"){
         print("yeah");
         showModalBottomSheet<void>(

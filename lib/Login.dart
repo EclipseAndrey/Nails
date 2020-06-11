@@ -87,9 +87,9 @@ class _LoginState extends State<Login> {
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 colors: [
-                  Color.fromRGBO(255, 188, 173, 1),
-                  Color.fromRGBO(255, 188, 173, 0.8),
-                  Color.fromRGBO(255, 188, 173, 0.5)
+                  Color.fromRGBO(34, 15, 45, 1),
+                  Color.fromRGBO(34, 15, 45, 0.8),
+                  Color.fromRGBO(34, 15, 45, 0.5)
                 ]
             )
         ),
@@ -127,7 +127,7 @@ class _LoginState extends State<Login> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [BoxShadow(
-                                  color: Color.fromRGBO(225, 95, 27, .3),
+                                  color: Color.fromRGBO(34, 15, 45, .3),
                                   blurRadius: 20,
                                   offset: Offset(0, 10)
                               )]
@@ -164,7 +164,7 @@ class _LoginState extends State<Login> {
                             margin: EdgeInsets.symmetric(horizontal: 30),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color.fromRGBO(255, 188, 173, 1)
+                                color: Color.fromRGBO(25, 1, 58, 1)
                             ),
                             child: Center(
                               child: Text("Далее", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
@@ -187,9 +187,9 @@ class _LoginState extends State<Login> {
                                   width: 230,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(color: Color.fromRGBO(255, 188, 173, 1), width: 1)
+                                      border: Border.all(color: Color.fromRGBO(25, 1, 58, 1), width: 1)
                                   ),
-                                  child: Center(child: Text("Создать аккаунт", style: TextStyle(fontSize: 18, color: Color.fromRGBO(255, 188, 173, 1), fontWeight: FontWeight.normal),)))
+                                  child: Center(child: Text("Создать аккаунт", style: TextStyle(fontSize: 18, color: Color.fromRGBO(25, 1, 58, 1), fontWeight: FontWeight.normal),)))
                             )
                             :
                             GestureDetector(
