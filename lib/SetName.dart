@@ -30,9 +30,9 @@ class _SetNameState extends State<SetName> {
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 colors: [
-                  Color.fromRGBO(255, 182, 173, 1),
-                  Color.fromRGBO(255, 182, 173, 0.8),
-                  Color.fromRGBO(255, 182, 173, 0.5)
+                  Color.fromRGBO(34, 15, 45, 1),
+                  Color.fromRGBO(34, 15, 45, 0.8),
+                  Color.fromRGBO(34, 15, 45, 0.5)
                 ]
             )
         ),
@@ -69,7 +69,7 @@ class _SetNameState extends State<SetName> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [BoxShadow(
-                                  color: Color.fromRGBO(225, 95, 27, .3),
+                                  color: Color.fromRGBO(34, 15, 45, .3),
                                   blurRadius: 20,
                                   offset: Offset(0, 10)
                               )]
@@ -95,32 +95,32 @@ class _SetNameState extends State<SetName> {
                           ),
                         )),
                         SizedBox(height: 40,),
-                        FadeAnimation(1.6, Container(
-                          height: 50,
-                          margin: EdgeInsets.symmetric(horizontal: 50),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: Color.fromRGBO(255, 182, 173, 1)
-                          ),
-                          child: GestureDetector(
-                            onTap: () async {
-                              print(num);
-                              final prefs = await SharedPreferences.getInstance();
-                              final token = prefs.getString('token') ?? 'none';
+                        FadeAnimation(1.6, GestureDetector(
+                          onTap: () async {
+                            print(num);
+                            final prefs = await SharedPreferences.getInstance();
+                            final token = prefs.getString('token') ?? 'none';
 
-                              Future<http.Response> fetchAlbum() async {
-                                print('http://eclipsedevelop.ru/api.php/cbsetname?name=${_numcontroller.text}&token=$token');
-                                return await http.get(
-                                    'http://eclipsedevelop.ru/api.php/cbsetname?name=${_numcontroller.text}&token=$token');
-                              }
+                            Future<http.Response> fetchAlbum() async {
+                              print('http://eclipsedevelop.ru/api.php/cbsetname?name=${_numcontroller.text}&token=$token');
+                              return await http.get(
+                                  'http://eclipsedevelop.ru/api.php/cbsetname?name=${_numcontroller.text}&token=$token');
+                            }
 
-                               fetchAlbum().then((value) {
-                                if(value.statusCode == 200){
-                                  Navigator.of(context)
-                                      .pushReplacementNamed('/main');
-                                 }});
+                            fetchAlbum().then((value) {
+                              if(value.statusCode == 200){
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/main');
+                              }});
 
-                            },
+                          },
+                          child: Container(
+                            height: 50,
+                            margin: EdgeInsets.symmetric(horizontal: 50),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Color.fromRGBO(25, 1, 58, 1)
+                            ),
                             child: Center(
                               child: Text("Далее", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
                             ),
