@@ -175,7 +175,50 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
         ],
       );
     } else {
-      return SizedBox();
+
+      return Column(
+        children: [
+          Container(
+            height: 73,
+            child: Column(
+              children: [
+                Text("Записи",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 44,
+                      fontFamily: "MPLUS",
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w300),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 58.0, right: 58),
+                  child: Divider(
+                    height: 1,
+                    color: Colors.white60,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          Text("Тут будет информация",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontFamily: "MPLUS",
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w300),
+          ),
+          Text("о ваших записях :)",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontFamily: "MPLUS",
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w300),
+          ),
+        ],
+      );
     }
 
 
@@ -193,6 +236,33 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
     }
   }
 
+
+  Widget buttonState(){
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 8.0, top: 8),
+    child: FlatButton(
+        onPressed: (){
+
+        },
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            side: BorderSide(color: Colors.white)),
+        color: Colors.transparent,
+        textColor: Colors.pinkAccent,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 3.0, right: 3, top: 3, bottom: 3),
+          child: Text("отменить запись",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontFamily: "MPLUS",
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w500),
+          ),
+        ),
+      ),
+  );
+  }
 
   Widget ElementOrder(ElementItemOrder item, BuildContext context, int index, Animation<double> anime, AnimationController controller, List<AnimationController> contollerL) {
     print("Дата контейнера "+item.date+" Время "+item.time);
@@ -334,6 +404,7 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
                               padding: const EdgeInsets.only(left: 10.0, top: 4.0),
                               child: orders50(item.ids, animOpen[index], index),
                             ),
+                            animOpen[index]?buttonState():SizedBox(),
                           ],
                         ),
                       ),
@@ -569,7 +640,7 @@ Widget StatusOrder(int _Status, BuildContext context) {
       {
         return Container(
           child: Text(
-            'Ожидает',
+            'Ожидание',
             style: TextStyle(
                 color: Color.fromRGBO(255, 255, 255, 30), decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
@@ -580,7 +651,7 @@ Widget StatusOrder(int _Status, BuildContext context) {
       {
         return Container(
           child: Text(
-            'Подтвержден',
+            'Подтверждено',
             style: TextStyle(
                 color: Color.fromRGBO(255, 255, 255, 30), decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
@@ -591,7 +662,7 @@ Widget StatusOrder(int _Status, BuildContext context) {
       {
         return Container(
           child: Text(
-            'Отменен',
+            'Отменено',
             style: TextStyle(
                 color: Color.fromRGBO(255, 255, 255, 30), decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
@@ -602,7 +673,7 @@ Widget StatusOrder(int _Status, BuildContext context) {
       {
         return Container(
           child: Text(
-            'Завершен',
+            'Завершено',
             style: TextStyle(
                 color: Color.fromRGBO(255, 255, 255, 30), decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
