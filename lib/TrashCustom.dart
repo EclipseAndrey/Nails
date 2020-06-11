@@ -31,11 +31,10 @@ class TrashCustom extends StatefulWidget {
 }
 
 class _TrashCustomState extends State<TrashCustom> {
-  void _a(){
-    setState(() {
+  String _cityValue = "Москва";
+  int getAddressLength = ObjectAddress.getAddresses().length+1;
 
-    });
-  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -261,7 +260,6 @@ class _TrashCustomState extends State<TrashCustom> {
       }
 
 
-
       return Column(
         children: [
           Container(
@@ -374,7 +372,13 @@ class _TrashCustomState extends State<TrashCustom> {
                       ),
                       isScrollControlled: true,
                       builder: (context) {
-                        return MakeOrder();
+                        return StatefulBuilder(
+                          builder: (BuildContext context,
+                              StateSetter setState2) {
+                            return MakeOrder(setState2);
+                          },
+                        );
+                        //     return MakeOrder();
 
                       },
                     );
@@ -678,21 +682,25 @@ class _TrashCustomState extends State<TrashCustom> {
   }
 
 
-  Widget Date(DateTime date){
+  Widget Date(StateSetter setState2){
+    DateTime date;
     _showDatePicker() async {
       date = await showDatePicker(
         helpText: "",
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2015, 1),
+        firstDate: DateTime.now(),
         lastDate: DateTime(2100),
       );
-        print("=========================");
-        setState(() {
-          selectedDate = true;
-        });
+      setState2(() {
+        selectedDate = true;
+        date2 = date.day.toString()+" "+_month(date.month.toString());
+      });
+
     }
-    if(!selectedDate){
+    print("=========================" + date2);
+
+    if(selectedDate == false){
       print("Дата невыбрана");
       return Row(
         children: [
@@ -718,7 +726,6 @@ class _TrashCustomState extends State<TrashCustom> {
         ],
       );
     }else{
-      print("SIFASLFASKJASKG");
       return Row(
         children: [
           Text("Дата ", style:  TextStyle(
@@ -732,7 +739,7 @@ class _TrashCustomState extends State<TrashCustom> {
             onTap: (){
               _showDatePicker();
             },
-            child: Text(date.day.toString()+" "+_month(date.month.toString()), style:  TextStyle(
+            child: Text(date2, style:  TextStyle(
                 color: Colors.blueAccent,
                 fontSize: sizeText,
                 fontFamily: "MPLUS",
@@ -748,7 +755,19 @@ class _TrashCustomState extends State<TrashCustom> {
 
 
   //НЕ ЗАБЫТЬ ПОСАВИТЬ ФЛАГ selected КОГДА ВЫБРАНО ВРЕМЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  Widget Time(DateTime time){
+  Widget Time(StateSetter setState2){
+    TimeOfDay time;
+    _showTimePicker() async {
+      time = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+      setState2(() {
+        selectedTime = true;
+        time2 = "${time.hour}:${time.minute%60}";
+      });
+
+    }
     if(!selectedTime){
       return Row(
         children: [
@@ -761,7 +780,7 @@ class _TrashCustomState extends State<TrashCustom> {
               fontWeight: FontWeight.w300),),
           GestureDetector(
             onTap: (){
-
+              _showTimePicker();
             },
             child: Text("время", style:  TextStyle(
                 color: Colors.blueAccent,
@@ -785,9 +804,9 @@ class _TrashCustomState extends State<TrashCustom> {
               fontWeight: FontWeight.w300),),
           GestureDetector(
             onTap: (){
-
+              _showTimePicker();
             },
-            child: Text("${time.hour}:${time.minute%60}", style:  TextStyle(
+            child: Text(time2, style:  TextStyle(
                 color: Colors.blueAccent,
                 fontSize: sizeText,
                 fontFamily: "MPLUS",
@@ -799,25 +818,23 @@ class _TrashCustomState extends State<TrashCustom> {
       );
     }
   }
-  Widget city(){
-    String _simpleValue = "Москва";
+  Widget city(StateSetter setState3){
     void showAndSetMenuSelection(BuildContext context, String value) {
-      print(_simpleValue);
-      setState(() {
-        _simpleValue = value;
+      setState3(() {
+        _cityValue = value;
       });
-      print(_simpleValue);
+      print(_cityValue);
     }
 
     return Container(
       width: MediaQuery.of(context).size.width,
       child: PopupMenuButton<String>(
         padding: EdgeInsets.zero,
-        initialValue: _simpleValue,
+        initialValue: _cityValue,
         onSelected: (value) => showAndSetMenuSelection(context, value),
         child: ListTile(
           title: Text("Выберите город"),
-          subtitle: Text(_simpleValue),
+          subtitle: Text(_cityValue),
         ),
         itemBuilder: (context) => <PopupMenuItem<String>>[
           PopupMenuItem<String>(
@@ -837,7 +854,12 @@ class _TrashCustomState extends State<TrashCustom> {
     );
   }
 
-  Widget SelectAddress(){
+  Widget SelectAddress(StateSetter setState3, String value){
+    final FocusNode streetFocusNode = new FocusNode () ;
+    final FocusNode houseFocusNode = new FocusNode () ;
+    final FocusNode kvFocusNode = new FocusNode () ;
+    final FocusNode stroenieFocusNode = new FocusNode () ;
+    final FocusNode corpusFocusNode = new FocusNode () ;
     TextEditingController streetController = TextEditingController(),
         houseController = TextEditingController(),
         kvController = TextEditingController(),
@@ -851,9 +873,9 @@ class _TrashCustomState extends State<TrashCustom> {
             topRight: Radius.circular(16)
         ),
       ),
-
+      height: 800,
       width: MediaQuery.of(context).size.width,
-     // height: MediaQuery.of(context).size.height*0.5,
+      // height: MediaQuery.of(context).size.height*0.5,
       child: SingleChildScrollView(
         child: Stack(
           children: [
@@ -870,6 +892,7 @@ class _TrashCustomState extends State<TrashCustom> {
                         child: GestureDetector(
                           onTap: (){
                             Navigator.pop(context);
+                            _cityValue = "Москва";
                           },
                           child: Text("Отмена", style:  TextStyle(
                               color: Colors.blueAccent,
@@ -891,7 +914,7 @@ class _TrashCustomState extends State<TrashCustom> {
                     children: [
                       Column(
                         children: <Widget>[
-                          city(),
+                          city(setState3),
                           Row(
                             children: <Widget>[
                               Expanded(
@@ -903,9 +926,12 @@ class _TrashCustomState extends State<TrashCustom> {
                                   )),
                               Expanded(
                                 flex: 4,
-                                child: TextFormField(
+                                child: TextField(
+                                  focusNode: streetFocusNode,
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.multiline,
                                   controller: streetController,
-                                  //  cursorColor: Colors.purple,
+                                  cursorColor: Colors.deepPurple,
                                   decoration: InputDecoration(
                                     filled: false,
                                   ),
@@ -924,9 +950,12 @@ class _TrashCustomState extends State<TrashCustom> {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: TextFormField(
+                                child: TextField(
+                                  focusNode: houseFocusNode,
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.multiline,
                                   controller: houseController,
-                                  //  cursorColor: Colors.purple,
+                                  cursorColor: Colors.deepPurple,
                                   decoration: InputDecoration(
                                     filled: false,
                                   ),
@@ -946,9 +975,11 @@ class _TrashCustomState extends State<TrashCustom> {
                               ),
                               Expanded(
                                 flex: 2,
-                                child: TextFormField(
+                                child: TextField(
+                                  focusNode: kvFocusNode,
+                                  textInputAction: TextInputAction.next,
                                   controller: kvController,
-                                  //  cursorColor: Colors.purple,
+                                  cursorColor: Colors.deepPurple,
                                   decoration: InputDecoration(
                                     filled: false,
                                   ),
@@ -969,9 +1000,12 @@ class _TrashCustomState extends State<TrashCustom> {
                                   )),
                               Expanded(
                                 flex: 2,
-                                child: TextFormField(
+                                child: TextField(
+                                  focusNode: stroenieFocusNode,
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.multiline,
                                   controller: stroenieController,
-                                  //  cursorColor: Colors.purple,
+                                  cursorColor: Colors.deepPurple,
                                   decoration: InputDecoration(
                                     filled: false,
                                   ),
@@ -992,7 +1026,10 @@ class _TrashCustomState extends State<TrashCustom> {
                                   )),
                               Expanded(
                                 flex: 3,
-                                child: TextFormField(
+                                child: TextField(
+                                  focusNode: corpusFocusNode,
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.multiline,
                                   controller: corpusController,
                                   //  cursorColor: Colors.purple,
                                   decoration: InputDecoration(
@@ -1018,6 +1055,19 @@ class _TrashCustomState extends State<TrashCustom> {
                               textColor: Colors.purple,
                               padding: EdgeInsets.all(8.0),
                               onPressed: () {
+                                if(_cityValue != "" && streetController.text != "" && houseController.text != ""){
+                                  adress Address = adress(city: _cityValue, street: streetController.text, house: houseController.text,
+                                      corpus: corpusController.text, stroenie: stroenieController.text, kv: kvController.text);
+                                  ObjectAddress.addAddress(Address);
+                                  print(Address);
+                                  setState3(() {
+                                    selectAdress = (ObjectAddress.getAddresses().length).toString();
+                                  });
+                                  Navigator.pop(context);
+                                  print("=========selectAdres=======" + selectAdress);
+                                }else{
+                                  print("===== Заполните обязательные поля");
+                                }
 
                               },
                               child: Padding(
@@ -1061,14 +1111,13 @@ class _TrashCustomState extends State<TrashCustom> {
   }
 
 
-  Widget adressSelect(){
+  Widget adressSelect(StateSetter setState2){
     void showAndSetMenuSelection(BuildContext context, String value) {
       print(selectAdress);
 
       setState(() {
         selectAdress = value;
       });
-      _a();
       if(selectAdress == "0"){
         print("yeah");
         showModalBottomSheet<void>(
@@ -1079,7 +1128,7 @@ class _TrashCustomState extends State<TrashCustom> {
           ),
           isScrollControlled: true,
           builder: (context) {
-            return SelectAddress();
+            return SelectAddress(setState2, value);
 
           },
         );
@@ -1145,7 +1194,6 @@ class _TrashCustomState extends State<TrashCustom> {
     );
 
   }
-
   Widget Adress(String selectAdress){
     if(selectAdress == "-1" || selectAdress == "0"){
       print("address $selectAdress");
@@ -1196,18 +1244,13 @@ class _TrashCustomState extends State<TrashCustom> {
 //              decoration: TextDecoration.underline,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w300),),
-          GestureDetector(
-            onTap: (){
-
-            },
-            child: Text(buildAdress(), style:  TextStyle(
-                color: Colors.blueAccent,
-                fontSize: sizeText,
-                fontFamily: "MPLUS",
-                decoration: TextDecoration.underline,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w300),),
-          ),
+          Text(buildAdress(), style:  TextStyle(
+              color: Colors.blueAccent,
+              fontSize: sizeText,
+              fontFamily: "MPLUS",
+              decoration: TextDecoration.underline,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w300),),
         ],
       );
 
@@ -1272,7 +1315,9 @@ class _TrashCustomState extends State<TrashCustom> {
     );
   }
 
-  Widget MakeOrder(){
+  Widget MakeOrder(StateSetter setState2){
+    Future<bool> acceptGetAddress = ObjectAddress.AdressListUp();
+    ObjectAddress.getAddresses();
     return Container(
 
       decoration: BoxDecoration(
@@ -1301,6 +1346,9 @@ class _TrashCustomState extends State<TrashCustom> {
                         child: GestureDetector(
                           onTap: (){
                             Navigator.pop(context);
+                            selectedDate = false;
+                            selectAdress = "-1";
+                            selectedTime = false;
                           },
                           child: Text("Отмена", style:  TextStyle(
                               color: Colors.blueAccent,
@@ -1339,8 +1387,8 @@ class _TrashCustomState extends State<TrashCustom> {
                           ],
                         ),
                       ),
-                      Date(TrashDate),
-                      Time(TrashTime),
+                      Date(setState2),
+                      Time(setState2),
 
 
                       Padding(
@@ -1362,7 +1410,7 @@ class _TrashCustomState extends State<TrashCustom> {
                           ],
                         ),
                       ),
-                      adressSelect(),
+                      adressSelect(setState2),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0),
@@ -1495,27 +1543,6 @@ class _TrashCustomState extends State<TrashCustom> {
       ),
     );
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

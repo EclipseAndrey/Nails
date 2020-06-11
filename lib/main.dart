@@ -97,6 +97,8 @@ String selectAdress = "-1";
 var TrashDate = new DateFormat("dd.MM.yyyy", "en_US").parse("00.00.0000");
 var TrashTime = new DateFormat("HH:mm", "en_US").parse("12:30");
 bool selectedDate = false, selectedTime= false, selectedAdress = false;
+String date2 = "";
+String time2 = "";
 
 class SplashScreen extends StatefulWidget  {
   final String nextRoute;
