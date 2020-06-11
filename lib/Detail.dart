@@ -39,6 +39,19 @@ class _DetailState extends State<Detail> {
     }
 
   }
+  void stateTrash(){
+    print("+++++++++++++++++++++++++++++++++++++++++++");
+    if(ObjectTrash.checkTrash(elementItem.id))
+    {
+      print("++++++++++++++++++++++++++++"+ ObjectTrash.checkTrash(elementItem.id).toString());
+      Save = true;
+    }else{
+      print("++++++++++++++++++++++++++++"+ ObjectTrash.checkTrash(elementItem.id).toString());
+
+      Save = false;
+    }
+
+  }
 
 
   Widget Prise(ElementItem itemForSales){
@@ -70,6 +83,7 @@ class _DetailState extends State<Detail> {
 
     Widget icon(){
       if(!Save){
+
         return Icon(Icons.add_shopping_cart, color: Colors.white, size: 24,);
       }
       else
@@ -82,11 +96,30 @@ class _DetailState extends State<Detail> {
 
 
     return FlatButton(
-      onPressed: (){
-        setState(() {
 
-          Save = !Save;
+      onPressed: ()async{
+
+        Save = !Save;
+        setState(() {
         });
+        if(!Save){
+          print(await ObjectTrash.deleteTrash(elementItem.id));
+          await ObjectTrash.TrashListUp();
+          setState(() {
+
+          });
+        }else{
+          print(await ObjectTrash.addTrash(elementItem.id));
+          await ObjectTrash.TrashListUp();
+          setState(() {
+          });
+        }
+        stateTrash();
+        setState(() {
+          print("UP");
+        });
+
+        //  setState(() { });
       },
       shape: new RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
@@ -143,7 +176,7 @@ class _DetailState extends State<Detail> {
             });
           }else{
             print(await ObjectLikes.addLikes(elementItem.id));
-            ObjectLikes.Likes();
+             ObjectLikes.Likes();
             setState(() {
             });
           }
@@ -182,11 +215,15 @@ class _DetailState extends State<Detail> {
 @override
   void initState() {
   stateLike();
+  stateTrash();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Save = ObjectTrash.checkTrash(elementItem.id);
+    setState(() {
+    });
     return Scaffold(
      backgroundColor:  Color.fromRGBO(34, 15, 51, 1),
       body: SingleChildScrollView(
