@@ -776,3 +776,59 @@ class AdressList{
 
 
 
+Future<String> MakeOrderButton(String address, String date, String time, String num, String promo, String comment )async{
+
+  String ids(){
+    String ids = "";
+    for(int i = 0; i < ObjectTrash.getTrash().length; i ++){
+      ids+= ObjectTrash.getTrash()[i].toString()+",";
+    }
+    return ids;
+  }
+  var a;
+  print('http://eclipsedevelop.ru/api.php/cbmakeorder?token=$token&adress=$address&date=$date&time=$time&num=$num&promo=$promo&comment=$comment&ids=${ids()}');
+  Future<bool> make() async {
+    a = await http.get(
+        'http://eclipsedevelop.ru/api.php/cbmakeorder?token=$token&adress=$address&date=$date&time=$time&num=$num&promo=$promo&comment=$comment&ids=${ids()}');
+
+
+    if (await a.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  if(await make()){
+    var response = jsonDecode(a.body);
+    if(response['response'] == "14"){
+      return "Вы записаны";
+    }
+    if(response['response'] == "56"){
+      return "Укажите, пожалуйста, адрес";
+    }
+    if(response['response'] == "55"){
+      return "Укажите, пожалуйста, время";
+    }
+    if(response['response'] == "54"){
+      return "Укажите, пожалуйста, дату";
+    }
+    if(response['response'] == "58"){
+      return "Хм, корзина пуста";
+    }
+    else {
+      return "Какая-то непонятная ошибка, попробуйте еще.";
+    }
+
+
+
+  }else{
+    return "Что-то пошло не так, попробуйте позже :)";
+  }
+
+
+
+}
+
+
+

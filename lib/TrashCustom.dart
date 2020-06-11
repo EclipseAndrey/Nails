@@ -706,6 +706,7 @@ class _TrashCustomState extends State<TrashCustom> {
       setState2(() {
         selectedDate = true;
         date2 = date.day.toString()+" "+_month(date.month.toString());
+        date3 = date.day.toString()+"."+date.month.toString();
       });
 
     }
@@ -1749,9 +1750,12 @@ class _TrashCustomState extends State<TrashCustom> {
       ],
     );
   }
+  TextEditingController controllerPromo = TextEditingController();
+  TextEditingController controllerComment = TextEditingController();
 
   Widget commentField(){
     return TextField(
+      controller: controllerComment,
         decoration: InputDecoration(
           focusColor: Colors.black,
           border: OutlineInputBorder(
@@ -1764,6 +1768,7 @@ class _TrashCustomState extends State<TrashCustom> {
 
   Widget promoField(){
     return TextField(
+      controller: controllerPromo,
         obscureText: true,
         decoration: InputDecoration(
           border: OutlineInputBorder(
@@ -1773,6 +1778,8 @@ class _TrashCustomState extends State<TrashCustom> {
         )
     );
   }
+
+
 
   Widget MakeOrder(StateSetter setState2){
     Future<bool> acceptGetAddress = ObjectAddress.AdressListUp();
@@ -1927,7 +1934,10 @@ class _TrashCustomState extends State<TrashCustom> {
 //                          fontFamily: "MPLUS",
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w300),),
-                      promoField(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: promoField(),
+                      ),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0),
@@ -1948,7 +1958,16 @@ class _TrashCustomState extends State<TrashCustom> {
                           ],
                         ),
                       ),
-                      commentField(),
+                      Text("Вы можете оставить свои\nпожелания к заказу", style:  TextStyle(
+                          color: Colors.black54,
+                          fontSize: sizeText-4,
+//                          fontFamily: "MPLUS",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w300),),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: commentField(),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 18.0),
                         child: Container(
@@ -1962,8 +1981,60 @@ class _TrashCustomState extends State<TrashCustom> {
                               color: Colors.white,
                               textColor: Colors.purple,
                               padding: EdgeInsets.all(8.0),
-                              onPressed: () {
-                              },
+                              onPressed: ()async {
+
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white38,
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(25),
+                                              topRight: Radius.circular(25),
+                                              bottomLeft: Radius.circular(25),
+                                              bottomRight: Radius.circular(25)
+                                          ),
+
+                                        ),
+                                        width: MediaQuery.of(context).size.width*2/3,
+                                        height: 80,
+                                        child: Center(
+                                          child: new CircularProgressIndicator(),
+                                        ),
+                                      ),
+
+                                    );
+                                  },
+                                );
+
+                                String res = await MakeOrderButton(selectAdress,date3+".2020",time2,numOrder,controllerPromo.text,controllerComment.text);
+
+                                Navigator.of(context).pop();
+
+                                showDialog<void>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      content:  Text(res),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text('OK'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+
+
+
+                                },
                               child: Padding(
                                 padding: const EdgeInsets.only(left : 8.0, right: 8.0),
                                 child: Text(
