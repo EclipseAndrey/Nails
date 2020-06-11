@@ -807,11 +807,13 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                       ),
                                     ),
                                     Expanded(
-                                      flex: 1,
+                                      flex: 2,
                                       child: Padding(
                                         padding: const EdgeInsets.only(right: 8.0),
-                                        child: Icon(Icons.add_shopping_cart,
-                                          color: Colors.white,),
+                                        child: Container(
+                                            height: 30,
+                                            width: 30,
+                                            child: TrashButton(SearchResult[index*2])),
                                       ),
                                     )
                                   ],
@@ -819,8 +821,8 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                               ],
                             ),
                             Positioned(
-                              top: 10,
-                              right: 10,
+                              top: 0,
+                              right: 0,
                               child: LikeButton(SearchResult[index*2]),
                             ),
                           ],
@@ -884,11 +886,13 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                       ),
                                     ),
                                     Expanded(
-                                      flex: 1,
+                                      flex: 2,
                                       child: Padding(
                                         padding: const EdgeInsets.only(right: 8.0),
-                                        child: Icon(Icons.add_shopping_cart,
-                                          color: Colors.white,),
+                                        child: Container(
+                                            height: 30,
+                                            width: 30,
+                                            child: TrashButton(SearchResult[index*2+1])),
                                       ),
                                     )
                                   ],
@@ -896,8 +900,8 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                               ],
                             ),
                             Positioned(
-                              top: 10,
-                              right: 10,
+                              top: 0,
+                              right: 0,
                               child: LikeButton(SearchResult[index*2+1]),
                             ),
                           ],
@@ -1258,7 +1262,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right:8.0),
-                          child: Icon(Icons.add_shopping_cart, color: Colors.white,),
+                          child: TrashButton(sales[itemIndex]),
                         )
                       ],
                     ),
@@ -1369,7 +1373,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right:8.0),
-                              child: Icon(Icons.add_shopping_cart, color: Colors.white,),
+                              child: TrashButton(sales[itemIndex]),
                             )
                           ],
                         ),
@@ -1516,7 +1520,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(right:8.0),
-                                    child: Icon(Icons.add_shopping_cart, color: Colors.white,),
+                                    child: TrashButton(LikesList[itemIndex]),
                                   )
                                 ],
                               ),

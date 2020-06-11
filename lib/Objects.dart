@@ -1,12 +1,13 @@
 import 'dart:convert';
-
+import 'dart:developer';
+import 'package:ansicolor/ansicolor.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'home.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:print_color/print_color.dart';
 class DataTresh {
   List<ElementItem> items;
 
@@ -216,10 +217,8 @@ class Like {
 
   bool checkLike(int id) {
     bool point = false;
-    print("+++++++++++++++++++" + likeIds.length.toString());
     for (int i = 0; i < likeIds.length; i++) {
-      print(
-          "++++++++++++++++++ " + likeIds[i].toString() + " " + id.toString());
+
       if (int.parse(likeIds[i]) == id) {
         point = true;
       }
@@ -417,10 +416,10 @@ class TrashList {
 
   bool checkTrash(int id) {
     bool point = false;
-    print("+++++++++++++++++++" + trashIds.length.toString());
+
     for (int i = 0; i < trashIds.length; i++) {
-      print(
-          "++++++++++++++++++ " + trashIds[i].toString() + " " + id.toString());
+
+
       if (int.parse(trashIds[i]) == id) {
         point = true;
       }
@@ -455,7 +454,13 @@ class _TrashButtonState extends State<TrashButton> {
 
 
   Widget Button(bool active){
+
+
+
+
+
     if(active){
+      print("Добавлен " + item.head);
       return Container(
         height: 710,
         width: 710,
@@ -467,6 +472,8 @@ class _TrashButtonState extends State<TrashButton> {
         ),
       );
     }else{
+      print("Удален "+ item.head);
+
       return Container(
         width: 710,
         height: 710,

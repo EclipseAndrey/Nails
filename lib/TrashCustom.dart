@@ -290,70 +290,75 @@ class _TrashCustomState extends State<TrashCustom> {
           Expanded(
             child: SingleChildScrollView(
               child: Center(
-                child: Column(
-                  children: List.generate(ObjectTrash.getTrash().length+1, (index) {
-                    if(index == ObjectTrash.getTrash().length){
-                      return PriceEnd(ObjectTrash.getTrash());
-                    }else
-                      return ClipRRect(
-                        child: Card(
-                            color: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(width: 1, color:Colors.white ),
-                            ),
+                child: Container(
+                  width: size.width*0.95,
+                  height: double.maxFinite,
+
+                  child: ListView(
+                    children: List.generate(ObjectTrash.getTrash().length+1, (index) {
+                      if(index == ObjectTrash.getTrash().length){
+                        return PriceEnd(ObjectTrash.getTrash());
+                      }else
+                        return ClipRRect(
+                          child: Card(
+                              color: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: BorderSide(width: 1, color:Colors.white ),
+                              ),
 
 //                color: Color(0xff8A1FFF),
-                            child: Container(
-                              width: size.width * 0.95,
-                              height: size.height * 0.20,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Flexible(
-                                    child: Container(
-                                      padding: EdgeInsets.only(left: 5, top: 6),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image(
-                                          image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                              child: Container(
+                                width: size.width * 0.95,
+                                height: size.height * 0.20,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Container(
+                                        padding: EdgeInsets.only(left: 5, top: 6),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(10),
+                                          child: Image(
+                                            image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Container(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: <Widget>[
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
-                                              Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
-                                            ],
-                                          ),
-                                          Prise(elemts[index]),
-                                        ],
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: <Widget>[
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
+                                                Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
+                                              ],
+                                            ),
+                                            Prise(elemts[index]),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Flexible(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 18.0),
-                                      child: TrashButton(
-                                          elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
-                                      //LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1))
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 18.0),
+                                        child: TrashButton(
+                                            elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
+                                        //LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1))
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )),
-                      );
-                  }),
+                                  ],
+                                ),
+                              )),
+                        );
+                    }),
+                  ),
                 ),
               ),
             ),
@@ -542,11 +547,13 @@ class _TrashCustomState extends State<TrashCustom> {
                                                 ),
                                               ),
                                               Expanded(
-                                                flex: 1,
+                                                flex: 2,
                                                 child: Padding(
                                                   padding: const EdgeInsets.only(right: 8.0),
-                                                  child: Icon(Icons.add_shopping_cart,
-                                                    color: Colors.white,),
+                                                  child: Container(
+                                                      height: 30,
+                                                      width: 30,
+                                                      child: TrashButton(SearchResult[index*2])),
                                                 ),
                                               )
                                             ],
@@ -554,8 +561,8 @@ class _TrashCustomState extends State<TrashCustom> {
                                         ],
                                       ),
                                       Positioned(
-                                        top: 10,
-                                        right: 10,
+                                        top: 0,
+                                        right: 0,
                                         child: LikeButton(elementInfo(populations[index*2]~/100-1, populations[index*2]%100-1)),
                                       ),
                                     ],
@@ -619,11 +626,13 @@ class _TrashCustomState extends State<TrashCustom> {
                                                 ),
                                               ),
                                               Expanded(
-                                                flex: 1,
+                                                flex: 2,
                                                 child: Padding(
                                                   padding: const EdgeInsets.only(right: 8.0),
-                                                  child: Icon(Icons.add_shopping_cart,
-                                                    color: Colors.white,),
+                                                  child: Container(
+                                                      height: 30,
+                                                      width: 30,
+                                                      child: TrashButton(SearchResult[index*2+1])),
                                                 ),
                                               )
                                             ],
@@ -631,8 +640,8 @@ class _TrashCustomState extends State<TrashCustom> {
                                         ],
                                       ),
                                       Positioned(
-                                        top: 10,
-                                        right: 10,
+                                        top: 0,
+                                        right: 0,
                                         child: LikeButton(elementInfo(populations[index*2+1]~/100-1, populations[index*2+1]%100-1)),
                                       ),
                                     ],
