@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutterapp32/MakeOrder.dart';
 import 'package:flutterapp32/home.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:rounded_modal/rounded_modal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'EmptyTrash.dart';
@@ -1257,11 +1259,442 @@ class _TrashCustomState extends State<TrashCustom> {
     }
   }
 
-  Widget Telephone(String tel){
+  String text = '';
 
+
+  void _onKeyboardTap(String value) {
+    print(text);
+    setState(() {
+      text = text + value;
+    });
+  }
+
+
+  Widget numberWidget(int position) {
+    try {
+      return Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.black, width: 0),
+            borderRadius: const BorderRadius.all(Radius.circular(8))
+        ),
+        child: Center(child: Text(
+          text[position], style: TextStyle(color: Colors.black),)),
+      );
+    } catch (e) {
+      return Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.black, width: 0),
+            borderRadius: const BorderRadius.all(Radius.circular(8))
+        ),
+      );
+    }
+  }
+
+  Widget CheckSwitchNumber(StateSetter setState2){
+    String num = maskFormatter.getUnmaskedText();
+    void _onLoading() async {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Dialog(
+
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white38,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25)
+                ),
+
+              ),
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width * 2 / 3,
+              height: 80,
+              child: Center(
+                child: new CircularProgressIndicator(),
+              ),
+            ),
+
+          );
+        },
+      );
+      if (text.length == 4) {
+        print(
+            'http://eclipsedevelop.ru/api.php/cbcheckcode?num=7$num&code=$text');
+        Future<http.Response> fetchAlbum() async {
+          return await http.get(
+              'http://eclipsedevelop.ru/api.php/cbcheckcode?num=7$num&code=$text');
+        }
+
+        fetchAlbum().then((value) {
+          if (value.statusCode == 200) {
+            print(value.body);
+            var res = value.body;
+            var response = jsonDecode(res);
+            // ignore: non_constant_identifier_names
+            String Response = response["response"];
+            // ignore: unrelated_type_equality_checks
+            if (Response == "3") {
+              setState2(() {
+                text = '';
+                numOrder = "7"+num;
+              });
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+
+            }
+            // ignore: unrelated_type_equality_checks
+            if (Response == "4") {
+              print('Code don\'t verification');
+            }
+          }
+          else {
+            print(value.statusCode);
+          }
+        });
+      } else {
+        //Если код не введен
+      }
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16)
+        ),
+      ),
+      //height: 800,
+      width: MediaQuery.of(context).size.width,
+      // height: MediaQuery.of(context).size.height*0.5,
+      child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+//                  color: Colors.white70,
+                  height: 70,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0, top : 20),
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.pop(context);
+                          },
+                          child: Text("Отмена", style:  TextStyle(
+                              color: Colors.blueAccent,
+                              fontSize: sizeText,
+                              fontFamily: "MPLUS",
+                              decoration: TextDecoration.underline,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500),),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(height: 3, color: Colors.black45,),
+                Container(
+                  width: MediaQuery.of(context).size.width*0.90,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: MediaQuery.of(context).size.height*0.03,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment
+                            .spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          numberWidget(0),
+                          numberWidget(1),
+                          numberWidget(2),
+                          numberWidget(3),
+                        ],
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.03,),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child:
+                        Center(
+                          child: FlatButton(
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                                side: BorderSide(color: Colors.black)),
+                            color: Colors.white,
+                            textColor: Colors.purple,
+                            padding: EdgeInsets.all(8.0),
+                            onPressed: () {
+                              _onLoading();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left : 8.0, right: 8.0),
+                              child: Text(
+                                'Отправить',
+                                style: TextStyle(
+                                  decoration: TextDecoration.none,
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+                      NumericKeyboard(
+                        onKeyboardTap: (String value){
+                          setState2(() {
+                            text = text + value;
+                          });
+                          print(text);
+                        },
+                        textColor: Colors.black87,
+                        rightIcon: Icon(
+                          Icons.backspace,
+                          color: Colors.black87,
+                        ),
+                        rightButtonFn: () {
+                          setState2(() {
+                            text = text.substring(0, text.length - 1);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Text("Ввод кода", style:  TextStyle(
+                    color: Colors.black,
+                    fontSize: sizeText+10,
+                    fontFamily: "MPLUS",
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w500),),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+  }
+  MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
+      mask: '(###) ###-##-##', filter: { "#": RegExp(r'[0-9]') });
+
+  Widget SwitchNumber(StateSetter setState2){
+    void _onLoading() async {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Dialog(
+
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white38,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25)
+                ),
+
+              ),
+              width: MediaQuery.of(context).size.width*2/3,
+              height: 80,
+              child: Center(
+                child: new CircularProgressIndicator(),
+              ),
+            ),
+
+          );
+        },
+      );
+      new  Future.delayed(new Duration(seconds: 3), () async {
+
+        String num = maskFormatter.getUnmaskedText();
+        print(num);
+        var response = await http.get('http://eclipsedevelop.ru/api.php/cbgetcode?num=7$num');
+        print('http://eclipsedevelop.ru/api.php/cbgetcode?num=7$num');
+        showModalBottomSheet<void>(
+          context: context,
+          barrierColor: Colors.black45,
+          shape : RoundedRectangleBorder(
+              borderRadius : BorderRadius.circular(20)
+          ),
+          isScrollControlled: true,
+          builder: (context) {
+            return StatefulBuilder(
+              builder: (BuildContext context,
+                  StateSetter setState3) {
+                return CheckSwitchNumber(setState3);
+              },
+            );
+
+          },
+        );
+
+      });
+    }
+
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16)
+        ),
+      ),
+      height: 800,
+      width: MediaQuery.of(context).size.width,
+      // height: MediaQuery.of(context).size.height*0.5,
+      child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+//                  color: Colors.white70,
+                  height: 70,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0, top : 20),
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.pop(context);
+                          },
+                          child: Text("Отмена", style:  TextStyle(
+                              color: Colors.blueAccent,
+                              fontSize: sizeText,
+                              fontFamily: "MPLUS",
+                              decoration: TextDecoration.underline,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500),),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(height: 3, color: Colors.black45,),
+                Container(
+                  width: MediaQuery.of(context).size.width*0.90,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: <Widget>[
+                          SizedBox(height: 10,),
+                          Row(
+                            children: <Widget>[
+                              Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right:20.0),
+                                    child: Text("*Номер телефона:  ", style: TextStyle(fontSize: 18),),
+                                  )),
+                              Expanded(
+                                flex: 1,
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [maskFormatter],
+                                  decoration: InputDecoration(
+                                    // hintText: "+7",
+                                    prefix: Text('+7 '),
+                                    hintStyle: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top:16.0),
+                            child: Text("Вам придет СМС с кодом подтверждения", style: TextStyle(fontSize: 16),),
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0, bottom: 28),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child:
+                          Center(
+                            child: FlatButton(
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(25.0),
+                                  side: BorderSide(color: Colors.black)),
+                              color: Colors.white,
+                              textColor: Colors.purple,
+                              padding: EdgeInsets.all(8.0),
+                              onPressed: () {
+                                _onLoading();
+
+
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(left : 8.0, right: 8.0),
+                                child: Text(
+                                  'Отправить',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    color: Colors.black,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      //------------------------------------------------------------------------------------------------------------Сюда наполнение заказа
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Text("Смена номера", style:  TextStyle(
+                    color: Colors.black,
+                    fontSize: sizeText+10,
+                    fontFamily: "MPLUS",
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w500),),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+  }
+  String numOrder = num;
+
+  Widget Telephone(StateSetter setState2){
     return Row(
       children: [
-        Text("По номеру "+ tel+ " (", style:  TextStyle(
+        Text("По номеру "+ numOrder+ " (", style:  TextStyle(
             color: Colors.black,
             fontSize: sizeText,
             fontFamily: "MPLUS",
@@ -1270,7 +1703,18 @@ class _TrashCustomState extends State<TrashCustom> {
             fontWeight: FontWeight.w300),),
         GestureDetector(
           onTap: (){
+            showModalBottomSheet<void>(
+              context: context,
+              barrierColor: Colors.black45,
+              shape : RoundedRectangleBorder(
+                  borderRadius : BorderRadius.circular(20)
+              ),
+              isScrollControlled: true,
+              builder: (context) {
+                return SwitchNumber(setState2);
 
+              },
+            );
           },
           child: Text("изменить", style:  TextStyle(
               color: Colors.blueAccent,
@@ -1437,7 +1881,7 @@ class _TrashCustomState extends State<TrashCustom> {
 //                          fontFamily: "MPLUS",
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w300),),
-                      Telephone("+7(930)722-96-02"),
+                      Telephone(setState2),
                       Padding(
                         padding:  EdgeInsets.only(left:  MediaQuery.of(context).size.width*0, right: MediaQuery.of(context).size.width*0, top: 10),
                         child: Divider(height: 3, color: Colors.black45,),
