@@ -739,7 +739,7 @@ class _TrashCustomState extends State<TrashCustom> {
     }else{
       return Row(
         children: [
-          Text("Дата ", style:  TextStyle(
+          Text("", style:  TextStyle(
               color: Colors.black,
               fontSize: sizeText,
               fontFamily: "MPLUS",
@@ -764,6 +764,12 @@ class _TrashCustomState extends State<TrashCustom> {
     }
   }
 
+  String time0 (int min){
+    if(min < 10)
+      return "0" + min.toString();
+    else return min.toString();
+    
+  }
 
   //НЕ ЗАБЫТЬ ПОСАВИТЬ ФЛАГ selected КОГДА ВЫБРАНО ВРЕМЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   Widget Time(StateSetter setState2){
@@ -775,7 +781,7 @@ class _TrashCustomState extends State<TrashCustom> {
       );
       setState2(() {
         selectedTime = true;
-        time2 = "${time.hour}:${time.minute%60}";
+        time2 = "${time.hour}:${time0(time.minute%60)}";
       });
 
     }
@@ -806,7 +812,7 @@ class _TrashCustomState extends State<TrashCustom> {
     }else{
       return Row(
         children: [
-          Text("Время ", style:  TextStyle(
+          Text("В ", style:  TextStyle(
               color: Colors.black,
               fontSize: sizeText,
               fontFamily: "MPLUS",
