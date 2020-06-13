@@ -277,6 +277,130 @@ class _TrashCustomState extends State<TrashCustom> {
       }
 
 
+      Widget _trashButton(ElementItem item){
+
+        Widget Button(bool active){
+
+
+          if(active){
+            print("Добавлен " + item.head);
+            return Container(
+              height: 710,
+              width: 710,
+              child: FlareActor(
+                'assets/animations/intrash2.flr',
+                alignment: Alignment.center,
+                fit: BoxFit.contain,
+                animation: "onbasket",
+              ),
+            );
+          }else{
+            print("Удален "+ item.head);
+
+            return Container(
+              width: 710,
+              height: 710,
+              child: FlareActor(
+                'assets/animations/intrash2.flr',
+                alignment: Alignment.center,
+                fit: BoxFit.contain,
+                animation: "offbasket",
+
+              ),
+            );
+          }
+        }
+
+        var  active = ObjectTrash.checkTrash(item.id);
+
+        return Container(
+          height: 31,
+          width: 61,
+          child: GestureDetector(
+              onTap: () async {
+                showGeneralDialog(
+                    barrierColor: Colors.white.withOpacity(0.3),
+                    transitionBuilder: (context, a1, a2, widget) {
+                      final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                      return Transform(
+                        transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: CupertinoAlertDialog(
+                            title: Text("Подтвердите"),
+                            content: Text("Убрать из корзины эту услугу?"),
+                            actions: [
+                              CupertinoDialogAction(child: Text("Да", style: TextStyle(color: Colors.deepPurple),),onPressed: ()async{
+
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white38,
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(25),
+                                              topRight: Radius.circular(25),
+                                              bottomLeft: Radius.circular(25),
+                                              bottomRight: Radius.circular(25)
+                                          ),
+
+                                        ),
+                                        width: MediaQuery
+                                            .of(context)
+                                            .size
+                                            .width * 2 / 3,
+                                        height: 80,
+                                        child: Center(
+                                          child: new CircularProgressIndicator(),
+                                        ),
+                                      ),
+
+                                    );
+                                  },
+                                );
+
+                                if (!ObjectTrash.checkTrash(item.id)) {
+                                  await ObjectTrash.addTrash(item.id);
+                                  await ObjectTrash.TrashListUp();
+                                } else {
+                                  await ObjectTrash.deleteTrash(item.id);
+                                  await ObjectTrash.TrashListUp();
+                                }
+                                active = ObjectTrash.checkTrash(item.id);
+
+                                setState(() {});
+                                Navigator.of(context).pop(context);
+                                Navigator.of(context).pop(context);
+
+
+
+
+                              },),
+                              CupertinoDialogAction(child: Text("Нет", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
+                                Navigator.of(context).pop(context);
+                              },)
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    transitionDuration: Duration(milliseconds: 200),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) {});
+              },
+              child: Button(active)
+          ),
+        );
+      }
+
+
+
       return Column(
         children: [
           Container(
@@ -307,70 +431,74 @@ class _TrashCustomState extends State<TrashCustom> {
               child: Center(
                 child: Container(
                   width: size.width*0.95,
-                  height: double.maxFinite,
 
-                  child: ListView(
+                  child: Column(
                     children: List.generate(ObjectTrash.getTrash().length+1, (index) {
                       if(index == ObjectTrash.getTrash().length){
                         return PriceEnd(ObjectTrash.getTrash());
                       }else
-                        return ClipRRect(
-                          child: Card(
-                              color: Colors.transparent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                side: BorderSide(width: 1, color:Colors.white ),
-                              ),
+                        return AnimatedPadding(
+                          duration: Duration(milliseconds: 100),
+                          padding:  EdgeInsets.only(top: 0, bottom: 0),
+                          child: ClipRRect(
+                            child: Card(
+                                color: Color.fromRGBO(255, 255, 255, 0.0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(width: 1, color:Colors.white ),
+                                ),
 
 //                color: Color(0xff8A1FFF),
-                              child: Container(
-                                width: size.width * 0.95,
-                                height: size.height * 0.20,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: Container(
-                                        padding: EdgeInsets.only(left: 5, top: 6),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: Image(
-                                            image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                                child: Container(
+                                  width: size.width * 0.95,
+                                  height: size.height * 0.16,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Flexible(
+                                        child: Container(
+                                          padding: EdgeInsets.only(left: 5, top: 6),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child: Image(
+                                              image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          children: <Widget>[
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
-                                                Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
-                                              ],
-                                            ),
-                                            Prise(elemts[index]),
-                                          ],
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
+                                                  Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
+                                                ],
+                                              ),
+                                              Prise(elemts[index]),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Flexible(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 18.0),
-                                        child: TrashButton(
-                                            elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
-                                        //LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1))
+                                      Flexible(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 18.0),
+
+                                          child: _trashButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
+
+                                          //LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1))
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )),
+                                    ],
+                                  ),
+                                )),
+                          ),
                         );
                     }),
                   ),
@@ -2030,22 +2158,30 @@ class _TrashCustomState extends State<TrashCustom> {
 
                                 Navigator.of(context).pop();
 
-                                showDialog<void>(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      content:  Text(res),
-                                      actions: <Widget>[
-                                        FlatButton(
-                                          child: Text('OK'),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
+                                showGeneralDialog(
+                                    barrierColor: Colors.black.withOpacity(0.3),
+                                    transitionBuilder: (context, a1, a2, widget) {
+                                      final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                                      return Transform(
+                                        transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                                        child: Opacity(
+                                          opacity: a1.value,
+                                          child: AlertDialog(
+
+                                            shape: OutlineInputBorder(
+                                              borderSide: BorderSide(color: Colors.white),
+                                                borderRadius: BorderRadius.circular(16.0)),
+                                            title: Text("Результат"),
+                                            content: Text(res),
+                                          ),
                                         ),
-                                      ],
-                                    );
-                                  },
-                                );
+                                      );
+                                    },
+                                    transitionDuration: Duration(milliseconds: 200),
+                                    barrierDismissible: true,
+                                    barrierLabel: '',
+                                    context: context,
+                                    pageBuilder: (context, animation1, animation2) {});
 
 
 

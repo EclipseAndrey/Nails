@@ -781,7 +781,7 @@ Future<String> MakeOrderButton(String address, String date, String time, String 
   String ids(){
     String ids = "";
     for(int i = 0; i < ObjectTrash.getTrash().length; i ++){
-      ids+= ObjectTrash.getTrash()[i].toString()+",";
+      ids+= ","+ObjectTrash.getTrash()[i].toString();
     }
     return ids;
   }
