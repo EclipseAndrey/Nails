@@ -1488,10 +1488,10 @@ class _TrashCustomState extends State<TrashCustom> {
       );
       if (text.length == 4) {
         print(
-            'http://eclipsedevelop.ru/api.php/cbcheckcode?num=7$num&code=$text');
+            'http://eclipsedevelop.ru/api.php/cbnumorder?num=7$num&code=$text');
         Future<http.Response> fetchAlbum() async {
           return await http.get(
-              'http://eclipsedevelop.ru/api.php/cbcheckcode?num=7$num&code=$text');
+              'http://eclipsedevelop.ru/api.php/cbnumorder?num=7$num&code=$text');
         }
 
         fetchAlbum().then((value) {
