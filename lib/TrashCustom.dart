@@ -168,93 +168,108 @@ class _TrashCustomState extends State<TrashCustom> {
 
         double spaseLine = 3;
 
-        return Container(
-          width: size.width*0.75,
-          child: Column(
-            children: [
-              Padding(
-                padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return Row(
+          children: <Widget>[
+            Expanded(
+                child: SizedBox(width: 0,)
+            ),
+            Expanded(
+              flex: 9,
+              child: Container(
+                child: Column(
                   children: [
-                    Text("Выбранно услуг",style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: "MPLUS",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w300),),
-                    Text(count.toString(),style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: "MPLUS",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w300),),
-                  ],
-                ),
-              ),               Padding(
-                padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("На сумму ",style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: "MPLUS",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w300),),
-                    Text(sum.toString()+" руб.",style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: "MPLUS",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w300),),
-                  ],
-                ),
-              ),               Padding(
-                padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Скидка ",style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: "MPLUS",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w300),),
-                    Text(sale.toString()+" руб.",style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: "MPLUS",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w300),),
+                    Padding(
+                      padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Выбранно услуг",style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: "MPLUS",
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w300),),
+                          Text(count.toString(),style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: "MPLUS",
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w300),),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("На сумму ",style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: "MPLUS",
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w300),),
+                          Text(sum.toString()+" руб.",style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: "MPLUS",
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w300),),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Скидка ",style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: "MPLUS",
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w300),),
+                          Text(sale.toString()+" руб.",style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: "MPLUS",
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w300),),
+                        ],
+                      ),
+                    ),
+                    Divider(
+                      color: Colors.white,
+                      height: 3,),
+                    Padding(
+                      padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Итого ",style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily: "MPLUS",
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500),),
+                          Text(endSum.toString()+ " руб.",style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily: "MPLUS",
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500),),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-              Divider(
-                color: Colors.white,
-                height: 3,),
-              Padding(
-                padding:  EdgeInsets.only(top: spaseLine, bottom: spaseLine),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Итого ",style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontFamily: "MPLUS",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500),),
-                    Text(endSum.toString()+ " руб.",style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontFamily: "MPLUS",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500),),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+            Expanded(
+                child: SizedBox(width: 0,)
+            ),
+
+          ],
         );
 
 
@@ -1079,7 +1094,7 @@ class _TrashCustomState extends State<TrashCustom> {
                                   ObjectAddress.addAddress(Address);
                                   print(Address);
                                   setState3(() {
-                                    selectAdress = (ObjectAddress.getAddresses().length).toString();
+                                    selectAdress = (ObjectAddress.getAddresses().length+1).toString();
                                   });
                                   Navigator.pop(context);
                                   print("=========selectAdres=======" + selectAdress);
@@ -1127,39 +1142,39 @@ class _TrashCustomState extends State<TrashCustom> {
     );
 
   }
+  void showAndSetMenuSelection(BuildContext context, String value, StateSetter setState2) {
+    print(selectAdress);
+
+    setState2(() {
+      selectAdress = value;
+    });
+    if(selectAdress == "0"){
+      print("yeah");
+      showModalBottomSheet<void>(
+        context: context,
+        barrierColor: Colors.black45,
+        shape : RoundedRectangleBorder(
+            borderRadius : BorderRadius.circular(20)
+        ),
+        isScrollControlled: true,
+        builder: (context) {
+          return SelectAddress(setState2, value);
+
+        },
+      );
+    }
+    print(selectAdress);
+
+  }
 
 
   Widget adressSelect(StateSetter setState2){
-    void showAndSetMenuSelection(BuildContext context, String value) {
-      print(selectAdress);
-
-      setState(() {
-        selectAdress = value;
-      });
-      if(selectAdress == "0"){
-        print("yeah");
-        showModalBottomSheet<void>(
-          context: context,
-          barrierColor: Colors.black45,
-          shape : RoundedRectangleBorder(
-              borderRadius : BorderRadius.circular(20)
-          ),
-          isScrollControlled: true,
-          builder: (context) {
-            return SelectAddress(setState2, value);
-
-          },
-        );
-      }
-      print(selectAdress);
-
-    }
 
     return Container(
       child: PopupMenuButton<String>(
         padding: EdgeInsets.zero,
         initialValue: selectAdress,
-        onSelected: (value) { showAndSetMenuSelection(context, value);
+        onSelected: (value) { showAndSetMenuSelection(context, value, setState2);
 
         setState(() {
           selectAdress = value;

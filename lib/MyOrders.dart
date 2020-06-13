@@ -237,12 +237,13 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
   }
 
 
-  Widget buttonState(){
+  Widget buttonState(ElementItemOrder item){
+    String id = item.id;
   return Padding(
     padding: const EdgeInsets.only(bottom: 8.0, top: 8),
     child: FlatButton(
         onPressed: (){
-
+          http.get("http://eclipsedevelop.ru/api.php/cbdeleteorder?token=$token&id=$id");
         },
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -404,7 +405,7 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
                               padding: const EdgeInsets.only(left: 10.0, top: 4.0),
                               child: orders50(item.ids, animOpen[index], index),
                             ),
-                            animOpen[index]?buttonState():SizedBox(),
+                            animOpen[index]?buttonState(item):SizedBox(),
                           ],
                         ),
                       ),
