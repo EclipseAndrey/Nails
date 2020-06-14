@@ -847,9 +847,10 @@ class _TrashCustomState extends State<TrashCustom> {
         lastDate: DateTime(2100),
       );
       setState2(() {
-        selectedDate = true;
         date2 = date.day.toString()+" "+_month(date.month.toString());
         date3 = date.day.toString()+"."+date.month.toString();
+        selectedDate = true;
+
       });
 
     }
@@ -924,8 +925,9 @@ class _TrashCustomState extends State<TrashCustom> {
         initialTime: TimeOfDay.now(),
       );
       setState2(() {
-        selectedTime = true;
         time2 = "${time.hour}:${time0(time.minute%60)}";
+        selectedTime = true;
+
       });
 
     }
@@ -1215,14 +1217,15 @@ class _TrashCustomState extends State<TrashCustom> {
                               color: Colors.white,
                               textColor: Colors.purple,
                               padding: EdgeInsets.all(8.0),
-                              onPressed: () {
+                              onPressed: ()async {
                                 if(_cityValue != "" && streetController.text != "" && houseController.text != ""){
                                   adress Address = adress(city: _cityValue, street: streetController.text, house: houseController.text,
                                       corpus: corpusController.text, stroenie: stroenieController.text, kv: kvController.text);
                                   ObjectAddress.addAddress(Address);
                                   print(Address);
+                                  await ObjectAddress.AdressListUp();
                                   setState3(() {
-                                    selectAdress = (ObjectAddress.getAddresses().length+1).toString();
+                                    selectAdress = (ObjectAddress.getAddresses().length).toString();
                                   });
                                   Navigator.pop(context);
                                   print("=========selectAdres=======" + selectAdress);

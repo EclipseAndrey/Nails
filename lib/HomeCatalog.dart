@@ -300,9 +300,15 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                                 ],
                                               ),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(right:8.0),
-                                              child: Icon(Icons.add_shopping_cart, color: Colors.white,),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(right: 8.0),
+                                                child: Container(
+                                                    height: 30,
+                                                    width: 30,
+                                                    child: TrashButton(elementInfo(SelectedCategories, index*2))),
+                                              ),
                                             )
                                           ],
                                         ),
@@ -356,9 +362,15 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                               ],
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(right:8.0),
-                                            child: Icon(Icons.add_shopping_cart, color: Colors.white,),
+                                          Expanded(
+                                            flex: 2,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(right: 8.0),
+                                              child: Container(
+                                                  height: 30,
+                                                  width: 30,
+                                                  child: TrashButton(elementInfo(SelectedCategories, index*2+1))),
+                                            ),
                                           )
                                         ],
                                       ),
@@ -716,9 +728,9 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
             //
             //
             //
-            Container(
-                margin: EdgeInsets.only(bottom: 0, top: 12),
-                child: SliderLikes()),
+//            Container(
+//                margin: EdgeInsets.only(bottom: 0, top: 12),
+//                child: SliderLikes()),
           ],
         );
 
