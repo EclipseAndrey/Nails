@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+
 import 'FadeAnimation.dart';
 
 import 'package:flutter/material.dart';
@@ -238,12 +240,95 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
 
 
   Widget buttonState(ElementItemOrder item){
+
+    String buttonText;
+    if (item.status == 0 || item.status == 1){
+      buttonText = "Отменить запись";
+    }
+    if (item.status == 2 || item.status == 4 || item.status == 5){
+      buttonText = "Удалить запись";
+    }
     String id = item.id;
   return Padding(
     padding: const EdgeInsets.only(bottom: 8.0, top: 8),
     child: FlatButton(
         onPressed: (){
-          http.get("http://eclipsedevelop.ru/api.php/cbdeleteorder?token=$token&id=$id");
+          if (buttonText == "Удалить запись"){
+            showGeneralDialog(
+                barrierColor: Colors.white.withOpacity(0.3),
+                transitionBuilder: (context, a1, a2, widget) {
+                  final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                  return Transform(
+                    transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                    child: Opacity(
+                      opacity: a1.value,
+                      child: CupertinoAlertDialog(
+                        title: Text("Подтвердите"),
+                        content: Text("Убрать из корзины эту услугу?"),
+                        actions: [
+                          CupertinoDialogAction(child: Text("Да", style: TextStyle(color: Colors.deepPurple),),onPressed: ()async{
+
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return Dialog(
+
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white38,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(25),
+                                          topRight: Radius.circular(25),
+                                          bottomLeft: Radius.circular(25),
+                                          bottomRight: Radius.circular(25)
+                                      ),
+
+                                    ),
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width * 2 / 3,
+                                    height: 80,
+                                    child: Center(
+                                      child: new CircularProgressIndicator(),
+                                    ),
+                                  ),
+
+                                );
+                              },
+                            );
+                            await http.get("http://eclipsedevelop.ru/api.php/cbdeleteorder?token=$token&id=$id");
+                            print(http.get("http://eclipsedevelop.ru/api.php/cbdeleteorder?token=$token&id=$id"));
+                            Scaffold.of(context).showSnackBar(SnackBar(content: Text("Запись удалена")));
+                            setState(() {});
+                            Navigator.of(context).pop(context);
+                            Navigator.of(context).pop(context);
+
+
+
+
+                          },),
+                          CupertinoDialogAction(child: Text("Нет", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
+                            Navigator.of(context).pop(context);
+                          },)
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                transitionDuration: Duration(milliseconds: 200),
+                barrierDismissible: true,
+                barrierLabel: '',
+                context: context,
+                pageBuilder: (context, animation1, animation2) {});
+
+          } else{
+            http.get("http://eclipsedevelop.ru/api.php/cbcancelorder?token=$token&id=$id");
+            print(http.get("http://eclipsedevelop.ru/api.php/cbcancelorder?token=$token&id=$id"));
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text("Запись отменена")));
+          }
+
         },
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -252,7 +337,7 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
         textColor: Colors.pinkAccent,
         child: Padding(
           padding: const EdgeInsets.only(left: 3.0, right: 3, top: 3, bottom: 3),
-          child: Text("отменить запись",
+          child: Text(buttonText,
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -676,6 +761,17 @@ Widget StatusOrder(int _Status, BuildContext context) {
         return Container(
           child: Text(
             'Завершено',
+            style: TextStyle(
+                color: Color.fromRGBO(255, 255, 255, 30), decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
+          ),
+        );
+      }
+      break;
+    case 5:
+      {
+        return Container(
+          child: Text(
+            'Отменено оператором',
             style: TextStyle(
                 color: Color.fromRGBO(255, 255, 255, 30), decoration: TextDecoration.none, fontSize: 22,fontWeight: FontWeight.w500),
           ),
