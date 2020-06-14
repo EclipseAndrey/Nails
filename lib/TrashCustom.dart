@@ -9,6 +9,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:rounded_modal/rounded_modal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Detail.dart';
 import 'EmptyTrash.dart';
 import 'Objects.dart';
 import 'home.dart';
@@ -437,68 +438,72 @@ class _TrashCustomState extends State<TrashCustom> {
                       if(index == ObjectTrash.getTrash().length){
                         return PriceEnd(ObjectTrash.getTrash());
                       }else
-                        return AnimatedPadding(
-                          duration: Duration(milliseconds: 100),
-                          padding:  EdgeInsets.only(top: 0, bottom: 0),
-                          child: ClipRRect(
-                            child: Card(
-                                color: Color.fromRGBO(255, 255, 255, 0.0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(width: 1, color:Colors.white ),
-                                ),
+                        return ClipRRect(
+                          child: Card(
+                              color: Color.fromRGBO(255, 255, 255, 0.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: BorderSide(width: 1, color:Colors.white ),
+                              ),
 
 //                color: Color(0xff8A1FFF),
-                                child: Container(
-                                  width: size.width * 0.95,
-                                  height: size.height * 0.16,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Flexible(
-                                        child: Container(
-                                          padding: EdgeInsets.only(left: 5, top: 6),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(10),
-                                            child: Image(
-                                              image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                              child: Container(
+                                width: size.width * 0.95,
+                                height: size.height * 0.16,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: GestureDetector(
+                                        onTap: (){
+                                          Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(elemts[index])));
+                                        },
+                                        child: Hero(
+                                          tag: elemts[index].id,
+                                          child: Container(
+                                            padding: EdgeInsets.only(left: size.width*0.00, top: size.height*0.00),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(10),
+                                              child: Image(
+                                                image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Container(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                            children: <Widget>[
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
-                                                  Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
-                                                ],
-                                              ),
-                                              Prise(elemts[index]),
-                                            ],
-                                          ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: <Widget>[
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(elemts[index].head, style: TextStyle(fontSize: 18, color: Colors.white),),
+                                                Text(elemts[index].tx, style: TextStyle(fontSize: 14, color: Colors.white60),),
+                                              ],
+                                            ),
+                                            Prise(elemts[index]),
+                                          ],
                                         ),
                                       ),
-                                      Flexible(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(top: 18.0),
+                                    ),
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 18.0),
 
-                                          child: _trashButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
+                                        child: _trashButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1)),
 
-                                          //LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1))
-                                        ),
+                                        //LikeButton(elementInfo(int.parse(spisok[index])~/100-1,int.parse(spisok[index])%100-1))
                                       ),
-                                    ],
-                                  ),
-                                )),
-                          ),
+                                    ),
+                                  ],
+                                ),
+                              )),
                         );
                     }),
                   ),
@@ -652,11 +657,19 @@ class _TrashCustomState extends State<TrashCustom> {
                                         children: <Widget>[
                                           AspectRatio(
                                             aspectRatio: 9 / 12,
-                                            child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(15),
-                                                child: Image.network(
-                                                  SearchResult[index*2]
-                                                      .picture, fit: BoxFit.fill,)),
+                                            child: GestureDetector(
+                                              onTap: (){
+                                                Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(SearchResult[index*2])));
+                                              },
+                                              child: Hero(
+                                                tag: SearchResult[index*2].id,
+                                                child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                    child: Image.network(
+                                                      SearchResult[index*2]
+                                                          .picture, fit: BoxFit.fill,)),
+                                              ),
+                                            ),
                                           ),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment
@@ -731,11 +744,19 @@ class _TrashCustomState extends State<TrashCustom> {
                                         children: <Widget>[
                                           AspectRatio(
                                             aspectRatio: 9 / 12,
-                                            child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(15),
-                                                child: Image.network(
-                                                  SearchResult[index*2+1]
-                                                      .picture, fit: BoxFit.fill,)),
+                                            child: GestureDetector(
+                                              onTap: (){
+                                                Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(SearchResult[index*2+1])));
+                                              },
+                                              child: Hero(
+                                                tag: SearchResult[index*2+1].id,
+                                                child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                    child: Image.network(
+                                                      SearchResult[index*2+1]
+                                                          .picture, fit: BoxFit.fill,)),
+                                              ),
+                                            ),
                                           ),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment
@@ -1298,7 +1319,6 @@ class _TrashCustomState extends State<TrashCustom> {
 
   }
 
-
   Widget adressSelect(StateSetter setState2){
 
     return Container(
@@ -1422,15 +1442,6 @@ class _TrashCustomState extends State<TrashCustom> {
   }
 
   String text = '';
-
-
-  void _onKeyboardTap(String value) {
-    print(text);
-    setState(() {
-      text = text + value;
-    });
-  }
-
 
   Widget numberWidget(int position) {
     try {

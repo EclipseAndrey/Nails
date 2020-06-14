@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/home.dart';
 import 'package:flutterapp32/main.dart';
+import 'Detail.dart';
 import 'Objects.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -108,12 +109,20 @@ class _LikePageState extends State<LikePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Flexible(
-                            child: Container(
-                              padding: EdgeInsets.only(left: 5, top: 6),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image(
-                                  image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(elemts[index])));
+                              },
+                              child: Hero(
+                                tag: elemts[index].id,
+                                child: Container(
+                                  padding: EdgeInsets.only(left: 5, top: 6),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image(
+                                      image: images[int.parse(spisok[index])~/100-1][int.parse(spisok[index])%100-1].image,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

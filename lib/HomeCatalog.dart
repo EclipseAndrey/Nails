@@ -1207,10 +1207,6 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
 
   Widget SliderSales1(){
-
-
-
-
     List<ElementItem> sales = [ElementItem(0, '','', '', '', 0, 0,true, [101, 201, 30],[101, 201, 30],[101, 201, 30],[101, 201, 30])];
     sales.clear();
     for(int cat = 0; cat < 7; cat++){
@@ -1279,8 +1275,6 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                     Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
                                       child: Text("${sales[itemIndex].price - sales[itemIndex].sale} руб.", style: TextStyle(color: Colors.pinkAccent, fontSize: 16),),
-
-
                                     ),
                                   ],
                                 ),
@@ -1289,7 +1283,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right:8.0),
+                          padding: const EdgeInsets.only(right:0.0),
                           child: TrashButton(sales[itemIndex]),
                         )
                       ],
