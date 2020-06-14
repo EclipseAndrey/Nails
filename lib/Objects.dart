@@ -793,6 +793,7 @@ Future<String> MakeOrderButton(String address, String date, String time, String 
 
 
     if (await a.statusCode == 200) {
+      ObjectAddress.AdressListUp();
       return true;
     } else {
       return false;

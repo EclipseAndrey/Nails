@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp32/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 import 'FadeAnimation.dart';
 
@@ -9,6 +11,7 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  TextEditingController namecontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class _AccountState extends State<Account> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  FadeAnimation(1, Text("Имя", style: TextStyle(color: Colors.white, fontSize: 40),)),
+                  FadeAnimation(1, Text(ResName, style: TextStyle(color: Colors.white, fontSize: 40),)),
                   SizedBox(height: 10,),
                   FadeAnimation(1.3, Text("Добро пожаловать", style: TextStyle(color: Colors.white, fontSize: 18),)),
                 ],
@@ -72,6 +75,7 @@ class _AccountState extends State<Account> {
                                     border: Border(bottom: BorderSide(color: Colors.grey[200]))
                                 ),
                                 child: TextField(
+                                  controller: namecontroller,
                                   decoration: InputDecoration(
                                       hintText: "Имя",
                                       hintStyle: TextStyle(color: Colors.grey),
@@ -115,6 +119,20 @@ class _AccountState extends State<Account> {
                         GestureDetector(
                           onTap: () async {
 
+                            print('http://eclipsedevelop.ru/api.php/cbsetname?name=${namecontroller.text}&token=$token');
+                            var a = await http.get(
+                                'http://eclipsedevelop.ru/api.php/cbsetname?name=${namecontroller.text}&token=$token');
+
+                            ResName = namecontroller.text;
+                            await a;
+                            setState(() {
+
+                            });
+
+                            Scaffold.of(context).showSnackBar(new SnackBar(
+                              content: new Text('Успешно'),
+                            ));
+                            //==========================================================
                           },
                           child: FadeAnimation(1.6, Container(
                             height: 50,

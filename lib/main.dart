@@ -79,6 +79,8 @@ String num;
 var response;
 var response2;
 
+String ResName = "";
+
 List<List<Image>> images = [];
 List<Image> imagesCategory = [];
 List<int> TrashSave = [];
@@ -249,7 +251,7 @@ class _SplashScreenState extends State<SplashScreen>  {
               Navigator.of(context).pushReplacementNamed('/SetName');
             }
             else if(Response == "13"){
-
+              ResName = response['text'];
 
               Future<http.Response> res2() async {
                 return await http
