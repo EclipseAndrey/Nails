@@ -299,11 +299,29 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
                               },
                             );
                             await http.get("http://eclipsedevelop.ru/api.php/cbdeleteorder?token=$token&id=$id");
-                            print(http.get("http://eclipsedevelop.ru/api.php/cbdeleteorder?token=$token&id=$id"));
-                            Scaffold.of(context).showSnackBar(SnackBar(content: Text("Запись удалена")));
+                            print("http://eclipsedevelop.ru/api.php/cbdeleteorder?token=$token&id=$id");
+
+
+
+
+
+                            Navigator.of(context).pop(context);
+                            Navigator.of(context).pop(context);
+                            Future<http.Response> res() async {
+                              return await http
+                                  .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+                            }
+                            print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+
+                            await res().then((value) {
+                              if (value.statusCode == 200) {
+                                response2 = jsonDecode(value.body);
+                                print(response2);
+                              }
+                            });
                             setState(() {});
-                            Navigator.of(context).pop(context);
-                            Navigator.of(context).pop(context);
+
+                            Scaffold.of(context).showSnackBar(SnackBar(content: Text("Запись удалена")));
 
 
 
@@ -324,9 +342,92 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
                 pageBuilder: (context, animation1, animation2) {});
 
           } else{
-            http.get("http://eclipsedevelop.ru/api.php/cbcancelorder?token=$token&id=$id");
-            print(http.get("http://eclipsedevelop.ru/api.php/cbcancelorder?token=$token&id=$id"));
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text("Запись отменена")));
+
+
+            showGeneralDialog(
+                barrierColor: Colors.white.withOpacity(0.3),
+                transitionBuilder: (context, a1, a2, widget) {
+                  final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                  return Transform(
+                    transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                    child: Opacity(
+                      opacity: a1.value,
+                      child: CupertinoAlertDialog(
+                        title: Text("Подтвердите"),
+                        content: Text("Отменить запись?"),
+                        actions: [
+                          CupertinoDialogAction(child: Text("Да", style: TextStyle(color: Colors.deepPurple),),onPressed: ()async{
+
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return Dialog(
+
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white38,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(25),
+                                          topRight: Radius.circular(25),
+                                          bottomLeft: Radius.circular(25),
+                                          bottomRight: Radius.circular(25)
+                                      ),
+
+                                    ),
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width * 2 / 3,
+                                    height: 80,
+                                    child: Center(
+                                      child: new CircularProgressIndicator(),
+                                    ),
+                                  ),
+
+                                );
+                              },
+                            );
+                            await http.get("http://eclipsedevelop.ru/api.php/cbcancelorder?token=$token&id=$id");
+                            print("http://eclipsedevelop.ru/api.php/cbcancelorder?token=$token&id=$id");
+                            Navigator.of(context).pop(context);
+                            Navigator.of(context).pop(context);
+
+                            Future<http.Response> res() async {
+                              return await http
+                                  .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+                            }
+                            print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+
+                            await res().then((value) {
+                              if (value.statusCode == 200) {
+                                response2 = jsonDecode(value.body);
+                                print(response2);
+                              }
+                            });
+                            setState(() {});
+
+
+                            Scaffold.of(context).showSnackBar(SnackBar(content: Text("Запись отиенена")));
+
+
+
+
+                          },),
+                          CupertinoDialogAction(child: Text("Нет", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
+                            Navigator.of(context).pop(context);
+                          },)
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                transitionDuration: Duration(milliseconds: 200),
+                barrierDismissible: true,
+                barrierLabel: '',
+                context: context,
+                pageBuilder: (context, animation1, animation2) {});
+
           }
 
         },
