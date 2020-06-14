@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_regex_validator/constant.dart';
 import 'package:flutter_regex_validator/validator.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -228,133 +228,151 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
             child: Container(
               width: MediaQuery.of(context).size.width,
               child:
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Text(
-                        InfSelected.name, style: TextStyle(color: Colors.white, fontSize: 35, ),
+              Stack(
+                children: [
+                  Positioned(
+                    left: 10,
+                    top: 25,
+                    child: GestureDetector(
+                      onTap: (){
+                        controllerHomeOffset.reverse();
+
+                      },
+                      child: Icon(Icons.arrow_back, color: Colors.white,
                       ),
                     ),
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Text(
+                            InfSelected.name, style: TextStyle(color: Colors.white, fontSize: 35, ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
 
-                      Column(
-                        children:
-                          List.generate(ColumnOne, (index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 18.0),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width* 0.44,
-                                child: Column(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: (){
-                                        Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(((elementInfo(SelectedCategories, index*2))))));
-                                      },
-                                      child: Hero(
-                                        tag: elementInfo(SelectedCategories, index*2).id,
-                                        child: AspectRatio(
-                                          aspectRatio: 9/12,
-                                          child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(15),
-                                              child: Image.network(elementInfo(SelectedCategories, index*2).picture, fit: BoxFit.fill,)),
-                                        ),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Column(
+                            children:
+                              List.generate(ColumnOne, (index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 18.0),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width* 0.44,
+                                    child: Column(
                                       children: <Widget>[
-                                        Container(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Padding(
-                                                padding: const EdgeInsets.only(left : 16.0, top: 4),
-                                                child: Text(elementInfo(SelectedCategories, index*2).head, style: TextStyle(color: Colors.white, fontSize: 16),),
-                                              ),
-                                              Padding(
-                                                  padding: const EdgeInsets.only(left: 16.0),
-                                                  child: Prise(elementInfo(SelectedCategories, index*2))
-                                              ),
-                                            ],
+                                        GestureDetector(
+                                          onTap: (){
+                                            Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(((elementInfo(SelectedCategories, index*2))))));
+                                          },
+                                          child: Hero(
+                                            tag: elementInfo(SelectedCategories, index*2).id,
+                                            child: AspectRatio(
+                                              aspectRatio: 9/12,
+                                              child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(15),
+                                                  //child: Image.network(elementInfo(SelectedCategories, index*2).picture, fit: BoxFit.fill,)),
+                                                  child: Image(image: images[SelectedCategories][index*2].image, fit: BoxFit.fill,)),
+                                            ),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(right:8.0),
-                                          child: Icon(Icons.add_shopping_cart, color: Colors.white,),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children:
-                        List.generate(ColumnTwo, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 18.0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width* 0.44,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: (){
-                                      Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(((elementInfo(SelectedCategories, index*2+1))))));
-                                    },
-                                    child: Hero(
-                                      tag: elementInfo(SelectedCategories, index*2+1).id,
-                                      child: AspectRatio(
-                                        aspectRatio: 9/12,
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(15),
-                                            child: Image.network(elementInfo(SelectedCategories, index*2+1).picture, fit: BoxFit.fill,)),
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Container(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(left : 16.0, top: 4),
-                                              child: Text(elementInfo(SelectedCategories, index*2+1).head, style: TextStyle(color: Colors.white, fontSize: 16),),
+                                            Container(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left : 16.0, top: 4),
+                                                    child: Text(elementInfo(SelectedCategories, index*2).head, style: TextStyle(color: Colors.white, fontSize: 16),),
+                                                  ),
+                                                  Padding(
+                                                      padding: const EdgeInsets.only(left: 16.0),
+                                                      child: Prise(elementInfo(SelectedCategories, index*2))
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                             Padding(
-                                                padding: const EdgeInsets.only(left: 16.0),
-                                                child: Prise(elementInfo(SelectedCategories, index*2+1))
-                                            ),
+                                              padding: const EdgeInsets.only(right:8.0),
+                                              child: Icon(Icons.add_shopping_cart, color: Colors.white,),
+                                            )
                                           ],
                                         ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children:
+                            List.generate(ColumnTwo, (index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 18.0),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width* 0.44,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: (){
+                                          Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail(((elementInfo(SelectedCategories, index*2+1))))));
+                                        },
+                                        child: Hero(
+                                          tag: elementInfo(SelectedCategories, index*2+1).id,
+                                          child: AspectRatio(
+                                            aspectRatio: 9/12,
+                                            child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(15),
+//                                                child: Image.network(elementInfo(SelectedCategories, index*2+1).picture, fit: BoxFit.fill,)),
+                                                child: Image(image: images[SelectedCategories][index*2+1].image, fit: BoxFit.fill,)),
+                                          ),
+                                        ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right:8.0),
-                                        child: Icon(Icons.add_shopping_cart, color: Colors.white,),
-                                      )
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left : 16.0, top: 4),
+                                                  child: Text(elementInfo(SelectedCategories, index*2+1).head, style: TextStyle(color: Colors.white, fontSize: 16),),
+                                                ),
+                                                Padding(
+                                                    padding: const EdgeInsets.only(left: 16.0),
+                                                    child: Prise(elementInfo(SelectedCategories, index*2+1))
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(right:8.0),
+                                            child: Icon(Icons.add_shopping_cart, color: Colors.white,),
+                                          )
+                                        ],
+                                      ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
+                                ),
+                              );
+                            }),
+                          ),
+                        ],
                       ),
+
                     ],
                   ),
-
                 ],
               ),
             ),
@@ -771,9 +789,8 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                   aspectRatio: 9 / 12,
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(15),
-                                      child: Image.network(
-                                        SearchResult[index*2]
-                                            .picture, fit: BoxFit.fill,)),
+//                                      child: Image.network(SearchResult[index*2].picture, fit: BoxFit.fill,)),
+                                      child: Image(image: images[SearchResult[index*2].id~/100-1][SearchResult[index*2].id%100-1].image, fit: BoxFit.fill,)),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment
@@ -850,9 +867,8 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                   aspectRatio: 9 / 12,
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(15),
-                                      child: Image.network(
-                                        SearchResult[index*2+1]
-                                            .picture, fit: BoxFit.fill,)),
+//                                      child: Image.network(SearchResult[index*2+1].picture, fit: BoxFit.fill,)),
+                                      child: Image(image: images[SearchResult[index*2+1].id~/100-1][SearchResult[index*2+1].id%100-1].image, fit: BoxFit.fill,)),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment
