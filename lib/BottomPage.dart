@@ -241,7 +241,9 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               icon: Container(
                 height: 24,
                 child: FlareActor(
+
                   'assets/animations/item_heart2.flr',
+                  color: Colors.white,
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
                   animation: "unselect",
@@ -251,6 +253,8 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
                 height: 30,
                 child: FlareActor(
                   'assets/animations/item_heart2.flr',
+                  color: Colors.white,
+
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
                   animation: "select",
@@ -262,7 +266,10 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               icon: Container(
                 height: 24,
                 child: FlareActor(
+
                   'assets/animations/bookmark1.flr',
+                  color: Colors.white,
+
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
                   animation: "unselect",
@@ -272,6 +279,8 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
                 height: 30,
                 child: FlareActor(
                   'assets/animations/bookmark1.flr',
+                  color: Colors.white,
+
                   alignment: Alignment.center,
                   fit: BoxFit.contain,
                   animation: "select",
