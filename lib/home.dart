@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterapp32/Detail.dart';
@@ -40,14 +40,14 @@ class _Home extends State<Home> {
     }
   }
 
-  final FirebaseMessaging _messaging = FirebaseMessaging();
+  //final FirebaseMessaging _messaging = FirebaseMessaging();
 
   @override
   void initState() {
     super.initState();
-    _messaging.getToken().then((token) {
-      print(token);
-    });
+//    _messaging.getToken().then((token) {
+//      print(token);
+//    });
   }
 
   @override
@@ -57,7 +57,7 @@ class _Home extends State<Home> {
     items_counter = [1];
     items_counter.clear();
     return new Scaffold(
-      key: _scaffoldKey,
+  //    key: _scaffoldKey,
       body: Builder(builder: (context) => Categories(context)),
     );
   }
