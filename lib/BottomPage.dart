@@ -366,32 +366,32 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
   }
 
 
-  Widget BodyTrash(Order order, BuildContext context) {
-    _getPrice();
-    return SingleChildScrollView(
-      child: Stack(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Divider(),
-              Container(
-                child: AnimatedList(
-                  shrinkWrap: true,
-                  key: animatedListKey,
-                  initialItemCount: items2.length,
-                  itemBuilder: (context, index, animation){
-                    return _buildItem(items2[index], animation, index);
-                  },
-                ),
-              ),
-              _RegistrationZakaza(context, controller1),
-            ],
-          ),
-          _TrashIsEmpty(context),
-        ],
-      ),
-    );
-  }
+//  Widget BodyTrash(Order order, BuildContext context) {
+//    _getPrice();
+//    return SingleChildScrollView(
+//      child: Stack(
+//        children: <Widget>[
+//          Column(
+//            children: <Widget>[
+//              Divider(),
+//              Container(
+//                child: AnimatedList(
+//                  shrinkWrap: true,
+//                  key: animatedListKey,
+//                  initialItemCount: items2.length,
+//                  itemBuilder: (context, index, animation){
+//                    return _buildItem(items2[index], animation, index);
+//                  },
+//                ),
+//              ),
+//              _RegistrationZakaza(context, controller1),
+//            ],
+//          ),
+//          _TrashIsEmpty(context),
+//        ],
+//      ),
+//    );
+//  }
 
   Widget _ElementTrash(int i) {
     Animation<double> remove;
@@ -531,140 +531,140 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
     }
   }
 
-  Widget _TrashIsEmpty(BuildContext context) {
-    if (items2.length == 0)
-      return Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(28.0),
-                child: Text(
-                  'Козина пуста',
-                  style: TextStyle(
-                    decoration: TextDecoration.none,
-                    color: Colors.black,
-                    fontSize: 17,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (items.length == 0){
-                    Future<http.Response> res() async {
-                      return await http
-                          .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
-                    }
-                    print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
-                    var response;
-                    res().then((value) {
-                      if (value.statusCode == 200) {
-                        response = jsonDecode(value.body);
-                        print(response);
-
-                        print("Count  "+response['count'].toString());
-
-                        if (response['count'] > 0) {
-
-                          List<dynamic> ids = response['orders'][0]['ids'];
-
-                          print("Кол-во проходов цикла "+ids.length.toString());
-                          for(int i = 0; i < ids.length; i++){
-
-                            print("Проход "+i.toString());
-                            int id =ids[i];
-                            var item = elementInfo((id ~/ 100), id % 100);
-                            if(items.isEmpty){
-                              items_counter = [1];
-                              List<ElementItem> step = [item];
-                              items = step;
-                            }else{
-                              bool find = false;
-                              for(int i = 0 ; i  < items.length; i++){
-                                print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
-                                if(items[i].id == item.id){
-                                  items_counter[i]++;
-                                  print('Элементов id${items[i].id} - ${items_counter[i]}');
-                                  find = true;
-                                  break;
-                                }
-                              }
-                              print('find = $find');
-                              if(!find) {
-                                items.add(item);
-                                items_counter.add(1);
-                              }
-
-
-                            }
-                            print("---------------------$items");
-                          }
-                        }
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => EmptyTrash(items)));
-                      }
-
-                    });
-                  }
-
-
-                },
-                child: Container(
-                  height: 33,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    shape: BoxShape.rectangle,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(25)),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Повторить прошлую запись',
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        color: Colors.black,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 18.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/home');
-                  },
-                  child: Container(
-                    height: 33,
-                    width: 210,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      shape: BoxShape.rectangle,
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Перейти к выбору услуг',
-                        style: TextStyle(
-                          decoration: TextDecoration.none,
-                          color: Colors.black,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    else
-      return SizedBox();
-  }
+//  Widget _TrashIsEmpty(BuildContext context) {
+//    if (items2.length == 0)
+//      return Padding(
+//        padding: const EdgeInsets.all(18.0),
+//        child: Center(
+//          child: Column(
+//            children: <Widget>[
+//              Padding(
+//                padding: const EdgeInsets.all(28.0),
+//                child: Text(
+//                  'Козина пуста',
+//                  style: TextStyle(
+//                    decoration: TextDecoration.none,
+//                    color: Colors.black,
+//                    fontSize: 17,
+//                  ),
+//                ),
+//              ),
+//              GestureDetector(
+//                onTap: () {
+//                  if (items.length == 0){
+//                    Future<http.Response> res() async {
+//                      return await http
+//                          .get('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+//                    }
+//                    print('http://eclipsedevelop.ru/api.php/cbmyorders?token=$token');
+//                    var response;
+//                    res().then((value) {
+//                      if (value.statusCode == 200) {
+//                        response = jsonDecode(value.body);
+//                        print(response);
+//
+//                        print("Count  "+response['count'].toString());
+//
+//                        if (response['count'] > 0) {
+//
+//                          List<dynamic> ids = response['orders'][0]['ids'];
+//
+//                          print("Кол-во проходов цикла "+ids.length.toString());
+//                          for(int i = 0; i < ids.length; i++){
+//
+//                            print("Проход "+i.toString());
+//                            int id =ids[i];
+//                            var item = elementInfo((id ~/ 100), id % 100);
+//                            if(items.isEmpty){
+//                              items_counter = [1];
+//                              List<ElementItem> step = [item];
+//                              items = step;
+//                            }else{
+//                              bool find = false;
+//                              for(int i = 0 ; i  < items.length; i++){
+//                                print('Добавляется элемент id${item.id} проверяется элемент id${items[i].id}');
+//                                if(items[i].id == item.id){
+//                                  items_counter[i]++;
+//                                  print('Элементов id${items[i].id} - ${items_counter[i]}');
+//                                  find = true;
+//                                  break;
+//                                }
+//                              }
+//                              print('find = $find');
+//                              if(!find) {
+//                                items.add(item);
+//                                items_counter.add(1);
+//                              }
+//
+//
+//                            }
+//                            print("---------------------$items");
+//                          }
+//                        }
+//                        Navigator.push(context, MaterialPageRoute(builder: (context) => EmptyTrash(items)));
+//                      }
+//
+//                    });
+//                  }
+//
+//
+//                },
+//                child: Container(
+//                  height: 33,
+//                  width: 250,
+//                  decoration: BoxDecoration(
+//                    color: Colors.transparent,
+//                    shape: BoxShape.rectangle,
+//                    border: Border.all(color: Colors.black),
+//                    borderRadius: BorderRadius.all(Radius.circular(25)),
+//                  ),
+//                  child: Center(
+//                    child: Text(
+//                      'Повторить прошлую запись',
+//                      style: TextStyle(
+//                        decoration: TextDecoration.none,
+//                        color: Colors.black,
+//                        fontSize: 17,
+//                      ),
+//                    ),
+//                  ),
+//                ),
+//              ),
+//              Padding(
+//                padding: const EdgeInsets.only(top: 18.0),
+//                child: GestureDetector(
+//                  onTap: () {
+//                    Navigator.pushNamed(context, '/home');
+//                  },
+//                  child: Container(
+//                    height: 33,
+//                    width: 210,
+//                    decoration: BoxDecoration(
+//                      color: Colors.transparent,
+//                      shape: BoxShape.rectangle,
+//                      border: Border.all(color: Colors.black),
+//                      borderRadius: BorderRadius.all(Radius.circular(25)),
+//                    ),
+//                    child: Center(
+//                      child: Text(
+//                        'Перейти к выбору услуг',
+//                        style: TextStyle(
+//                          decoration: TextDecoration.none,
+//                          color: Colors.black,
+//                          fontSize: 17,
+//                        ),
+//                      ),
+//                    ),
+//                  ),
+//                ),
+//              ),
+//            ],
+//          ),
+//        ),
+//      );
+//    else
+//      return SizedBox();
+//  }
 
 
 
