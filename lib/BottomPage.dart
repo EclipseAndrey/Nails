@@ -338,24 +338,32 @@ class _BottomPageState extends State<BottomPage> with TickerProviderStateMixin {
               title: Text('', style: TextStyle(fontWeight: FontWeight.bold, height: 0.0),),
               icon: Container(
                 height: 24,
-                child: FlareActor(
-                  'assets/animations/chel.flr',
-                  color: Colors.white,
-                  alignment: Alignment.center,
-                  fit: BoxFit.contain,
-                  animation: "idle",
+                child: Stack(
+                  children: <Widget>[
+                    FlareActor(
+                      'assets/animations/chel.flr',
+                      color: Colors.white,
+                      alignment: Alignment.center,
+                      fit: BoxFit.contain,
+                      animation: "idle",
+                    ),
+                    Positioned(
+                        top:0,
+                        left: -5,
+                        child: Text("1", style: TextStyle(color: Colors.white),)),
+                  ],
                 ),
               ),
               activeIcon: Container(
-                height: 30,
-                child: FlareActor(
-                  'assets/animations/chel.flr',
-                  color: Colors.white,
-                  alignment: Alignment.center,
-                  fit: BoxFit.contain,
-                  animation: "go",
+                  height: 30,
+                  child: FlareActor(
+                    'assets/animations/chel.flr',
+                    color: Colors.white,
+                    alignment: Alignment.center,
+                    fit: BoxFit.contain,
+                    animation: "go",
+                  ),
                 ),
-              ),
             ),          ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.transparent,

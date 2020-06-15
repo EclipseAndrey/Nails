@@ -1262,19 +1262,23 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(left : 16.0, top: 4),
-                                child: Text(sales[itemIndex].head, style: TextStyle(color: Colors.white, fontSize: 16),),
-                              ),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left : 16.0, top: 4),
+                                  child: Text(sales[itemIndex].head, style: TextStyle(color: Colors.white),),
+                                )),
                               Padding(
                                 padding: const EdgeInsets.only(left: 16.0),
                                 child: Row(
 
                                   children: <Widget>[
-                                    Text("${sales[itemIndex].price} руб.", style: TextStyle(color: Colors.white, fontSize: 16, decoration: TextDecoration.lineThrough,),),
+                                    FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text("${sales[itemIndex].price} руб.", style: TextStyle(color: Colors.white, decoration: TextDecoration.lineThrough,),)),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text("${sales[itemIndex].price - sales[itemIndex].sale} руб.", style: TextStyle(color: Colors.pinkAccent, fontSize: 16),),
+                                      child: Text("${sales[itemIndex].price - sales[itemIndex].sale} руб.", style: TextStyle(color: Colors.pinkAccent,),),
                                     ),
                                   ],
                                 ),
@@ -1320,10 +1324,14 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
         return Row(
 
           children: <Widget>[
-            Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, fontSize: 16, decoration: TextDecoration.lineThrough,),),
+            FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, decoration: TextDecoration.lineThrough,),)),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: Text("${itemForSales.price - itemForSales.sale} руб.", style: TextStyle(color: Colors.pinkAccent, fontSize: 16),),
+              child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text("${itemForSales.price - itemForSales.sale} руб.", style: TextStyle(color: Colors.pinkAccent,),)),
 
 
             ),
@@ -1384,7 +1392,9 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.only(left : 16.0, top: 4),
-                                    child: Text(sales[itemIndex].head, style: TextStyle(color: Colors.white, fontSize: 16),),
+                                    child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(sales[itemIndex].head, style: TextStyle(color: Colors.white,),)),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 16.0),
@@ -1394,7 +1404,7 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right:8.0),
+                              padding: const EdgeInsets.only(right:0.0),
                               child: TrashButton(sales[itemIndex]),
                             )
                           ],

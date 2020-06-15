@@ -684,7 +684,7 @@ class _TrashCustomState extends State<TrashCustom> {
                                                     children: <Widget>[
                                                       Padding(
                                                         padding: const EdgeInsets.only(
-                                                            left: 16.0, top: 4, right: 2),
+                                                            left: 16.0, top: 4, right: 0),
                                                         child: FittedBox(
                                                           fit: BoxFit.contain,
                                                           child: Text(SearchResult[index*2]
@@ -771,7 +771,7 @@ class _TrashCustomState extends State<TrashCustom> {
                                                     children: <Widget>[
                                                       Padding(
                                                         padding: const EdgeInsets.only(
-                                                            left: 16.0, top: 4, right: 2),
+                                                            left: 16.0, top: 4, right: 0),
                                                         child: FittedBox(
                                                           fit: BoxFit.contain,
                                                           child: Text(SearchResult[index*2+1]
@@ -792,7 +792,7 @@ class _TrashCustomState extends State<TrashCustom> {
                                               Expanded(
                                                 flex: 2,
                                                 child: Padding(
-                                                  padding: const EdgeInsets.only(right: 8.0),
+                                                  padding: const EdgeInsets.only(right: 0.0),
                                                   child: Container(
                                                       height: 30,
                                                       width: 30,
