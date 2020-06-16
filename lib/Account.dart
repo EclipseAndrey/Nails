@@ -44,7 +44,15 @@ class _AccountState extends State<Account> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      FadeAnimation(0.4, Text(ResName, style: TextStyle(color: Colors.white, fontSize: 40),)),
+                      FadeAnimation(0.4, Row(
+                        children: [
+                          Text(ResName, style: TextStyle(color: Colors.white, fontSize: 40),),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text("VIP", style: TextStyle(color: Colors.yellow, fontSize: 30),),
+                          ),
+                        ],
+                      )),
                       SizedBox(height: 10,),
                       FadeAnimation(0.6, Text("Добро пожаловать", style: TextStyle(color: Colors.white, fontSize: 18),)),
                     ],

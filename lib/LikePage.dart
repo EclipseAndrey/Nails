@@ -103,7 +103,7 @@ class _LikePageState extends State<LikePage> {
 //                color: Color(0xff8A1FFF),
                     child: Container(
                       width: size.width * 0.95,
-                      height: size.height * 0.20,
+                      height: size.height * 0.17,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
