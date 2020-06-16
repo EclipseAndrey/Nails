@@ -4,6 +4,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/Addresses.dart';
+import 'package:flutterapp32/Admin.dart';
 import 'package:flutterapp32/Login.dart';
 import 'package:flutterapp32/MyOrders.dart';
 import 'package:flutterapp32/SetName.dart';
@@ -45,6 +46,7 @@ void main(){
     '/BottomPage': (BuildContext context) =>BottomPage(),
     '/Addresses': (BuildContext context) =>Addresses(),
     '/Helping': (BuildContext context) =>Help(),
+    '/Admin': (BuildContext context) =>Admin(),
   };
 
   runApp(

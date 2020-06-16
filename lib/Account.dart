@@ -585,7 +585,7 @@ class _AccountState extends State<Account> {
                               padding: const EdgeInsets.only(top: 18.0),
                               child: GestureDetector(
                                 onTap: (){
-                                  Navigator.of(context).pushNamed('/Helping');
+                                  Navigator.of(context).pushNamed('/Admin');
 
                                 },
                                 child: Container(
