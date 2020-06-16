@@ -728,7 +728,7 @@ class _MyOrdersState extends State<MyOrders> with TickerProviderStateMixin{
             String txc = elementInfo((id[0] ~/ 100-1), id[0] % 100-1).head + '...';
             String txc2 = elementInfo((id[0] ~/ 100-1), id[0] % 100-1).head +
                 ',\n ' +
-                elementInfo((id[1] ~/ 100), id[1] % 100).head +
+                elementInfo((id[1] ~/ 100-1), id[1] % 100-1).head +
                 '...';
 
             if (elementInfo((id[0] ~/ 100-1), id[0] % 100-1).head.length +

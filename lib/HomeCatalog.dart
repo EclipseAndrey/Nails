@@ -1217,6 +1217,33 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
        }
       }
     }
+    Widget Prise(ElementItem itemForSales){
+      if(itemForSales.sale>0){
+        return Row(
+
+          children: <Widget>[
+            FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, decoration: TextDecoration.lineThrough,),)),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text("${itemForSales.price - itemForSales.sale} руб.", style: TextStyle(color: Colors.pinkAccent,),)),
+
+
+            ),
+          ],
+        );
+      }else{
+        return Row(
+
+          children: <Widget>[
+            Text("${itemForSales.price} руб.", style: TextStyle(color: Colors.white, fontSize: 16, ),),
+          ],
+        );
+      }
+    }
 
     return
       CarouselSlider.builder(
@@ -1259,31 +1286,27 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Padding(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width*0.38,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
                                   padding: const EdgeInsets.only(left : 16.0, top: 4),
-                                  child: Text(sales[itemIndex].head, style: TextStyle(color: Colors.white),),
-                                )),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 16.0),
-                                child: Row(
-
-                                  children: <Widget>[
-                                    FittedBox(
+                                  child: FittedBox(
                                       fit: BoxFit.scaleDown,
-                                      child: Text("${sales[itemIndex].price} руб.", style: TextStyle(color: Colors.white, decoration: TextDecoration.lineThrough,),)),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text("${sales[itemIndex].price - sales[itemIndex].sale} руб.", style: TextStyle(color: Colors.pinkAccent,),),
-                                    ),
-                                  ],
+                                      child: Text(sales[itemIndex].head, style: TextStyle(color: Colors.white,),)),
                                 ),
-                              ),
-                            ],
+                                Padding(
+                                    padding: const EdgeInsets.only(left: 16.0),
+                                    child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Prise(sales[itemIndex]))
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
@@ -1387,20 +1410,27 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(left : 16.0, top: 4),
-                                    child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text(sales[itemIndex].head, style: TextStyle(color: Colors.white,),)),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 16.0),
-                                    child: Prise(sales[itemIndex])
-                                  ),
-                                ],
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxWidth: MediaQuery.of(context).size.width*0.38,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(left : 16.0, top: 4),
+                                      child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text(sales[itemIndex].head, style: TextStyle(color: Colors.white,),)),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 16.0),
+                                      child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Prise(sales[itemIndex]))
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             Padding(

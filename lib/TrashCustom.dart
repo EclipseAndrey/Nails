@@ -1421,20 +1421,24 @@ class _TrashCustomState extends State<TrashCustom> {
 
       return Row(
         children: [
-          Text("По адресу  ", style:  TextStyle(
-              color: Colors.black,
-              fontSize: sizeText,
-              fontFamily: "MPLUS",
-//              decoration: TextDecoration.underline,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w300),),
-          Text(buildAdress(), style:  TextStyle(
-              color: Colors.blueAccent,
-              fontSize: sizeText,
-              fontFamily: "MPLUS",
-              decoration: TextDecoration.underline,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w300),),
+//            Text("По адресу  ", style:  TextStyle(
+//                color: Colors.black,
+//                fontSize: sizeText,
+//                fontFamily: "MPLUS",
+////              decoration: TextDecoration.underline,
+//                fontStyle: FontStyle.normal,
+//                fontWeight: FontWeight.w300),),
+          Container(
+            width: MediaQuery.of(context).size.width*0.90,
+
+            child: Text(buildAdress(), style:  TextStyle(
+                color: Colors.blueAccent,
+                fontSize: sizeText,
+                fontFamily: "MPLUS",
+                decoration: TextDecoration.underline,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w300),),
+          ),
         ],
       );
 
@@ -1926,7 +1930,7 @@ class _TrashCustomState extends State<TrashCustom> {
   Widget promoField(){
     return TextField(
       controller: controllerPromo,
-        obscureText: true,
+//        obscureText: true,
         decoration: InputDecoration(
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black),
@@ -1953,287 +1957,323 @@ class _TrashCustomState extends State<TrashCustom> {
 
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height*0.95,
-      child: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Container(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        resizeToAvoidBottomPadding: true,
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Container(
 //                  color: Colors.white70,
-                  height: 70,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0, top : 20),
-                        child: GestureDetector(
-                          onTap: (){
-                            Navigator.pop(context);
-                            selectedDate = false;
-                            selectAdress = "-1";
-                            selectedTime = false;
-                          },
-                          child: Text("Отмена", style:  TextStyle(
-                              color: Colors.blueAccent,
-                              fontSize: sizeText,
-                              fontFamily: "MPLUS",
-                              decoration: TextDecoration.underline,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w500),),
+                    height: 70,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18.0, top : 20),
+                          child: GestureDetector(
+                            onTap: (){
+                              Navigator.pop(context);
+                              selectedDate = false;
+                              selectAdress = "-1";
+                              selectedTime = false;
+                            },
+                            child: Text("Отмена", style:  TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: sizeText,
+                                fontFamily: "MPLUS",
+                                decoration: TextDecoration.underline,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w500),),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Divider(height: 3, color: Colors.black45,),
-                Container(
-                  width: MediaQuery.of(context).size.width*0.90,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Row(
-                          children: [
-                            Text("Когда", style:  TextStyle(
-                                color: Colors.black,
-                                fontSize: sizeText+4,
-                                fontFamily: "MPLUS",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w500),),
-                            Text(" приехать мастеру?", style:  TextStyle(
-                                color: Colors.black,
-                                fontSize: sizeText+4,
-                                fontFamily: "MPLUS",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400),),
-                          ],
+                  Divider(height: 3, color: Colors.black45,),
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.90,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Row(
+                            children: [
+                              Text("Когда", style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeText+4,
+                                  fontFamily: "MPLUS",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w500),),
+                              Text(" приехать мастеру?", style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeText+4,
+                                  fontFamily: "MPLUS",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400),),
+                            ],
+                          ),
                         ),
-                      ),
-                      Date(setState2),
-                      Time(setState2),
+                        Date(setState2),
+                        Time(setState2),
 
 
-                      Padding(
-                        padding: const EdgeInsets.only(top: 18.0),
-                        child: Row(
-                          children: [
-                            Text("Куда", style:  TextStyle(
-                                color: Colors.black,
-                                fontSize: sizeText+4,
-                                fontFamily: "MPLUS",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w500),),
-                            Text(" приехать мастеру?", style:  TextStyle(
-                                color: Colors.black,
-                                fontSize: sizeText+4,
-                                fontFamily: "MPLUS",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400),),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 18.0),
+                          child: Row(
+                            children: [
+                              Text("Куда", style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeText+4,
+                                  fontFamily: "MPLUS",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w500),),
+                              Text(" приехать мастеру?", style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeText+4,
+                                  fontFamily: "MPLUS",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400),),
+                            ],
+                          ),
                         ),
-                      ),
-                      adressSelect(setState2),
+                        adressSelect(setState2),
 
-                      Padding(
-                        padding: const EdgeInsets.only(top: 18.0),
-                        child: Row(
-                          children: [
-                            Text("Как", style:  TextStyle(
-                                color: Colors.black,
-                                fontSize: sizeText+4,
-                                fontFamily: "MPLUS",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w500),),
-                            Text(" с вами связаться?", style:  TextStyle(
-                                color: Colors.black,
-                                fontSize: sizeText+4,
-                                fontFamily: "MPLUS",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400),),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 18.0),
+                          child: Row(
+                            children: [
+                              Text("Как", style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeText+4,
+                                  fontFamily: "MPLUS",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w500),),
+                              Text(" с вами связаться?", style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeText+4,
+                                  fontFamily: "MPLUS",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400),),
+                            ],
+                          ),
                         ),
-                      ),
-                      Text("Вам позвонит менеджер \nдля подтверждения записи", style:  TextStyle(
-                          color: Colors.black54,
-                          fontSize: sizeText-4,
+                        Text("Вам позвонит менеджер \nдля подтверждения записи", style:  TextStyle(
+                            color: Colors.black54,
+                            fontSize: sizeText-4,
 //                          fontFamily: "MPLUS",
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w300),),
-                      Telephone(setState2),
-                      Padding(
-                        padding:  EdgeInsets.only(left:  MediaQuery.of(context).size.width*0, right: MediaQuery.of(context).size.width*0, top: 10),
-                        child: Divider(height: 3, color: Colors.black45,),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 18.0),
-                        child: Row(
-                          children: [
-                            Text("", style:  TextStyle(
-                                color: Colors.black,
-                                fontSize: sizeText+4,
-                                fontFamily: "MPLUS",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w500),),
-                            Text("Промокод", style:  TextStyle(
-                                color: Colors.black,
-                                fontSize: sizeText+4,
-                                fontFamily: "MPLUS",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w300),),
-                          ],
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w300),),
+                        Telephone(setState2),
+                        Padding(
+                          padding:  EdgeInsets.only(left:  MediaQuery.of(context).size.width*0, right: MediaQuery.of(context).size.width*0, top: 10),
+                          child: Divider(height: 3, color: Colors.black45,),
                         ),
-                      ),
-
-                      Text("Оставьте поле пустым, если\nу вас нет промокода", style:  TextStyle(
-                          color: Colors.black54,
-                          fontSize: sizeText-4,
-//                          fontFamily: "MPLUS",
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w300),),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: promoField(),
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.only(top: 18.0),
-                        child: Row(
-                          children: [
-                            Text("", style:  TextStyle(
-                                color: Colors.black,
-                                fontSize: sizeText+4,
-                                fontFamily: "MPLUS",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w500),),
-                            Text("Комментарий к записи", style:  TextStyle(
-                                color: Colors.black,
-                                fontSize: sizeText+4,
-                                fontFamily: "MPLUS",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w300),),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 18.0),
+                          child: Row(
+                            children: [
+                              Text("", style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeText+4,
+                                  fontFamily: "MPLUS",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w500),),
+                              Text("Промокод", style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeText+4,
+                                  fontFamily: "MPLUS",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w300),),
+                            ],
+                          ),
                         ),
-                      ),
-                      Text("Вы можете оставить свои\nпожелания к заказу", style:  TextStyle(
-                          color: Colors.black54,
-                          fontSize: sizeText-4,
+
+                        Text("Оставьте поле пустым, если\nу вас нет промокода", style:  TextStyle(
+                            color: Colors.black54,
+                            fontSize: sizeText-4,
 //                          fontFamily: "MPLUS",
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w300),),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: commentField(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 18.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          child:
-                          Center(
-                            child: FlatButton(
-                              shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(25.0),
-                                  side: BorderSide(color: Colors.black)),
-                              color: Colors.white,
-                              textColor: Colors.purple,
-                              padding: EdgeInsets.all(8.0),
-                              onPressed: ()async {
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w300),),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: promoField(),
+                        ),
 
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (BuildContext context) {
-                                    return Dialog(
+                        Padding(
+                          padding: const EdgeInsets.only(top: 18.0),
+                          child: Row(
+                            children: [
+                              Text("", style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeText+4,
+                                  fontFamily: "MPLUS",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w500),),
+                              Text("Комментарий к записи", style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeText+4,
+                                  fontFamily: "MPLUS",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w300),),
+                            ],
+                          ),
+                        ),
+                        Text("Вы можете оставить свои\nпожелания к заказу", style:  TextStyle(
+                            color: Colors.black54,
+                            fontSize: sizeText-4,
+//                          fontFamily: "MPLUS",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w300),),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: commentField(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 18.0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child:
+                            Center(
+                              child: FlatButton(
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius: new BorderRadius.circular(25.0),
+                                    side: BorderSide(color: Colors.black)),
+                                color: Colors.white,
+                                textColor: Colors.purple,
+                                padding: EdgeInsets.all(8.0),
+                                onPressed: ()async {
 
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white38,
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(25),
-                                              topRight: Radius.circular(25),
-                                              bottomLeft: Radius.circular(25),
-                                              bottomRight: Radius.circular(25)
+                                  showGeneralDialog(
+                                      barrierColor: Colors.black.withOpacity(0.3),
+                                      transitionBuilder: (context, a1, a2, widget) {
+                                        final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                                        return Transform(
+                                          transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                                          child: Opacity(
+                                            opacity: a1.value,
+                                            child: CupertinoAlertDialog(
+                                              title: Text("PROMOCOD"),
+                                              content: Text("Скидка 10%\nИтого: 1799 руб."),
+                                              actions: [
+                                                CupertinoDialogAction(child: Text("Отмена", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
+                                                  Navigator.of(context).pop(context);
+                                                },),
+                                                CupertinoDialogAction(child: Text("Записаться", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
+                                                  Navigator.of(context).pop(context);
+                                                },)
+                                              ],
+                                            ),
                                           ),
+                                        );
+                                      },
+                                      transitionDuration: Duration(milliseconds: 200),
+                                      barrierDismissible: true,
+                                      barrierLabel: '',
+                                      context: context,
+                                      pageBuilder: (context, animation1, animation2) {});
 
-                                        ),
-                                        width: MediaQuery.of(context).size.width*2/3,
-                                        height: 80,
-                                        child: Center(
-                                          child: new CircularProgressIndicator(),
-                                        ),
-                                      ),
 
-                                    );
-                                  },
-                                );
 
-                                String res = await MakeOrderButton(selectAdress,date3+".2020",time2,numOrder,controllerPromo.text,controllerComment.text);
 
-                                Navigator.of(context).pop();
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return Dialog(
 
-                                showGeneralDialog(
-                                    barrierColor: Colors.black.withOpacity(0.3),
-                                    transitionBuilder: (context, a1, a2, widget) {
-                                      final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
-                                      return Transform(
-                                        transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
-                                        child: Opacity(
-                                          opacity: a1.value,
-                                          child: AlertDialog(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white38,
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(25),
+                                                topRight: Radius.circular(25),
+                                                bottomLeft: Radius.circular(25),
+                                                bottomRight: Radius.circular(25)
+                                            ),
 
-                                            shape: OutlineInputBorder(
-                                              borderSide: BorderSide(color: Colors.white),
-                                                borderRadius: BorderRadius.circular(16.0)),
-                                            title: Text("Результат"),
-                                            content: Text(res),
+                                          ),
+                                          width: MediaQuery.of(context).size.width*2/3,
+                                          height: 80,
+                                          child: Center(
+                                            child: new CircularProgressIndicator(),
                                           ),
                                         ),
+
                                       );
                                     },
-                                    transitionDuration: Duration(milliseconds: 200),
-                                    barrierDismissible: true,
-                                    barrierLabel: '',
-                                    context: context,
-                                    pageBuilder: (context, animation1, animation2) {});
+                                  );
+
+                                  String res = await MakeOrderButton(selectAdress,date3+".2020",time2,numOrder,controllerPromo.text,controllerComment.text);
+
+                                  Navigator.of(context).pop();
+
+                                  showGeneralDialog(
+                                      barrierColor: Colors.black.withOpacity(0.3),
+                                      transitionBuilder: (context, a1, a2, widget) {
+                                        final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                                        return Transform(
+                                          transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                                          child: Opacity(
+                                            opacity: a1.value,
+                                            child: AlertDialog(
+
+                                              shape: OutlineInputBorder(
+                                                borderSide: BorderSide(color: Colors.white),
+                                                  borderRadius: BorderRadius.circular(16.0)),
+                                              title: Text("Результат"),
+                                              content: Text(res),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      transitionDuration: Duration(milliseconds: 200),
+                                      barrierDismissible: true,
+                                      barrierLabel: '',
+                                      context: context,
+                                      pageBuilder: (context, animation1, animation2) {});
 
 
 
-                                },
-                              child: Padding(
-                                padding: const EdgeInsets.only(left : 8.0, right: 8.0),
-                                child: Text(
-                                  'Записаться',
-                                  style: TextStyle(
-                                    decoration: TextDecoration.none,
-                                    color: Colors.black,
-                                    fontSize: 17,
+                                  },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left : 8.0, right: 8.0),
+                                  child: Text(
+                                    'Записаться',
+                                    style: TextStyle(
+                                      decoration: TextDecoration.none,
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      //------------------------------------------------------------------------------------------------------------Сюда наполнение заказа
-                    ],
+                        //------------------------------------------------------------------------------------------------------------Сюда наполнение заказа
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 12.0),
-                child: Text("Оформление", style:  TextStyle(
-                    color: Colors.black,
-                    fontSize: sizeText+10,
-                    fontFamily: "MPLUS",
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500),),
+                ],
               ),
-            ),
-          ],
+              Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: Text("Оформление", style:  TextStyle(
+                      color: Colors.black,
+                      fontSize: sizeText+10,
+                      fontFamily: "MPLUS",
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w500),),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

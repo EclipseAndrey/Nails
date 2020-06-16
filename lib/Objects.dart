@@ -745,7 +745,7 @@ class AdressList{
       }
     }
 
-    print('http://eclipsedevelop.ru/api.php/cbaddaddress?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
+    print('http://eclipsedevelop.ru/api.php/cbaddaddresses?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
     if (await res()) {
       return true;
     } else {
@@ -756,7 +756,7 @@ class AdressList{
   Future<bool> deleteAddress(adress Address) async {
     Future<bool> res() async {
       var a = await http.get(
-          'http://eclipsedevelop.ru/api.php/cbdeleteaddress?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
+          'http://eclipsedevelop.ru/api.php/cbdeleteaddresses?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
 
       if (a.statusCode == 200) {
         return true;
@@ -765,7 +765,7 @@ class AdressList{
       }
     }
 
-    print('http://eclipsedevelop.ru/api.php/cbdeleteaddress?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
+    print('http://eclipsedevelop.ru/api.php/cbdeleteaddresses?token=$token&city=${Address.city}&street=${Address.street}&house=${Address.house}&stroenie=${Address.stroenie}&corpus=${Address.corpus}&kv=${Address.kv}');
     if (await res()) {
       return true;
     } else {

@@ -130,17 +130,22 @@ class _DetailState extends State<Detail> {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: <Widget>[
-            Text(Save?"Добавлено":"В корзину",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontFamily: "MPLUS",
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w500),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(Save?"Добавлено":"В корзину",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontFamily: "MPLUS",
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w500),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0, ),
-              child: icon(),
+              child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: icon()),
             ),
           ],
         ),
@@ -192,13 +197,16 @@ class _DetailState extends State<Detail> {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: <Widget>[
-            Text(Like?"В избранном":"В избранное",
-              style: TextStyle(
-                  color: Colors.pinkAccent,
-                  fontSize: 18,
-                  fontFamily: "MPLUS",
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w500),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(Like?"В избранном":"В избранное",
+                style: TextStyle(
+                    color: Colors.pinkAccent,
+                    fontSize: 16,
+                    fontFamily: "MPLUS",
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w500),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0, ),
