@@ -5,13 +5,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/Addresses.dart';
 import 'package:flutterapp32/Admin.dart';
+import 'package:flutterapp32/Bonuses.dart';
 import 'package:flutterapp32/Login.dart';
 import 'package:flutterapp32/MyOrders.dart';
+import 'package:flutterapp32/OrdersAcceptAdmin.dart';
+import 'package:flutterapp32/OrdersCancelAdmin.dart';
 import 'package:flutterapp32/SetName.dart';
 import 'dart:core';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'Help.dart';
+import 'OrdersAwaitAdmin.dart';
 import 'Trash.dart';
 import 'package:flutterapp32/Quality.dart';
 import 'package:flutterapp32/home.dart';
@@ -47,6 +51,10 @@ void main(){
     '/Addresses': (BuildContext context) =>Addresses(),
     '/Helping': (BuildContext context) =>Help(),
     '/Admin': (BuildContext context) =>Admin(),
+    '/Bonus': (BuildContext context) =>Bonuses(),
+    '/OrdersAwait': (BuildContext context) => OrdersAwait(),
+    '/OrdersAccept': (BuildContext context) => OrdersAccept(),
+    '/OrdersCancel': (BuildContext context) => OrdersCancel(),
   };
 
   runApp(
@@ -87,6 +95,10 @@ var response2;
 
 String ResName = "";
 
+String StatusUser = "0";
+String StatusVIP = "0";
+
+
 List<List<Image>> images = [];
 List<Image> imagesCategory = [];
 List<int> TrashSave = [];
@@ -100,6 +112,13 @@ List<int> ListTrash = [];
 AdressList ObjectAddress = AdressList.r();
 List<adress> ListAdress = [];
 String selectAdress = "-1";
+
+UsersList ObjectUsers = UsersList.r();
+
+OrdersListForAdmin ObjectOrdersAwait  = OrdersListForAdmin.r();
+OrdersListForAdmin ObjectOrdersAccept = OrdersListForAdmin.r();
+OrdersListForAdmin ObjectOrdersCacel  = OrdersListForAdmin.r();
+OrdersListForAdmin ObjectOrdersBreak  = OrdersListForAdmin.r();
 
 
 var TrashDate = new DateFormat("dd.MM.yyyy", "en_US").parse("00.00.0000");
@@ -258,6 +277,8 @@ class _SplashScreenState extends State<SplashScreen>  {
             }
             else if(Response == "13"){
               ResName = response['text'];
+              StatusUser = response['status'];
+              StatusVIP = response['vip'];
 
               Future<http.Response> res2() async {
                 return await http
@@ -288,6 +309,12 @@ class _SplashScreenState extends State<SplashScreen>  {
                   if(await acceptGetAddress){
                     ObjectAddress.getAddresses();
                   }
+
+                  ObjectUsers = UsersList(token);
+                  ObjectOrdersAwait  = OrdersListForAdmin(token, "0");
+                  ObjectOrdersAccept = OrdersListForAdmin(token,"1");
+                  ObjectOrdersCacel  = OrdersListForAdmin(token, "2");
+                  ObjectOrdersBreak  = OrdersListForAdmin(token, "4");
 
 
 

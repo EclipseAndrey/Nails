@@ -21,6 +21,7 @@ import 'MyOrders.dart';
 import 'main.dart';
 import 'home.dart';
 import 'style.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 
 class HomeCatalog extends StatefulWidget{
@@ -45,6 +46,12 @@ int SelectedCategories = 0;
 
 class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
 
+
+
+
+  final FirebaseMessaging firebaseMessanging =  FirebaseMessaging();
+  List<Message> messages = [];
+
   AnimationController controllerHomeOffset;
   Animation<double> animationHomeOffset;
   Tween tweenHomeOffset;
@@ -55,6 +62,23 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
   @override
   void initState() {
     super.initState();
+
+    firebaseMessanging.configure(
+      onMessage: (Map<String,dynamic> message)async{
+        print("Message: $message");
+      },
+      onLaunch: (Map<String,dynamic> message)async{
+      print("Launch: $message");
+    },
+    onResume: (Map<String,dynamic> message)async{
+      print("Resume: $message");
+    }
+
+
+    );
+    firebaseMessanging.requestNotificationPermissions(
+      IosNotificationSettings(sound: true, badge: true, alert: true));
+
 
     controllerHomeOffset = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
 

@@ -49,7 +49,7 @@ class _AccountState extends State<Account> {
                           Text(ResName, style: TextStyle(color: Colors.white, fontSize: 40),),
                           Padding(
                             padding: const EdgeInsets.only(left: 8.0),
-                            child: Text("VIP", style: TextStyle(color: Colors.yellow, fontSize: 30),),
+                            child: StatusVIP == "1"? Text("VIP", style: TextStyle(color: Colors.yellow, fontSize: 30),):SizedBox(),
                           ),
                         ],
                       )),
@@ -462,7 +462,7 @@ class _AccountState extends State<Account> {
                                         padding: const EdgeInsets.only(left: 18.0),
                                         child: Row(
                                           children: [
-                                            Icon(Icons.person_add, color: Colors.black54,),
+                                            Icon(Icons.supervisor_account, color: Colors.black54,),
                                             Padding(
                                               padding: const EdgeInsets.only(left: 14.0),
                                               child: Text(
@@ -585,7 +585,7 @@ class _AccountState extends State<Account> {
                               padding: const EdgeInsets.only(top: 18.0),
                               child: GestureDetector(
                                 onTap: (){
-                                  Navigator.of(context).pushNamed('/Admin');
+                                  Navigator.of(context).pushNamed('/Helping');
 
                                 },
                                 child: Container(
@@ -627,6 +627,51 @@ class _AccountState extends State<Account> {
                               ),
                             ),
 
+                            (StatusUser == "1" || StatusUser == "2")?Padding(
+                              padding: const EdgeInsets.only(top: 18.0),
+                              child: GestureDetector(
+                                onTap: (){
+                                  Navigator.of(context).pushNamed('/Admin');
+
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [BoxShadow(
+                                          color: Color.fromRGBO(34, 15, 45, .3),
+                                          blurRadius: blurSize,
+                                          offset: Offset(-2.5, 5)
+                                      )]
+                                  ),
+                                  width: MediaQuery.of(context).size.width*0.84,
+                                  height: MediaQuery.of(context).size.width*0.15,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 18.0),
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.spellcheck, color: Colors.black54,),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 14.0),
+                                              child: Text(
+                                                "Панель администратора", style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18
+                                              ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ):SizedBox(),
 
 
 

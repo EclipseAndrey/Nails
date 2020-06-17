@@ -8,6 +8,24 @@ import 'main.dart';
 import 'home.dart';
 import 'package:http/http.dart' as http;
 import 'package:print_color/print_color.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+
+
+@immutable
+class Message {
+  final String title ;
+  final String body;
+  const Message({
+    @required this.title,
+    @required this.body,
+});
+}
+
+
+
+
+
 class DataTresh {
   List<ElementItem> items;
 
@@ -669,6 +687,7 @@ class adress{
 
 class AdressList{
   List<dynamic> adreses = [];
+
   var response;
   int count;
   String token;
@@ -830,6 +849,184 @@ Future<String> MakeOrderButton(String address, String date, String time, String 
 
 
 }
+
+
+
+
+class User{
+  String
+  num,
+      name,
+      bonus;
+  User({this.num,this.name,this.bonus});
+
+  factory User.fromJson(Map<String,dynamic> json){
+    return User(
+        num: json['num'] .toString(),
+        name: json['name'].toString(),
+        bonus: json['bonus'].toString()
+    );
+
+  }
+}
+
+
+class UsersList{
+  List<dynamic> users = [];
+  var response;
+  int count;
+  String token;
+  UsersList.r();
+  UsersList(this.token);
+
+  Future<bool> Up() async {
+    Future<bool> res() async {
+      var a = await http
+          .get('http://eclipsedevelop.ru/api.php/cbgetusers?token=$token');
+
+      if (a.statusCode == 200) {
+        this.response = jsonDecode(a.body);
+        print('response ' + this.response.toString());
+
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    print('http://eclipsedevelop.ru/api.php/cbgetusers?token=$token');
+
+    //
+
+    bool a = await res();
+
+    if (a) {
+      print("Users ok" + this.response['response']);
+      if (this.response['response'] == '39') {
+        print("USERS 39");
+        count = response['text']['count'];
+        print("Count users "+count.toString());
+        count > 0 ? users = response['text']['users'].map((i) => User.fromJson(i)).toList() : users = [];
+        return true;
+      } else if (this.response == '202') {
+        print("USRES 202");
+
+        return false;
+      } else if (this.response == '203') {
+        print("USERS 203");
+
+        return false;
+      } else {
+        print("USERS 0");
+
+        return false;
+      }
+    } else
+      return false;
+  }
+
+  List<dynamic> getUsers() {
+    return users;
+  }
+
+}
+
+class ItemOrder{
+  String
+  name,
+  num,
+  promo,
+  prise,
+  comment,
+  address,
+  date,
+  time;
+  List<dynamic> OrderIds;
+
+
+
+  ItemOrder({this.num,this.name,this.comment,this.promo,this.address,this.time,this.date,this.prise,this.OrderIds});
+
+  factory ItemOrder.fromJson(Map<String,dynamic> json){
+    return ItemOrder(
+        num: json['num'] .toString(),
+        name: json['name'].toString(),
+        promo: json['promo'].toString(),
+        prise: json['price'].toString(),
+        comment: json['comment'].toString(),
+        address: json['adress'].toString(),
+        date: json['date'].toString(),
+        time: json['time'].toString(),
+      OrderIds: json['ids'] as List<dynamic>
+
+    );
+
+  }
+}
+
+class OrdersListForAdmin{
+  List<dynamic> users = [];
+
+  var response;
+  int count;
+  String token;
+  String status;
+  OrdersListForAdmin.r();
+  OrdersListForAdmin(this.token, this.status);
+
+  Future<bool> Up() async {
+    Future<bool> res() async {
+      var a = await http
+          .get('http://eclipsedevelop.ru/api.php/cbgetorders?token=$token&status=$status');
+
+      if (a.statusCode == 200) {
+        this.response = jsonDecode(a.body);
+        print('response ' + this.response.toString());
+
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    print('http://eclipsedevelop.ru/api.php/cbgetorders?token=$token&status=$status');
+
+    //
+
+    bool a = await res();
+
+    if (a) {
+      print("getorders ok" + this.response['response']);
+      if (this.response['response'] == '200') {
+        print("getorders 200");
+        count = response['count'];
+        print("Count users "+count.toString());
+        count > 0 ? users = response['orders'].map((i) => ItemOrder.fromJson(i)).toList() : users = [];
+        return true;
+      } else if (this.response == '202') {
+        print("getorders 202");
+
+        return false;
+      } else if (this.response == '203') {
+        print("getorders 203");
+
+        return false;
+      } else {
+        print("getorders 0");
+
+        return false;
+      }
+    } else
+      return false;
+  }
+
+  List<dynamic> getOrders() {
+    return users;
+  }
+
+}
+
+
 
 
 
