@@ -116,6 +116,8 @@ String selectAdress = "-1";
 UsersList ObjectUsers = UsersList.r();
 VIPList ObjectVIP = VIPList.r();
 
+MessagePanel ObjectMessage = MessagePanel.r();
+
 OrdersListForAdmin ObjectOrdersAwait  = OrdersListForAdmin.r();
 OrdersListForAdmin ObjectOrdersAccept = OrdersListForAdmin.r();
 OrdersListForAdmin ObjectOrdersCacel  = OrdersListForAdmin.r();
@@ -313,6 +315,7 @@ class _SplashScreenState extends State<SplashScreen>  {
 
                   ObjectUsers = UsersList(token);
                   ObjectVIP = VIPList(token);
+                  ObjectMessage = MessagePanel(token);
                   ObjectOrdersAwait  = OrdersListForAdmin(token, "0");
                   ObjectOrdersAccept = OrdersListForAdmin(token,"1");
                   ObjectOrdersCacel  = OrdersListForAdmin(token, "2");
