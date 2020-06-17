@@ -9,6 +9,7 @@ import 'home.dart';
 import 'package:http/http.dart' as http;
 import 'package:print_color/print_color.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
 
 
 
@@ -1188,6 +1189,148 @@ class VIPList{
 
   }
 }
+
+
+class MessageE{
+  String
+  mess;
+  var messtime;
+  MessageE({this.mess,this.messtime});
+
+  factory MessageE.fromJson(Map<String,dynamic> json){
+    return MessageE(
+      mess: json['mess'] .toString(),
+      messtime: DateFormat("yyyy-MM-dd HH:mm:ss", "en_US").parse(json['time']),
+    );
+
+  }
+}
+class DialogMessage{
+  String
+  mess,
+  name;
+  var messtime;
+  DialogMessage({this.mess,this.messtime, this.name});
+
+  factory DialogMessage.fromJson(Map<String,dynamic> json){
+    return DialogMessage(
+      mess: json['mess'] .toString(),
+      name: json['name'] .toString(),
+      messtime: DateFormat("yyyy-MM-dd HH:mm:ss", "en_US").parse(json['time']),
+
+    );
+
+  }
+}
+
+
+class MessagePanel {
+  String token;
+  String name ="";
+
+  List<dynamic> messUsers= [];
+  List<dynamic> messAdmin = [];
+  List<dynamic> dialogs = [];
+
+
+  MessagePanel.r();
+
+  MessagePanel(this.token);
+
+  Future<bool> sendMessUser(String mess) async {
+    var a = await http.get(
+        'http://eclipsedevelop.ru/api.php/cb_sendmess?token=$token&mess=$mess');
+    if (await a.statusCode == 200) {
+      var response = jsonDecode(a.body);
+      if (response['response'] == "200") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> sendMessAdmin(String mess, String num) async {
+    var a = await http.get(
+        'http://eclipsedevelop.ru/api.php/cb_sendmess?token=$token&mess=$mess&num=$num');
+    if (await a.statusCode == 200) {
+      var response = jsonDecode(a.body);
+      if (response['response'] == "200") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> upMessForUsers()async{
+    var a = await http.get(
+        'http://eclipsedevelop.ru/api.php/cb_usergetmess?token=$token');
+    if (await a.statusCode == 200) {
+      var response = jsonDecode(a.body);
+      if (response['response'] == "200") {
+        messUsers = response['text'].map((i) => MessageE.fromJson(i)).toList();
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  Future<bool> upMessForAdmin(String num)async{
+    var a = await http.get(
+        'http://eclipsedevelop.ru/api.php/cb_admingetmess?token=$token&num=$num');
+    if (await a.statusCode == 200) {
+      var response = jsonDecode(a.body);
+      if (response['response'] == "200") {
+        messAdmin = response['text'].map((i) => MessageE.fromJson(i)).toList();
+        name = response['name'].toString();
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  Future<bool> upDialogs()async{
+    var a = await http.get(
+        'http://eclipsedevelop.ru/api.php/cb_getdialogs?token=$token');
+    if (await a.statusCode == 200) {
+      var response = jsonDecode(a.body);
+      if (response['response'] == "200") {
+        messUsers = response['text'].map((i) => DialogMessage.fromJson(i)).toList();
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  List<dynamic> getMessForUsers(){
+    return messUsers;
+  }
+  List<dynamic> getMessForAdmin(){
+    return messAdmin;
+  }
+  String getNameDialog(){
+    return name;
+  }
+
+
+
+
+
+}
+
+
+
 
 
 
