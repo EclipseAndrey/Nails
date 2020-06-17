@@ -306,35 +306,35 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                             ),
                                           ),
                                         ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Container(
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(left : 16.0, top: 4),
-                                                    child: Text(elementInfo(SelectedCategories, index*2).head, style: TextStyle(color: Colors.white, fontSize: 16),),
-                                                  ),
-                                                  Padding(
-                                                      padding: const EdgeInsets.only(left: 16.0),
-                                                      child: Prise(elementInfo(SelectedCategories, index*2))
-                                                  ),
-                                                ],
+                                        Container(
+
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Container(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left : 16.0, top: 4),
+                                                      child: Text(elementInfo(SelectedCategories, index*2).head, style: TextStyle(color: Colors.white, fontSize: 16),),
+                                                    ),
+                                                    Padding(
+                                                        padding: const EdgeInsets.only(left: 16.0),
+                                                        child: Prise(elementInfo(SelectedCategories, index*2))
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            Expanded(
-                                              flex: 2,
-                                              child: Padding(
+                                              Padding(
                                                 padding: const EdgeInsets.only(right: 8.0),
                                                 child: Container(
                                                     height: 30,
                                                     width: 30,
                                                     child: TrashButton(elementInfo(SelectedCategories, index*2))),
-                                              ),
-                                            )
-                                          ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -386,15 +386,12 @@ class _HomeCatalog extends State<HomeCatalog> with TickerProviderStateMixin{
                                               ],
                                             ),
                                           ),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(right: 8.0),
-                                              child: Container(
-                                                  height: 30,
-                                                  width: 30,
-                                                  child: TrashButton(elementInfo(SelectedCategories, index*2+1))),
-                                            ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(right: 8.0),
+                                            child: Container(
+                                                height: 30,
+                                                width: 30,
+                                                child: TrashButton(elementInfo(SelectedCategories, index*2+1))),
                                           )
                                         ],
                                       ),

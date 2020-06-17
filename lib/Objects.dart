@@ -1043,6 +1043,14 @@ class AwaitVIP{
   }
 }
 
+class StatusVIP{
+  String status,
+  name,
+  error = "0";
+  StatusVIP(this.status,this.name);
+  StatusVIP.error(this.error);
+}
+
 class VIPList{
   List<dynamic> usersAwait = [];
   List<dynamic> usersOK = [];
@@ -1164,7 +1172,128 @@ class VIPList{
     }else{return false;}
 
   }
+  Future<StatusVIP> checkVipStatus(String num)async{
+    var a = await http.get('http://eclipsedevelop.ru/api.php/cbcheckvipstatus?token=$token&num=$num');
+
+    if(await a.statusCode == 200){
+      StatusVIP step;
+      var response = jsonDecode(a.body);
+      if(response['response'] == "200"){
+        step = StatusVIP(response['status'], response['name']);
+        return response['status'];
+      }else{
+        return StatusVIP.error("1");
+      }
+    }else{return StatusVIP.error("2");}
+
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
