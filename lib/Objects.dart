@@ -1027,6 +1027,145 @@ class OrdersListForAdmin{
 }
 
 
+class AwaitVIP{
+  String
+  name,
+  num;
+
+  AwaitVIP({this.num,this.name});
+
+  factory AwaitVIP.fromJson(Map<String,dynamic> json){
+    return AwaitVIP(
+        num: json['num'] .toString(),
+        name: json['name'].toString(),
+    );
+
+  }
+}
+
+class VIPList{
+  List<dynamic> usersAwait = [];
+  List<dynamic> usersOK = [];
+
+
+  var response;
+  int count;
+  String token;
+  VIPList.r();
+  VIPList(this.token);
+
+  Future<bool> UpAwait() async {
+    Future<bool> res() async {
+      var a = await http
+          .get('http://eclipsedevelop.ru/api.php/cbgetrequestusers?token=$token');
+      if (a.statusCode == 200) {
+        this.response = jsonDecode(a.body);
+        print('response ' + this.response.toString());
+
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    print('http://eclipsedevelop.ru/api.php/cbgetrequestusers?token=$token&');
+
+    //
+
+    bool a = await res();
+
+    if (a) {
+      print("awaitVIP ok" + this.response['response']);
+      if (this.response['response'] == '200') {
+        print("awaitVIP 200");
+        count = response['text']['count'];
+        print("Count users "+count.toString());
+        count > 0 ? usersAwait = response['text']['users'].map((i) => AwaitVIP.fromJson(i)).toList() : usersAwait = [];
+        return true;
+      } else if (this.response == '202') {
+        print("awaitVIP 202");
+
+        return false;
+      } else if (this.response == '203') {
+        print("awaitVIP 203");
+
+        return false;
+      } else {
+        print("awaitVIP 0");
+
+        return false;
+      }
+    } else
+      return false;
+  }
+
+  Future<bool> UpOk() async {
+    Future<bool> res() async {
+      var a = await http
+          .get('http://eclipsedevelop.ru/api.php/cbgetvipusers?token=$token');
+      if (a.statusCode == 200) {
+        this.response = jsonDecode(a.body);
+        print('response ' + this.response.toString());
+
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    print('http://eclipsedevelop.ru/api.php/cbgetvipusers?token=$token&');
+
+    //
+
+    bool a = await res();
+
+    if (a) {
+      print("okVIP ok" + this.response['response']);
+      if (this.response['response'] == '200') {
+        print("okVIP 200");
+        count = response['text']['count'];
+        print("Count users "+count.toString());
+        count > 0 ? usersOK = response['text']['users'].map((i) => AwaitVIP.fromJson(i)).toList() : usersOK = [];
+        return true;
+      } else if (this.response == '202') {
+        print("okVIP 202");
+
+        return false;
+      } else if (this.response == '203') {
+        print("okVIP 203");
+
+        return false;
+      } else {
+        print("okVIP 0");
+
+        return false;
+      }
+    } else
+      return false;
+  }
+
+  List<dynamic> getAwaitVIP() {
+    return usersAwait;
+  }
+  List<dynamic> getOkVIP() {
+    return usersOK;
+  }
+  Future<bool> setVipStatus(String num, String status)async{
+    var a = await http.get('http://eclipsedevelop.ru/api.php/cbsetvipstatus?token=$token&num=$num&status=$status');
+
+    if(await a.statusCode == 200){
+    var response = jsonDecode(a.body);
+    if(response['response'] == "200"){
+      return true;
+    }else{
+      return false;
+    }
+
+    }else{return false;}
+
+  }
+}
+
 
 
 

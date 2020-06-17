@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,26 +9,26 @@ import 'package:flutterapp32/MyOrders.dart';
 import 'package:flutterapp32/OrdersAcceptAdmin.dart';
 import 'package:flutterapp32/OrdersCancelAdmin.dart';
 import 'package:flutterapp32/SetName.dart';
-import 'dart:core';
-import 'dart:async';
-import 'package:http/http.dart' as http;
-import 'Help.dart';
-import 'OrdersAwaitAdmin.dart';
-import 'Trash.dart';
 import 'package:flutterapp32/Quality.dart';
 import 'package:flutterapp32/home.dart';
 import 'package:flutterapp32/Eclipse.dart';
 import 'package:flutterapp32/Info.dart';
-import 'package:flutterapp32/Contacts.dart';
+import 'dart:convert';
+import 'dart:core';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'Help.dart';
+import 'OkVip.dart';
+import 'OrdersAwaitAdmin.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'BottomPage.dart';
 import 'package:intl/intl.dart';
 import 'Objects.dart';
 import 'CheckCode.dart';
-import 'Detail.dart';
-import 'package:flutter_rounded_progress_bar/flutter_icon_rounded_progress_bar.dart';
+import 'AwaitVIP.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+
 
 void main(){
 
@@ -55,6 +53,8 @@ void main(){
     '/OrdersAwait': (BuildContext context) => OrdersAwait(),
     '/OrdersAccept': (BuildContext context) => OrdersAccept(),
     '/OrdersCancel': (BuildContext context) => OrdersCancel(),
+    '/AwaitVIP': (BuildContext context) => AwaitVIPADmin(),
+    '/OkVIP': (BuildContext context) => OkVipAdmin(),
   };
 
   runApp(
@@ -114,6 +114,7 @@ List<adress> ListAdress = [];
 String selectAdress = "-1";
 
 UsersList ObjectUsers = UsersList.r();
+VIPList ObjectVIP = VIPList.r();
 
 OrdersListForAdmin ObjectOrdersAwait  = OrdersListForAdmin.r();
 OrdersListForAdmin ObjectOrdersAccept = OrdersListForAdmin.r();
@@ -311,6 +312,7 @@ class _SplashScreenState extends State<SplashScreen>  {
                   }
 
                   ObjectUsers = UsersList(token);
+                  ObjectVIP = VIPList(token);
                   ObjectOrdersAwait  = OrdersListForAdmin(token, "0");
                   ObjectOrdersAccept = OrdersListForAdmin(token,"1");
                   ObjectOrdersCacel  = OrdersListForAdmin(token, "2");
