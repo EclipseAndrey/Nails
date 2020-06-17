@@ -1208,14 +1208,16 @@ class MessageE{
 class DialogMessage{
   String
   mess,
-  name;
+  name,
+  num;
   var messtime;
-  DialogMessage({this.mess,this.messtime, this.name});
+  DialogMessage({this.mess,this.messtime, this.name, this.num});
 
   factory DialogMessage.fromJson(Map<String,dynamic> json){
     return DialogMessage(
       mess: json['mess'] .toString(),
       name: json['name'] .toString(),
+      num: json['num'] .toString(),
       messtime: DateFormat("yyyy-MM-dd HH:mm:ss", "en_US").parse(json['time']),
 
     );
