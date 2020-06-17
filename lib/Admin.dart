@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp32/main.dart';
 
@@ -224,6 +225,126 @@ class _AdminState extends State<Admin> {
 
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed('/AwaitVIP');
+
+              break;
+
+            }
+            case "VIP клиенты":{
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return Dialog(
+
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white38,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                            bottomLeft: Radius.circular(25),
+                            bottomRight: Radius.circular(25)
+                        ),
+
+                      ),
+                      width: MediaQuery.of(context).size.width*2/3,
+                      height: 80,
+                      child: Center(
+                        child: new CircularProgressIndicator(),
+                      ),
+                    ),
+
+                  );
+                },
+              );
+
+              await ObjectVIP.UpOk();
+
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed('/OkVIP');
+
+              break;
+
+            }
+            case "Изменить статус":{
+              showGeneralDialog(
+                  barrierColor: Colors.grey.withOpacity(0.4),
+                  transitionBuilder: (context, a1, a2, widget) {
+                    final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                    return Transform(
+                      transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                      child: Opacity(
+                        opacity: a1.value,
+                        child: CupertinoAlertDialog(
+                          title: Text("Смена статуса"),
+                          content: Padding(
+                            padding: const EdgeInsets.only(top: 0.0),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text("Введите номер телефона пользователя"),
+                                ),
+                                Material(
+                                  color: Colors.transparent,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        hintText: "Номер телефона"
+                                    ),
+                                  ),
+                                )
+                              ],
+
+                            ),
+                          ),
+                          actions: [
+                            CupertinoDialogAction(child: Text("Отмена", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
+                              Navigator.of(context).pop(context);
+                            },),
+                            CupertinoDialogAction(child: Text("Применить", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
+                              Navigator.of(context).pop(context);
+
+                              showGeneralDialog(
+                                  barrierColor: Colors.black.withOpacity(0.3),
+                                  transitionBuilder: (context, a1, a2, widget) {
+                                    final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                                    return Transform(
+                                      transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                                      child: Opacity(
+                                        opacity: a1.value,
+                                        child: CupertinoAlertDialog(
+                                          title: Text("Имя изменено"),
+
+                                          actions: [
+                                            CupertinoDialogAction(child: Text("Ок", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
+                                              Navigator.of(context).pop(context);
+                                            },),
+
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  transitionDuration: Duration(milliseconds: 200),
+                                  barrierDismissible: true,
+                                  barrierLabel: '',
+                                  context: context,
+                                  pageBuilder: (context, animation1, animation2) {});
+
+                            },)
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  transitionDuration: Duration(milliseconds: 200),
+                  barrierDismissible: true,
+                  barrierLabel: '',
+                  context: context,
+                  pageBuilder: (context, animation1, animation2) {});
+
+              await ObjectVIP.UpOk();
+
 
               break;
 
