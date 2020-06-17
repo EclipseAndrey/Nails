@@ -48,7 +48,7 @@ class _OkVipAdminState extends State<OkVipAdmin> {
             children: List.generate(ObjectVIP.getOkVIP().length, (index){
               print(index);
               return Padding(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.05),
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.02),
                 child: ItemVIP(ObjectVIP.getOkVIP()[index]),
               );
             }),

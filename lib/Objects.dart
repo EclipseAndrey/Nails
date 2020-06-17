@@ -1043,12 +1043,12 @@ class AwaitVIP{
   }
 }
 
-class StatusVIP{
+class CheckerStatusVIP{
   String status,
   name,
   error = "0";
-  StatusVIP(this.status,this.name);
-  StatusVIP.error(this.error);
+  CheckerStatusVIP(this.status,this.name);
+  CheckerStatusVIP.error(this.error);
 }
 
 class VIPList{
@@ -1172,19 +1172,19 @@ class VIPList{
     }else{return false;}
 
   }
-  Future<StatusVIP> checkVipStatus(String num)async{
-    var a = await http.get('http://eclipsedevelop.ru/api.php/cbcheckvipstatus?token=$token&num=$num');
-
+  Future<CheckerStatusVIP> checkVipStatus(String num)async{
+    print('http://eclipsedevelop.ru/api.php/cbcheckvipstasus?token=$token&num=$num');
+    var a = await http.get('http://eclipsedevelop.ru/api.php/cbcheckvipstasus?token=$token&num=$num');
     if(await a.statusCode == 200){
-      StatusVIP step;
+      CheckerStatusVIP step;
       var response = jsonDecode(a.body);
       if(response['response'] == "200"){
-        step = StatusVIP(response['status'], response['name']);
-        return response['status'];
+        step = CheckerStatusVIP(response['status'], response['name']);
+        return step;
       }else{
-        return StatusVIP.error("1");
+        return CheckerStatusVIP.error("1");
       }
-    }else{return StatusVIP.error("2");}
+    }else{return CheckerStatusVIP.error("2");}
 
   }
 }

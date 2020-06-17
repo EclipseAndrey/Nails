@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp32/Objects.dart';
 import 'package:flutterapp32/main.dart';
 
 class Admin extends StatefulWidget {
@@ -271,6 +272,7 @@ class _AdminState extends State<Admin> {
                   barrierColor: Colors.grey.withOpacity(0.4),
                   transitionBuilder: (context, a1, a2, widget) {
                     final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                    TextEditingController numcontroller = TextEditingController();
                     return Transform(
                       transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
                       child: Opacity(
@@ -288,6 +290,7 @@ class _AdminState extends State<Admin> {
                                 Material(
                                   color: Colors.transparent,
                                   child: TextField(
+                                    controller: numcontroller,
                                     decoration: InputDecoration(
                                         hintText: "Номер телефона"
                                     ),
@@ -301,35 +304,134 @@ class _AdminState extends State<Admin> {
                             CupertinoDialogAction(child: Text("Отмена", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
                               Navigator.of(context).pop(context);
                             },),
-                            CupertinoDialogAction(child: Text("Применить", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
-                              Navigator.of(context).pop(context);
+                            CupertinoDialogAction(child: Text("Далее", style: TextStyle(color: Colors.deepPurple),),onPressed: () async{
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return Dialog(
 
-                              showGeneralDialog(
-                                  barrierColor: Colors.black.withOpacity(0.3),
-                                  transitionBuilder: (context, a1, a2, widget) {
-                                    final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
-                                    return Transform(
-                                      transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
-                                      child: Opacity(
-                                        opacity: a1.value,
-                                        child: CupertinoAlertDialog(
-                                          title: Text("Имя изменено"),
-
-                                          actions: [
-                                            CupertinoDialogAction(child: Text("Ок", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
-                                              Navigator.of(context).pop(context);
-                                            },),
-
-                                          ],
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white38,
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(25),
+                                            topRight: Radius.circular(25),
+                                            bottomLeft: Radius.circular(25),
+                                            bottomRight: Radius.circular(25)
                                         ),
+
                                       ),
-                                    );
-                                  },
-                                  transitionDuration: Duration(milliseconds: 200),
-                                  barrierDismissible: true,
-                                  barrierLabel: '',
-                                  context: context,
-                                  pageBuilder: (context, animation1, animation2) {});
+                                      width: MediaQuery.of(context).size.width*2/3,
+                                      height: 80,
+                                      child: Center(
+                                        child: new CircularProgressIndicator(),
+                                      ),
+                                    ),
+
+                                  );
+                                },
+                              );
+                              CheckerStatusVIP check = await
+                              ObjectVIP.checkVipStatus(numcontroller.text);
+                              Navigator.of(context).pop(context);
+                              if(check.error == "0"){
+                                String textButton;
+                                if(check.status == "0"){
+                                  textButton = "Добавить VIP";
+                                }else{
+                                  textButton = "Удалить VIP";
+                                }
+                                Navigator.of(context).pop(context);
+                                showGeneralDialog(
+                                    barrierColor: Colors.black.withOpacity(0.3),
+                                    transitionBuilder: (context, a1, a2, widget) {
+                                      final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                                      return Transform(
+                                        transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                                        child: Opacity(
+                                          opacity: a1.value,
+                                          child: CupertinoAlertDialog(
+                                            title: Text(numcontroller.text),
+
+                                            actions: [
+                                              CupertinoDialogAction(child: Text("Отмена", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
+                                                Navigator.of(context).pop(context);
+                                              },),
+                                              CupertinoDialogAction(child: Text(textButton, style: TextStyle(color: Colors.deepPurple),),onPressed: () async{
+                                                showDialog(
+                                                  context: context,
+                                                  barrierDismissible: false,
+                                                  builder: (BuildContext context) {
+                                                    return Dialog(
+
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.white38,
+                                                          borderRadius: BorderRadius.only(
+                                                              topLeft: Radius.circular(25),
+                                                              topRight: Radius.circular(25),
+                                                              bottomLeft: Radius.circular(25),
+                                                              bottomRight: Radius.circular(25)
+                                                          ),
+
+                                                        ),
+                                                        width: MediaQuery.of(context).size.width*2/3,
+                                                        height: 80,
+                                                        child: Center(
+                                                          child: new CircularProgressIndicator(),
+                                                        ),
+                                                      ),
+
+                                                    );
+                                                  },
+                                                );
+                                                await ObjectVIP.setVipStatus(numcontroller.text, check.status == "0"?"1":"0");
+                                                Navigator.of(context).pop(context);
+                                                Navigator.of(context).pop(context);
+                                                showGeneralDialog(
+                                                    barrierColor: Colors.black.withOpacity(0.3),
+                                                    transitionBuilder: (context, a1, a2, widget) {
+                                                      final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                                                      return Transform(
+                                                        transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                                                        child: Opacity(
+                                                          opacity: a1.value,
+                                                          child: CupertinoAlertDialog(
+                                                            title: Text(check.status == "0"?"VIP дообавлен":"VIP удален"),
+
+                                                            actions: [
+                                                              CupertinoDialogAction(child: Text("Ок", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
+                                                                Navigator.of(context).pop(context);
+                                                              },),
+
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    transitionDuration: Duration(milliseconds: 200),
+                                                    barrierDismissible: true,
+                                                    barrierLabel: '',
+                                                    context: context,
+                                                    pageBuilder: (context, animation1, animation2) {});
+                                              },),
+
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    transitionDuration: Duration(milliseconds: 200),
+                                    barrierDismissible: true,
+                                    barrierLabel: '',
+                                    context: context,
+                                    pageBuilder: (context, animation1, animation2) {});
+                              }
+                              else{
+                                print("ХУЙГОВНОМОЧАЖОПА");
+                              }
+
 
                             },)
                           ],
