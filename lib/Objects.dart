@@ -1311,7 +1311,7 @@ class MessagePanel {
       if (response['response'] == "200") {
         print( response['text'].toString());
 
-        messUsers = response['text'].map((i) => DialogMessage.fromJson(i)).toList();
+        dialogs = response['text'].map((i) => DialogMessage.fromJson(i)).toList();
         return true;
       } else {
         print('Up dialogs error');
