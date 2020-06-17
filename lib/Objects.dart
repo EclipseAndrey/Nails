@@ -1301,14 +1301,19 @@ class MessagePanel {
     }
   }
   Future<bool> upDialogs()async{
+    print('Up dialogs');
     var a = await http.get(
         'http://eclipsedevelop.ru/api.php/cb_getdialogs?token=$token');
     if (await a.statusCode == 200) {
+      print('Up dialogs ok');
+
       var response = jsonDecode(a.body);
       if (response['response'] == "200") {
         messUsers = response['text'].map((i) => DialogMessage.fromJson(i)).toList();
         return true;
       } else {
+        print('Up dialogs error');
+
         return false;
       }
     } else {
