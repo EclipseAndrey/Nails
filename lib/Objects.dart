@@ -1321,6 +1321,9 @@ class MessagePanel {
   List<dynamic> getMessForAdmin(){
     return messAdmin;
   }
+  List<dynamic> getDialogs(){
+    return dialogs;
+  }
   String getNameDialog(){
     return name;
   }
