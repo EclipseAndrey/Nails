@@ -241,6 +241,7 @@ class _AccountState extends State<Account> {
                               padding: const EdgeInsets.only(top: 18.0),
                               child: GestureDetector(
                                 onTap: (){
+                                  TextEditingController namecontroller = TextEditingController();
                                   showGeneralDialog(
                                       barrierColor: Colors.black.withOpacity(0.3),
                                       transitionBuilder: (context, a1, a2, widget) {
@@ -262,6 +263,7 @@ class _AccountState extends State<Account> {
                                                     Material(
                                                       color: Colors.transparent,
                                                       child: TextField(
+                                                        controller: namecontroller,
                                                         decoration: InputDecoration(
                                                             hintText: "Имя"
                                                         ),
@@ -275,35 +277,43 @@ class _AccountState extends State<Account> {
                                                 CupertinoDialogAction(child: Text("Отмена", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
                                                   Navigator.of(context).pop(context);
                                                 },),
-                                                CupertinoDialogAction(child: Text("Применить", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
-                                                  Navigator.of(context).pop(context);
+                                                CupertinoDialogAction(child: Text("Применить", style: TextStyle(color: Colors.deepPurple),),onPressed: () async{
+                                                  if(namecontroller.text != ''){
+                                                    String name = namecontroller.text;
+                                                    ResName = name;
+                                                    setState(() {
 
-                                                  showGeneralDialog(
-                                                      barrierColor: Colors.black.withOpacity(0.3),
-                                                      transitionBuilder: (context, a1, a2, widget) {
-                                                        final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
-                                                        return Transform(
-                                                          transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
-                                                          child: Opacity(
-                                                            opacity: a1.value,
-                                                            child: CupertinoAlertDialog(
-                                                              title: Text("Имя изменено"),
+                                                    });
+                                                    await http.get('http://eclipsedevelop.ru/api.php/cbsetname?token=$token&name=$name');
+                                                    print('http://eclipsedevelop.ru/api.php/cbsetname?token=$token&name=$name');
+                                                    Navigator.of(context).pop(context);
+                                                    showGeneralDialog(
+                                                        barrierColor: Colors.black.withOpacity(0.3),
+                                                        transitionBuilder: (context, a1, a2, widget) {
+                                                          final curvedValue = Curves.easeInOutBack.transform(a1.value) -   1.0;
+                                                          return Transform(
+                                                            transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                                                            child: Opacity(
+                                                              opacity: a1.value,
+                                                              child: CupertinoAlertDialog(
+                                                                title: Text("Имя изменено"),
 
-                                                              actions: [
-                                                                CupertinoDialogAction(child: Text("Ок", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
-                                                                  Navigator.of(context).pop(context);
-                                                                },),
+                                                                actions: [
+                                                                  CupertinoDialogAction(child: Text("Ок", style: TextStyle(color: Colors.deepPurple),),onPressed: (){
+                                                                    Navigator.of(context).pop(context);
+                                                                  },),
 
-                                                              ],
+                                                                ],
+                                                              ),
                                                             ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      transitionDuration: Duration(milliseconds: 200),
-                                                      barrierDismissible: true,
-                                                      barrierLabel: '',
-                                                      context: context,
-                                                      pageBuilder: (context, animation1, animation2) {});
+                                                          );
+                                                        },
+                                                        transitionDuration: Duration(milliseconds: 200),
+                                                        barrierDismissible: true,
+                                                        barrierLabel: '',
+                                                        context: context,
+                                                        pageBuilder: (context, animation1, animation2) {});
+                                                  }
 
                                                 },)
                                               ],

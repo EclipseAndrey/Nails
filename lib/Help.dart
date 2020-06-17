@@ -18,6 +18,7 @@ class _HelpState extends State<Help> {
     }
     print(Message[0][0]);
     return Scaffold(
+      backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.deepPurple.withOpacity(0.8),
           leading: GestureDetector(
@@ -118,18 +119,29 @@ class _HelpState extends State<Help> {
           ),
           Container(
             height: 50,
+            padding: EdgeInsets.all(2.0),
+            decoration:BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [BoxShadow(
+                    color: Color.fromRGBO(34, 15, 45, .3),
+                    blurRadius: 5,
+                    offset: Offset(-2.5, 5)
+                )]
+            ),
             child: Row(
               children: [
                 Expanded(child: TextField(
                   decoration: InputDecoration(
+                    hoverColor: Colors.purple,
                     hintText: "Введите сообщение",
                     fillColor: Colors.black12,
-                    filled: true
+                    filled: false
 
                   ),
 
                 )),
-                Icon(Icons.send, color: Colors.white,)
+                Icon(Icons.send, color: Colors.deepPurple,)
               ],
             ),
           )

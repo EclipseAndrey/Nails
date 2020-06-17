@@ -267,6 +267,42 @@ class _AdminState extends State<Admin> {
               break;
 
             }
+            case "Чат поддержки":{
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return Dialog(
+
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white38,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                            bottomLeft: Radius.circular(25),
+                            bottomRight: Radius.circular(25)
+                        ),
+
+                      ),
+                      width: MediaQuery.of(context).size.width*2/3,
+                      height: 80,
+                      child: Center(
+                        child: new CircularProgressIndicator(),
+                      ),
+                    ),
+
+                  );
+                },
+              );
+
+              await ObjectMessage.upDialogs();
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed('/Dialogs');
+
+              break;
+
+            }
             case "Изменить статус":{
               showGeneralDialog(
                   barrierColor: Colors.grey.withOpacity(0.4),

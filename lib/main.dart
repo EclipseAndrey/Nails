@@ -17,6 +17,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'Dialogs.dart';
 import 'Help.dart';
 import 'OkVip.dart';
 import 'OrdersAwaitAdmin.dart';
@@ -55,6 +56,7 @@ void main(){
     '/OrdersCancel': (BuildContext context) => OrdersCancel(),
     '/AwaitVIP': (BuildContext context) => AwaitVIPADmin(),
     '/OkVIP': (BuildContext context) => OkVipAdmin(),
+    '/Dialogs': (BuildContext context) => Dialogs(),
   };
 
   runApp(
