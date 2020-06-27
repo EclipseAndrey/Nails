@@ -97,13 +97,13 @@ class _AddressesState extends State<Addresses> {
 
             String buildAdress(){
               String total = step.city+", "+step.street+ " "+ step.house;
-              if(step.corpus!= "null"){
+              if(step.corpus.toString()!= "null"){
                 total+= step.corpus;
               }
-              if(step.stroenie!= "null"){
+              if(step.stroenie.toString()!= "null"){
                 total+= "C"+step.stroenie;
               }
-              if(step.kv!= "null"){
+              if(step.kv.toString()!= "null"){
                 total+= ", кв. "+step.kv;
               }
               return total;

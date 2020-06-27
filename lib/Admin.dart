@@ -303,6 +303,7 @@ class _AdminState extends State<Admin> {
               break;
 
             }
+
             case "Изменить статус":{
               showGeneralDialog(
                   barrierColor: Colors.grey.withOpacity(0.4),

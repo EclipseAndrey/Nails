@@ -14,27 +14,57 @@ class _DialogsState extends State<Dialogs> {
       appBar: AppBar(
         title: Text("Диалоги"),
         leading: GestureDetector(
-          onTap: (){
+          onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.arrow_back, color: Colors.white,),
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
         ),
       ),
       body: Content(),
     );
   }
 
-  Widget Content(){
+  Widget Content() {
     print(ObjectMessage.getDialogs().length.toString());
     return SingleChildScrollView(
       child: Column(
-        children:
-        List.generate(ObjectMessage.getDialogs().length, (index){
+        children: List.generate(ObjectMessage.getDialogs().length, (index) {
           DialogMessage step = ObjectMessage.getDialogs()[index];
           print(step.mess);
           return GestureDetector(
-            onTap: (){
+            onTap: () async {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return Dialog(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                            bottomLeft: Radius.circular(25),
+                            bottomRight: Radius.circular(25)),
+                      ),
+                      width: MediaQuery.of(context).size.width * 2 / 3,
+                      height: 80,
+                      child: Center(
+                        child: new CircularProgressIndicator(),
+                      ),
+                    ),
+                  );
+                },
+              );
 
+              await ObjectMessage.upMessForAdmin(step.num);
+
+
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed('/ChatAdmin');
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -43,30 +73,43 @@ class _DialogsState extends State<Dialogs> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [BoxShadow(
-                        color: Color.fromRGBO(34, 15, 45, .3),
-                        blurRadius: 5,
-                        offset: Offset(-1, 3)
-                    )]
-                ),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color.fromRGBO(34, 15, 45, .3),
+                          blurRadius: 5,
+                          offset: Offset(-1, 3))
+                    ]),
                 child: Column(
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Expanded(
-                            child: Text(step.name +" (" + step.num + ")", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),)),
+                            child: Text(
+                          step.name + " (" + step.num + ")",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
+                        )),
                         Flexible(
                           flex: 1,
-                          child: Text("16:49", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),),
+                          child: Text(
+                            "16:49",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w400),
+                          ),
                         )
                       ],
                     ),
-                    SizedBox(height: 4,),
+                    SizedBox(
+                      height: 4,
+                    ),
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: Text(step.mess, style: TextStyle(fontSize: 16),),
+                          child: Text(
+                            step.mess,
+                            style: TextStyle(fontSize: 16),
+                          ),
                         )
                       ],
                     )
@@ -76,7 +119,6 @@ class _DialogsState extends State<Dialogs> {
             ),
           );
         }),
-
       ),
     );
   }

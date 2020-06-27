@@ -17,6 +17,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'ChatADmin.dart';
 import 'Dialogs.dart';
 import 'Help.dart';
 import 'OkVip.dart';
@@ -57,6 +58,7 @@ void main(){
     '/AwaitVIP': (BuildContext context) => AwaitVIPADmin(),
     '/OkVIP': (BuildContext context) => OkVipAdmin(),
     '/Dialogs': (BuildContext context) => Dialogs(),
+    '/ChatAdmin': (BuildContext context) => ChatAdmin(),
   };
 
   runApp(

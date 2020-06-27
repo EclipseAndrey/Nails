@@ -1209,15 +1209,18 @@ class DialogMessage{
   String
   mess,
   name,
+  read,
   num;
   var messtime;
-  DialogMessage({this.mess,this.messtime, this.name, this.num});
+  DialogMessage({this.mess,this.messtime, this.name, this.num, this.read});
 
   factory DialogMessage.fromJson(Map<String,dynamic> json){
     return DialogMessage(
       mess: json['mess'] .toString(),
       name: json['name'] .toString(),
       num: json['num'] .toString(),
+      read: json['read'] .toString(),
+
       messtime: DateFormat("yyyy-MM-dd HH:mm:ss", "en_US").parse(json['time']),
 
     );
@@ -1229,6 +1232,7 @@ class DialogMessage{
 class MessagePanel {
   String token;
   String name ="";
+  String num = "";
 
   List<dynamic> messUsers= [];
   List<dynamic> messAdmin = [];
@@ -1255,10 +1259,13 @@ class MessagePanel {
   }
 
   Future<bool> sendMessAdmin(String mess, String num) async {
+
+    print('http://eclipsedevelop.ru/api.php/cb_sendmessadmin?token=$token&mess=$mess&num=$num');
     var a = await http.get(
-        'http://eclipsedevelop.ru/api.php/cb_sendmess?token=$token&mess=$mess&num=$num');
+        'http://eclipsedevelop.ru/api.php/cb_sendmessadmin?token=$token&mess=$mess&num=$num');
     if (await a.statusCode == 200) {
       var response = jsonDecode(a.body);
+      print(response.toString());
       if (response['response'] == "200") {
         return true;
       } else {
@@ -1273,7 +1280,9 @@ class MessagePanel {
     var a = await http.get(
         'http://eclipsedevelop.ru/api.php/cb_usergetmess?token=$token');
     if (await a.statusCode == 200) {
+
       var response = jsonDecode(a.body);
+      print(response.toString());
       if (response['response'] == "200") {
         messUsers = response['text'].map((i) => MessageE.fromJson(i)).toList();
         return true;
@@ -1289,9 +1298,12 @@ class MessagePanel {
         'http://eclipsedevelop.ru/api.php/cb_admingetmess?token=$token&num=$num');
     if (await a.statusCode == 200) {
       var response = jsonDecode(a.body);
+      print(response.toString());
+
       if (response['response'] == "200") {
         messAdmin = response['text'].map((i) => MessageE.fromJson(i)).toList();
         name = response['name'].toString();
+        this.num = num;
         return true;
       } else {
         return false;
